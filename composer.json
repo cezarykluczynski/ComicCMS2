@@ -1,0 +1,12 @@
+{
+  "name" : "zendframework/comiccms",
+  "description" : "ComicCMS2, a project",
+  "version" : "0.0.1",
+  "require" : {
+    "php" : "~5.4.0",
+    "zendframework/zendframework" : "2.4.*"
+  },
+  "keywords" : [ "comic", "cms", "zf2" ],
+  "license" : "MIT",
+  "homepage" : "http://github.com/cezarykluczynski/comiccms2"
+}
