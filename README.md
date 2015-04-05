@@ -22,3 +22,21 @@ here are the requirements:
 ```sh
 composer install
 ```
+
+Create PostgreSQL user and database:
+```sh
+createuser comiccms
+createdb -O comiccms comiccms
+```
+
+Create file config/autoload/local.php with the following contents:
+```php
+<?php
+
+return array(
+    'db' => array(
+        'username'  => 'comiccms',
+
+    ),
+);
+```

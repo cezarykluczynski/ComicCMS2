@@ -4,3 +4,4 @@ data/
 .buildpath
 .project
 composer.lock
+config/autoload/local.php
