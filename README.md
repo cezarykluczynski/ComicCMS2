@@ -13,7 +13,7 @@ because it have almost no functionalities implemented.
 If you like to participate in the development process,
 here are the requirements:
 
-* PHP 5.2+, with Composer
+* PHP 5.4+, with Composer
 * PostgreSQL
 * Apache
 * Node
@@ -21,6 +21,7 @@ here are the requirements:
 ## Installation
 ```sh
 composer install
+vendor/bin/phinx migrate -e development
 ```
 
 Create PostgreSQL user and database:
@@ -36,7 +37,7 @@ Create file config/autoload/local.php with the following contents:
 return array(
     'db' => array(
         'username'  => 'comiccms',
-
+        'password' => '',
     ),
 );
 ```
