@@ -6,3 +6,4 @@ data/
 .project
 composer.lock
 config/autoload/local.php
+*.sublime*

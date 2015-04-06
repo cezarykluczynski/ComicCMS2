@@ -6,3 +6,6 @@ data/
 .project
 composer.lock
 config/autoload/local.php
+
+syntax: glob
+*.sublime*

@@ -11,7 +11,7 @@ because it have almost no functionalities implemented.
 
 ## Revision control
 This repository was originally started as a Mercurial repository,
-for learning purposes. It can be used Git and Mercurial alike.
+for learning purposes. It can be used with Git and Mercurial alike.
 It has both .gitignore and .hgignore files.
 
 ## Requirements
