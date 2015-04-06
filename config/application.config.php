@@ -4,10 +4,11 @@ return array(
     'modules' => array(
         'Application',
         'Admin',
+      	'User',
         'SmartyModule',
         'DoctrineModule',
         'DoctrineORMModule',
-        'User',
+        'EdpModuleLayouts',
     ),
 
     // These are various options for the listeners attached to the ModuleManager

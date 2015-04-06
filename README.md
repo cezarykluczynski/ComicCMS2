@@ -1,6 +1,6 @@
-Work in progress.
+Work in progress. Not production ready.
 
-This project is aimed at recreating some of the functionalities of 
+This project is aimed at recreating some of the functionalities of
 [ComicCMS](http://comiccms.com/). It does not share any common code,
 not does it offer any path of migration from the original.
 
@@ -24,25 +24,24 @@ here are the requirements:
 * Node
 
 ## Installation
-```sh
-composer install
-vendor/bin/phinx migrate -e development
-```
-
 Create PostgreSQL user and database:
 ```sh
 createuser comiccms
 createdb -O comiccms comiccms
 ```
 
-Create file config/autoload/local.php with the following contents:
-```php
-<?php
+Install packages via Composer:
+```sh
+composer install
+```
 
-return array(
-    'db' => array(
-        'username'  => 'comiccms',
-        'password' => '',
-    ),
-);
+Migrate database:
+```sh
+vendor/bin/phinx migrate -e development
+```
+
+Install frontend libraries:
+```sh
+npm install -g bower
+bower install
 ```

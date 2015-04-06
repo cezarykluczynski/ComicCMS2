@@ -1,9 +1,11 @@
 .hg/
+.settings/
 vendor/
 data/
-.settings/
+public/vendor/
 .buildpath
 .project
 composer.lock
 config/autoload/local.php
+
 *.sublime*

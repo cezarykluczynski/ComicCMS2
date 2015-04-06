@@ -15,6 +15,8 @@ return array(
     'db' => array(
         'driver'         => 'Pdo',
         'dsn'            => 'pgsql:host=127.0.0.1;dbname=comiccms',
+        'username'       => 'comiccms',
+        'password'       => '',
     ),
     'service_manager' => array(
         'factories' => array(
@@ -29,6 +31,8 @@ return array(
                     'host'     => 'localhost',
                     'port'     => '5432',
                     'dbname'   => 'comiccms',
+                    'user'     => 'comiccms',
+                    'password' => '',
                 )
             )
         )

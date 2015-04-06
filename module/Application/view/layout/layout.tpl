@@ -7,8 +7,6 @@
 
     {$basePath = $this->basePath()}
 
-    {$this->headTitle('ComicCMS2')}
-
     {$this->headMeta()}
 
     <!-- styles -->

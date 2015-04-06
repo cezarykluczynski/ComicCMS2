@@ -41,6 +41,9 @@ return array(
             'Admin\Controller\Auth' => 'Admin\Controller\AuthController'
         ),
     ),
+	'module_layouts' => array(
+			'Admin' => 'layout/admin',
+	),
     'view_manager' => array(
         'default_suffix'           => 'tpl',
         'display_not_found_reason' => true,
@@ -49,6 +52,7 @@ return array(
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
         'template_map' => array(
+        	'layout/admin'                  => __DIR__ . '/../view/layout/layout.tpl',
             'application/admin/auth/signin' => __DIR__ . '/../view/admin/auth/signin.tpl',
         ),
         'template_path_stack' => array(
