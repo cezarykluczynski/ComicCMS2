@@ -9,6 +9,11 @@ familiarize myself with, and it could be abandonded at any time.
 Use with caution, or actually don't use it at all, at least for now,
 because it have almost no functionalities implemented.
 
+## Revision control
+This repository was originally started as a Mercurial repository,
+for learning purposes. It can be used Git and Mercurial alike.
+It has both .gitignore and .hgignore files.
+
 ## Requirements
 If you like to participate in the development process,
 here are the requirements:
