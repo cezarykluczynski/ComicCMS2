@@ -21,6 +21,7 @@ here are the requirements:
 * PHP 5.4+, with Composer
 * PostgreSQL
 * Apache
+* Ruby
 * Node
 
 ## Installation
@@ -40,8 +41,25 @@ Migrate database:
 vendor/bin/phinx migrate -e development
 ```
 
+Install gem:
+```sh
+gem install sass
+```
+
 Install frontend libraries:
 ```sh
 npm install -g bower
 bower install
 ```
+
+Compile SASS:
+```sh
+grunt sass
+```
+
+## Development
+
+### Grunt tasks
+
+* grunt sass - compile SASS files to CSS
+* grunt watch - watch SASS files, and compile them to CSS on change

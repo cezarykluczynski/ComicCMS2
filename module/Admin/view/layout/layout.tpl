@@ -11,21 +11,20 @@
 
     <!-- styles -->
     {$this->headLink()
-    ->appendStylesheet("`$basePath`/css/style.css")}
+        ->appendStylesheet("`$basePath`/vendor/bootswatch-dist/css/bootstrap.css")
+        ->appendStylesheet("`$basePath`/css/admin.css")
+    }
 
     <!-- scripts -->
     {$this->headScript()
-    ->appendFile("`$basePath`/vendor/jquery/dist/jquery.js")
-    ->appendFile("`$basePath`/vendor/angular/angular.js")
-    ->appendFile("`$basePath`/js/admin/admin.js")}
+        ->appendFile("`$basePath`/vendor/jquery/dist/jquery.js")
+        ->appendFile("`$basePath`/vendor/bootswatch-dist/js/bootstrap.js")
+        ->appendFile("`$basePath`/vendor/angular/angular.js")
+        ->appendFile("`$basePath`/js/admin/admin.js")
+    }
 </head>
 
-<body>
-    <a href="{$this->url('home')}">ComicCMS2</a>
-
-    <div class="container">
-        {$this->content}
-    </div>
-
+<body class="admin">
+    {$this->content}
 </body>
 </html>

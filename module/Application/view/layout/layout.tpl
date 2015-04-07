@@ -11,20 +11,16 @@
 
     <!-- styles -->
     {$this->headLink()
-    ->appendStylesheet("`$basePath`/css/style.css")}
+        ->appendStylesheet("`$basePath`/css/application.css")
+    }
 
     <!-- scripts -->
     {$this->headScript()}
 
 </head>
 
-<body>
-
+<body class="application">
     <a href="{$this->url('home')}">ComicCMS2</a>
-
-    <div class="container">
-        {$this->content}
-    </div>
-
+    {$this->content}
 </body>
 </html>

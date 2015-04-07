@@ -1,8 +1,12 @@
 .git/
+.sass-cache/
 .settings/
+node_modules/
 vendor/
 data/
 public/vendor/
+public/css/admin.css
+public/css/application.css
 .buildpath
 .project
 composer.lock
