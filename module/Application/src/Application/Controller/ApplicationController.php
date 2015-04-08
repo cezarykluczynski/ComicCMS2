@@ -12,6 +12,11 @@ class ApplicationController extends AbstractActionController
     public $user_id = null;
     public $user = null;
 
+    /**
+     * @var DoctrineORMEntityManager
+     */
+    protected $entifyManager;
+
     public function onDispatch(MvcEvent $e)
     {
         $this->user_id = (new Container('user'))->id;
@@ -22,12 +27,9 @@ class ApplicationController extends AbstractActionController
             ->getRepository('User\Entity\User')
             ->findById($this->user_id);
         }
-    }
 
-    /**
-     * @var DoctrineORMEntityManager
-     */
-    protected $entifyManager;
+        return parent::onDispatch($e);
+    }
 
     /**
      * @var Object

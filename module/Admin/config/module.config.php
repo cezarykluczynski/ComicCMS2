@@ -59,11 +59,19 @@ return array(
             __DIR__ . '/../view',
         ),
     ),
-    // Placeholder for console routes
     'console' => array(
         'router' => array(
             'routes' => array(
-            ),
-        ),
+                'create-admin' => array(
+                    'options' => array(
+                        'route'    => 'create-admin <email> <password>',
+                        'defaults' => array(
+                            'controller' => 'Admin\Controller\Auth',
+                            'action'     => 'create-admin'
+                        )
+                    )
+                )
+            )
+        )
     ),
 );

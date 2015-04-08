@@ -8,7 +8,8 @@
     "murganikolay/smarty-module" : "1.0.0",
     "robmorgan/phinx" : "*",
     "doctrine/doctrine-orm-module" : "=0.8.0",
-    "evandotpro/edp-module-layouts": "dev-master"
+    "evandotpro/edp-module-layouts": "dev-master",
+    "codegyre/robo": "*"
   },
   "keywords" : [ "comic", "cms", "zf2" ],
   "license" : "MIT",

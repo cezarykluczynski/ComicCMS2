@@ -41,6 +41,11 @@ Migrate database:
 vendor/bin/phinx migrate -e development
 ```
 
+Create admin user (adjust you credentials):
+```sh
+vendor/bin/robo createadmin my-email@example.com password
+```
+
 Install gem:
 ```sh
 gem install sass

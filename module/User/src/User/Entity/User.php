@@ -25,7 +25,7 @@ class User
     protected $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", unique=true)
      */
     protected $email;
 
@@ -33,6 +33,11 @@ class User
      * @ORM\Column(type="string")
      */
     protected $password;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $admin;
 
     /**
      * Magic getter to expose protected properties.
@@ -54,5 +59,10 @@ class User
     public function __set($property, $value)
     {
         $this->$property = $value;
+    }
+
+    public function createAdmin($email, $password) {
+        $this->email = $email;
+        $this->password = $password;
     }
 }
