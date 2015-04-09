@@ -3,7 +3,19 @@
 return array(
     'router' => array(
         'routes' => array(
-            'admin/signin' => array(
+            'admin-index' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route'    => '/admin/index',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Admin\Controller',
+                        'controller'    => 'Auth',
+                        'action'        => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+            ),
+            'admin-signin' => array(
                'type' => 'Literal',
                 'options' => array(
                     'route'    => '/admin/signin',
@@ -41,9 +53,9 @@ return array(
             'Admin\Controller\Auth' => 'Admin\Controller\AuthController'
         ),
     ),
-	'module_layouts' => array(
-			'Admin' => 'layout/admin',
-	),
+    'module_layouts' => array(
+        'Admin' => 'layout/admin',
+    ),
     'view_manager' => array(
         'default_suffix'           => 'tpl',
         'display_not_found_reason' => true,
@@ -57,6 +69,9 @@ return array(
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
+        ),
+        'strategies' => array(
+            'ViewJsonStrategy',
         ),
     ),
     'console' => array(

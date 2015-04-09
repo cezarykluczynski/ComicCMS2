@@ -3,17 +3,71 @@
 namespace Admin\Controller;
 
 use Zend\View\Model\ViewModel;
+use Zend\View\Model\JsonModel;
 use User\Entity\User;
+use Zend\Session\Container;
 use Zend\Crypt\Password\Bcrypt;
 
-class AuthController extends AdminController
+class AuthController extends AdminController implements \Zend\Mvc\InjectApplicationEventInterface
 {
     /**
-     * @return \Zend\View\Model\ViewModel
+     * @return \Zend\View\Model\ViewModel|Zend\View\Model\JsonModel
      */
     public function signinAction()
     {
-        return new ViewModel();
+        $request = $this->getRequest();
+
+        if (!$request->isPost()) {
+            return new ViewModel();
+        }
+
+        $response = $this->getResponse();
+
+        $email = $request->getPost('email');
+        $password = $request->getPost('password');
+
+        $user = $this
+            ->getEntityManager()
+            ->getRepository('User\Entity\User')
+            ->findOneBy(array(
+                'email' => $email,
+            ));
+
+        if (!$user) {
+            $response->setStatusCode(401);
+
+            return new JsonModel(array(
+                'success' => false,
+            ));
+        }
+
+        $bcrypt = new Bcrypt();
+        $validUser = $bcrypt->verify($password, $user->password);
+
+        if ($validUser) {
+            $userContainer = new Container('user');
+            $userContainer->id = $user->id;
+        }
+
+        $url = $this->url()->fromRoute('admin-index');
+
+        if ($request->isXmlHttpRequest()) {
+            $response->setStatusCode($validUser ? 201 : 401);
+
+            return new JsonModel(array(
+                'url' => $url,
+                'success' => $validUser,
+            ));
+        } elseif ($validUser) {
+            $this->redirect()
+                ->toUrl($url)
+                ->setStatusCode(201);
+        }
+
+        return new ViewModel(array(
+            'email' => $email,
+            'password' => $password,
+        ));
     }
 
     public function createAdminAction() {

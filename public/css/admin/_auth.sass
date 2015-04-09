@@ -2,11 +2,20 @@
     width: 600px
     margin: 3em auto 0px
 
-    h2
-        margin-left: 1.5em
 
     form
         margin: 1.5em 3em 0.75em
+
+        .ng-dirty.ng-invalid-email.ng-valid-minlength
+            background-color: lighten(red, 40%)
+
+        h2
+            margin-bottom: 1em
+
+        .alert
+            display: inline-block
+            width: 100%
+            margin: -1em 0 0
 
     .remember
         margin-bottom: 2.25em

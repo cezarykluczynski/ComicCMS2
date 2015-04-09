@@ -2,11 +2,19 @@
   width: 600px;
   margin: 3em auto 0px;
 }
-.admin-auth h2 {
-  margin-left: 1.5em;
-}
 .admin-auth form {
   margin: 1.5em 3em 0.75em;
+}
+.admin-auth form .ng-dirty.ng-invalid-email.ng-valid-minlength {
+  background-color: #ffcccc;
+}
+.admin-auth form h2 {
+  margin-bottom: 1em;
+}
+.admin-auth form .alert {
+  display: inline-block;
+  width: 100%;
+  margin: -1em 0 0;
 }
 .admin-auth .remember {
   margin-bottom: 2.25em;
