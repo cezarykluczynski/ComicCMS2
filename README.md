@@ -51,6 +51,12 @@ Install gem:
 gem install sass
 ```
 
+Install selenium-standalone:
+```sh
+npm install --global selenium-standalone@latest
+selenium-standalone install
+```
+
 Install frontend libraries:
 ```sh
 npm install -g bower
@@ -63,6 +69,18 @@ grunt sass
 ```
 
 ## Development
+
+### Tests
+
+Start local Selenium server before running tests:
+```sh
+selenium-standalone start
+```
+
+Run tests using:
+```sh
+vendor/bin/phpunit --configuration module/Application/test/phpunit.xml
+```
 
 ### Grunt tasks
 

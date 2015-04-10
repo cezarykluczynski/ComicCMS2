@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit
+    bootstrap="Bootstrap.php"
+    colors="true"
+    backupGlobals="false"
+    backupStaticAttributes="false"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    processIsolation="true"
+    stopOnFailure="false"
+    syntaxCheck="true"
+>
+    <php>
+        <includePath>.</includePath>
+    </php>
+    <testsuites>
+        <testsuite name="application">
+            <directory suffix=".php">./ApplicationTest/Controller</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">src</directory>
+      </whitelist>
+    </filter>
+</phpunit>
