@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit
+    bootstrap="module/Application/test/Bootstrap.php"
+    colors="true"
+    backupGlobals="false"
+    backupStaticAttributes="false"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    processIsolation="true"
+    stopOnFailure="false"
+    syntaxCheck="true"
+>
+    <php>
+        <includePath>.</includePath>
+    </php>
+    <testsuites>
+        <testsuite name="application">
+            <directory suffix=".php">./module/Admin/test/AdminTest/Controller</directory>
+            <directory suffix=".php">./module/Application/test/ApplicationTest/Controller</directory>
+        </testsuite>
+    </testsuites>
+    <logging>
+        <log type="coverage-html" target="./build/test/report" lowUpperBound="90" highLowerBound="95"/>
+        <log type="junit" target="./build/test/logfile.xml" logIncompleteSkipped="false"/>
+    </logging>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./module/Admin/src/</directory>
+            <directory suffix=".php">./module/Application/src/</directory>
+        </whitelist>
+    </filter>
+</phpunit>

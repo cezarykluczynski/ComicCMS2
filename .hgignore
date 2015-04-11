@@ -5,6 +5,7 @@ node_modules/
 vendor/
 data/
 tmp/
+build/
 public/vendor/
 public/css/admin.css
 public/css/application.css
