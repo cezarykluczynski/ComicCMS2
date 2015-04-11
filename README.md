@@ -79,7 +79,7 @@ selenium-standalone start
 
 Run tests using:
 ```sh
-vendor/bin/phpunit --configuration module/Application/test/phpunit.xml
+vendor/bin/phpunit
 ```
 
 ### Grunt tasks

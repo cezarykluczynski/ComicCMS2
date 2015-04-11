@@ -43,16 +43,4 @@ class ApplicationController extends AbstractActionController
         }
         return $this->entifyManager;
     }
-
-    /**
-     * Returns DB adapter.
-     * @return \Zend\Db\Adapter\Adapter
-     */
-    public function getDbAdapter()
-    {
-        if (!$this->adapter) {
-            $this->adapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
-        }
-        return $this->adapter;
-    }
 }
