@@ -8,7 +8,7 @@ install:
 before_script:
   - cp config/autoload/travis.php config/autoload/local.php
   - psql -c 'create database comiccms;' -U postgres
-  - vendor/bin/phinx migrate -e development
+  - vendor/bin/phinx migrate -e development -c phinx.travis.yml
   - vendor/bin/robo createadmin admin@example.com password
   - gem install sass
   - npm install -g bower
