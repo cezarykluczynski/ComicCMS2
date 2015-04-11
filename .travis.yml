@@ -6,8 +6,8 @@ addons:
 install:
   - composer install
 before_script:
-  - psql -c "CREATE USER comiccms WITH PASSWORD '';" -U postgres
-  - psql -c 'create database comiccms;' -U comiccms
+  - cp config/autoload/travis.php config/autoload/local.php
+  - psql -c 'create database comiccms;' -U postgres
   - vendor/bin/phinx migrate -e development
   - vendor/bin/robo createadmin admin@example.com password
   - gem install sass
