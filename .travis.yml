@@ -7,7 +7,7 @@ install:
   - composer install
 before_script:
   - psql -c "CREATE USER comiccms WITH PASSWORD '';" -U postgres
-  - psql -c 'create database comicmcs;' -U comiccms
+  - psql -c 'create database comiccms;' -U comiccms
   - vendor/bin/phinx migrate -e development
   - vendor/bin/robo createadmin admin@example.com password
   - gem install sass
