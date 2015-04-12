@@ -22,8 +22,8 @@
         </testsuite>
     </testsuites>
     <logging>
-        <log type="coverage-html" target="./build/test/report" lowUpperBound="90" highLowerBound="95"/>
-        <log type="junit" target="./build/test/logfile.xml" logIncompleteSkipped="false"/>
+        <log type="coverage-html" target="./build/logs/report" lowUpperBound="90" highLowerBound="95"/>
+        <log type="coverage-clover" target="./build/logs/coverage.xml"/>
     </logging>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
