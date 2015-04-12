@@ -1,2 +1,2 @@
-coverage_clover: /home/travis/build/cezarykluczynski/ComicCMS2/build/logs/clover.xml
+coverage_clover: build/logs/clover.xml
 src_dir: .

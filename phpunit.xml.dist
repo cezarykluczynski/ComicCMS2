@@ -23,7 +23,7 @@
     </testsuites>
     <logging>
         <log type="coverage-html" target="./build/logs/report" lowUpperBound="90" highLowerBound="95"/>
-        <log type="coverage-clover" target="./build/logs/coverage.xml"/>
+        <log type="coverage-clover" target="./build/logs/clover.xml"/>
     </logging>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
