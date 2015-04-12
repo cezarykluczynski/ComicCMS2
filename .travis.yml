@@ -12,6 +12,7 @@ before_script:
   - vendor/bin/robo createadmin admin@example.com password
   - gem install sass
   - npm install -g bower grunt-cli
+  - npm install
   - bower install
   - grunt sass
 script:
