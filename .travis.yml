@@ -11,7 +11,7 @@ before_script:
   - vendor/bin/phinx migrate -e development -c phinx.travis.yml
   - vendor/bin/robo createadmin admin@example.com password
   - gem install sass
-  - npm install -g bower
+  - npm install -g bower grunt-cli
   - bower install
   - grunt sass
 script:

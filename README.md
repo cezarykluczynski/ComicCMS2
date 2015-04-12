@@ -59,7 +59,7 @@ selenium-standalone install
 
 Install frontend libraries:
 ```sh
-npm install -g bower
+npm install -g bower grunt-cli
 bower install
 ```
 
