@@ -6,6 +6,7 @@ use Zend\Loader\AutoloaderFactory;
 use Zend\Mvc\Service\ServiceManagerConfig;
 use Zend\ServiceManager\ServiceManager;
 use RuntimeException;
+use Zend\Stdlib\ArrayUtils;
 
 error_reporting(E_ALL | E_STRICT);
 chdir(__DIR__);
@@ -34,10 +35,13 @@ class Bootstrap
             'module_listener_options' => array(
                 'module_paths' => $zf2ModulePaths,
             ),
-            'modules' => array(
-                'Application'
-            )
         );
+
+        $applicationConfig = array(include 'config/application.config.php');
+        $phpunitConfig = array(include 'config/phpunit.config.php');
+
+        $testConfig = ArrayUtils::merge($applicationConfig[0], $phpunitConfig[0]);
+        $config = ArrayUtils::merge($config, $testConfig);
 
         $serviceManager = new ServiceManager(new ServiceManagerConfig());
         $serviceManager->setService('ApplicationConfig', $config);

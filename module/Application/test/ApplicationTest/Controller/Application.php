@@ -3,8 +3,10 @@
 namespace ApplicationTest\Controller;
 
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
+use Application\Controller\ApplicationController;
+use ApplicationTest\Bootstrap;
 
-class IndexControllerTest extends AbstractHttpControllerTestCase
+class ApplicationControllerTest extends AbstractHttpControllerTestCase
 {
     public function setUp()
     {
@@ -12,13 +14,12 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         parent::setUp();
     }
 
-    public function testIndexActionCanBeAccessed()
-    {
-        $this->dispatch('/');
-        $this->assertResponseStatusCode(200);
-        $this->assertModuleName('Application');
-        $this->assertControllerName('Application\Controller\Index');
-        $this->assertControllerClass('IndexController');
-        $this->assertMatchedRouteName('home');
+    public function testGetEntityManagerReturnsInstanceOfDoctrineEntityManager() {
+        $serviceManager = Bootstrap::getServiceManager();
+        $this->controller = new ApplicationController();
+        $this->controller->setServiceLocator($serviceManager);
+        $this->applicationControllerEntityManager = $this->controller->getEntityManager();
+
+        $this->assertInstanceOf('Doctrine\ORM\EntityManager', $this->applicationControllerEntityManager);
     }
 }
