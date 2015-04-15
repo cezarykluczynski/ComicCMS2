@@ -1,5 +1,11 @@
 Work in progress. Not production ready.
 
+## Build status
+[![Build Status](https://travis-ci.org/cezarykluczynski/ComicCMS2.svg?branch=master)](https://travis-ci.org/cezarykluczynski/ComicCMS2)
+[![Coverage Status](https://coveralls.io/repos/cezarykluczynski/ComicCMS2/badge.svg?branch=master)](https://coveralls.io/r/cezarykluczynski/ComicCMS2?branch=master)
+
+## About
+
 This project is aimed at recreating some of the functionalities of
 [ComicCMS](http://comiccms.com/). It does not share any common code,
 not does it offer any path of migration from the original.
