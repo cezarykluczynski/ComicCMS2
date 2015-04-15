@@ -39,4 +39,18 @@ class AuthControllerTest extends AbstractHttpControllerTestCase
     	$this->dispatch('/admin/signin');
     	$this->assertResponseStatusCode(401);
     }
+
+    /**
+     * Invalid password generate an error.
+     */
+    public function testSigninActionRespondToInvalidPassword()
+    {
+    	$p = new Parameters();
+    	$p->set('email','admin@example.com');
+    	$p->set('password','justTooEasy');
+    	$this->getRequest()->setMethod('POST');
+    	$this->getRequest()->setPost($p);
+    	$this->dispatch('/admin/signin');
+    	$this->assertResponseStatusCode(401);
+    }
 }

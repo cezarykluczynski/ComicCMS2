@@ -51,9 +51,9 @@ class AuthController extends AdminController implements \Zend\Mvc\InjectApplicat
 
         $url = $this->url()->fromRoute('admin-index');
 
+        $response->setStatusCode($validUser ? 201 : 401);
+        
         if ($request->isXmlHttpRequest()) {
-            $response->setStatusCode($validUser ? 201 : 401);
-
             return new JsonModel(array(
                 'url' => $url,
                 'success' => $validUser,
