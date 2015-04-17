@@ -13,5 +13,6 @@ public/css/application.css
 .project
 composer.lock
 config/autoload/local.php
+phpunit.xml
 
 *.sublime*

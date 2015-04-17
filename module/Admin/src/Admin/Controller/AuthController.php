@@ -34,11 +34,17 @@ class AuthController extends AdminController implements \Zend\Mvc\InjectApplicat
             ));
 
         if (!$user) {
-            $response->setStatusCode(401);
-
-            return new JsonModel(array(
-                'success' => false,
-            ));
+        	$response->setStatusCode(401);
+        	if ($request->isXmlHttpRequest()) {
+        		return new JsonModel(array(
+        				'success' => false,
+        		));
+        	} else {
+        		return new ViewModel(array(
+        				'email' => $email,
+        				'password' => $password,
+        		));
+        	}
         }
 
         $bcrypt = new Bcrypt();
@@ -54,10 +60,16 @@ class AuthController extends AdminController implements \Zend\Mvc\InjectApplicat
         $response->setStatusCode($validUser ? 201 : 401);
         
         if ($request->isXmlHttpRequest()) {
-            return new JsonModel(array(
-                'url' => $url,
-                'success' => $validUser,
-            ));
+        	if ($validUser) {
+        		return new JsonModel(array(
+        				'url' => $url,
+        				'success' => true,
+        		));
+        	} else {
+	            return new JsonModel(array(
+	                'success' => false,
+	            ));
+        	}
         } elseif ($validUser) {
             $this->redirect()
                 ->toUrl($url)
