@@ -85,11 +85,6 @@ class AuthController extends AdminController implements \Zend\Mvc\InjectApplicat
     public function createAdminAction() {
         $request = $this->getRequest();
 
-        /** Disallow webaccess. */
-        if (!$request instanceof \Zend\Console\Request) {
-            throw new \RuntimeException('Admin account can be only created using CLI.');
-        }
-
         $email = $request->getParam('email');
         $password = $request->getParam('password');
 
@@ -112,8 +107,7 @@ class AuthController extends AdminController implements \Zend\Mvc\InjectApplicat
             $entityManager->getConnection()->commit();
 
             return "\nAdmin account for $email created.\n\n";
-
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $entityManager->getConnection()->rollback();
             $entityManager->close();
 
