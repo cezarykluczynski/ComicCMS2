@@ -32,20 +32,20 @@ class AuthControllerTest extends AbstractHttpControllerTestCase
      */
     public function testSigninActionRespondToInvalidCredentials()
     {
-    	$this->reset();
-    	$p = new Parameters();
-    	$p->set('email','nope@example.com');
-    	$p->set('password','justTooEasy');
-    	$this->getRequest()->setMethod('POST');
-    	$this->getRequest()->setPost($p);
-    	$this->dispatch('/admin/signin');
-    	$this->assertResponseStatusCode(401);
+        $this->reset();
+        $p = new Parameters();
+        $p->set('email','nope@example.com');
+        $p->set('password','justTooEasy');
+        $this->getRequest()->setMethod('POST');
+        $this->getRequest()->setPost($p);
+        $this->dispatch('/admin/signin');
+        $this->assertResponseStatusCode(401);
 
-    	$container = new Container('user');
-    	$this->assertNull($container->id, 'User session container not created.');
+        $container = new Container('user');
+        $this->assertNull($container->id, 'User session container not created.');
 
-    	$this->assertQuery('#email[value="nope@example.com"]', 'Email passed to view.');
-    	$this->assertQuery('#password[value="justTooEasy"]', 'Password passed to view.');
+        $this->assertQuery('#email[value="nope@example.com"]', 'Email passed to view.');
+        $this->assertQuery('#password[value="justTooEasy"]', 'Password passed to view.');
     }
 
     /**
@@ -53,20 +53,20 @@ class AuthControllerTest extends AbstractHttpControllerTestCase
      */
     public function testSigninActionRespondToInvalidCredentialsAJAX()
     {
-    	$this->reset();
-    	$p = new Parameters();
-    	$p->set('email','nope@example.com');
-    	$p->set('password','justTooEasy');
-    	$this->getRequest()->setMethod('POST');
-    	$this->getRequest()->setHeaders(\Zend\Http\Headers::fromString('X-Requested-With: XMLHttpRequest'));
-    	$this->getRequest()->setPost($p);
-    	$this->dispatch('/admin/signin');
-    	$this->assertResponseStatusCode(401);
+        $this->reset();
+        $p = new Parameters();
+        $p->set('email','nope@example.com');
+        $p->set('password','justTooEasy');
+        $this->getRequest()->setMethod('POST');
+        $this->getRequest()->setHeaders(\Zend\Http\Headers::fromString('X-Requested-With: XMLHttpRequest'));
+        $this->getRequest()->setPost($p);
+        $this->dispatch('/admin/signin');
+        $this->assertResponseStatusCode(401);
 
-    	$container = new Container('user');
-    	$this->assertNull($container->id, 'User session container not created.');
+        $container = new Container('user');
+        $this->assertNull($container->id, 'User session container not created.');
 
-    	$this->assertResponseHeaderContains('Content-Type', 'application/json; charset=utf-8');
+        $this->assertResponseHeaderContains('Content-Type', 'application/json; charset=utf-8');
         $this->assertJsonStringEqualsJsonString($this->getResponse()->getBody(), '{"success": false}');
     }
 
@@ -75,20 +75,20 @@ class AuthControllerTest extends AbstractHttpControllerTestCase
      */
     public function testSigninActionRespondToInvalidPassword()
     {
-    	$this->reset();
-    	$p = new Parameters();
-    	$p->set('email','admin@example.com');
-    	$p->set('password','justTooEasy');
-    	$this->getRequest()->setMethod('POST');
-    	$this->getRequest()->setPost($p);
-    	$this->dispatch('/admin/signin');
-    	$this->assertResponseStatusCode(401);
+        $this->reset();
+        $p = new Parameters();
+        $p->set('email','admin@example.com');
+        $p->set('password','justTooEasy');
+        $this->getRequest()->setMethod('POST');
+        $this->getRequest()->setPost($p);
+        $this->dispatch('/admin/signin');
+        $this->assertResponseStatusCode(401);
 
-    	$container = new Container('user');
-    	$this->assertNull($container->id, "User session container not created.");
+        $container = new Container('user');
+        $this->assertNull($container->id, "User session container not created.");
 
-    	$this->assertQuery('#email[value="admin@example.com"]', 'Email passed to view.');
-    	$this->assertQuery('#password[value="justTooEasy"]', 'Password passed to view.');
+        $this->assertQuery('#email[value="admin@example.com"]', 'Email passed to view.');
+        $this->assertQuery('#password[value="justTooEasy"]', 'Password passed to view.');
     }
 
     /**
@@ -96,20 +96,20 @@ class AuthControllerTest extends AbstractHttpControllerTestCase
      */
     public function testSigninActionRespondToInvalidPasswordAJAX()
     {
-    	$this->reset();
-    	$p = new Parameters();
-    	$p->set('email','admin@example.com');
-    	$p->set('password','justTooEasy');
-    	$this->getRequest()->setMethod('POST');
-    	$this->getRequest()->setHeaders(\Zend\Http\Headers::fromString('X-Requested-With: XMLHttpRequest'));
-    	$this->getRequest()->setPost($p);
-    	$this->dispatch('/admin/signin');
-    	$this->assertResponseStatusCode(401);
+        $this->reset();
+        $p = new Parameters();
+        $p->set('email','admin@example.com');
+        $p->set('password','justTooEasy');
+        $this->getRequest()->setMethod('POST');
+        $this->getRequest()->setHeaders(\Zend\Http\Headers::fromString('X-Requested-With: XMLHttpRequest'));
+        $this->getRequest()->setPost($p);
+        $this->dispatch('/admin/signin');
+        $this->assertResponseStatusCode(401);
 
-    	$container = new Container('user');
-    	$this->assertNull($container->id, "User session container not created.");
+        $container = new Container('user');
+        $this->assertNull($container->id, "User session container not created.");
 
-    	$this->assertResponseHeaderContains('Content-Type', 'application/json; charset=utf-8');
+        $this->assertResponseHeaderContains('Content-Type', 'application/json; charset=utf-8');
         $this->assertJsonStringEqualsJsonString($this->getResponse()->getBody(), '{"success": false}');
     }
 
@@ -118,18 +118,18 @@ class AuthControllerTest extends AbstractHttpControllerTestCase
      */
     public function testSigninActionCreatesValidSessionAndARedirect()
     {
-    	$this->reset();
-    	$p = new Parameters();
-    	$p->set('email','admin@example.com');
-    	$p->set('password','password');
-    	$this->getRequest()->setMethod('POST');
-    	$this->getRequest()->setPost($p);
-    	$this->dispatch('/admin/signin');
-    	$this->assertResponseStatusCode(201);
-    	$this->assertRedirectTo('/admin/index');
+        $this->reset();
+        $p = new Parameters();
+        $p->set('email','admin@example.com');
+        $p->set('password','password');
+        $this->getRequest()->setMethod('POST');
+        $this->getRequest()->setPost($p);
+        $this->dispatch('/admin/signin');
+        $this->assertResponseStatusCode(201);
+        $this->assertRedirectTo('/admin/index');
 
-    	$container = new Container('user');
-    	$this->assertNotNull($container->id, "User session container created.");
+        $container = new Container('user');
+        $this->assertNotNull($container->id, "User session container created.");
     }
 
     /**
@@ -137,21 +137,21 @@ class AuthControllerTest extends AbstractHttpControllerTestCase
      */
     public function testSigninActionCreatesValidSessionAndARedirectAJAX()
     {
-    	$this->reset();
-    	$p = new Parameters();
-    	$p->set('email','admin@example.com');
-    	$p->set('password','password');
-    	$this->getRequest()->setMethod('POST');
-    	$this->getRequest()->setHeaders(\Zend\Http\Headers::fromString('X-Requested-With: XMLHttpRequest'));
-    	$this->getRequest()->setPost($p);
-    	$this->dispatch('/admin/signin');
-    	$this->assertResponseStatusCode(201);
+        $this->reset();
+        $p = new Parameters();
+        $p->set('email','admin@example.com');
+        $p->set('password','password');
+        $this->getRequest()->setMethod('POST');
+        $this->getRequest()->setHeaders(\Zend\Http\Headers::fromString('X-Requested-With: XMLHttpRequest'));
+        $this->getRequest()->setPost($p);
+        $this->dispatch('/admin/signin');
+        $this->assertResponseStatusCode(201);
 
-    	$container = new Container('user');
-    	$this->assertNotNull($container->id, "User session container created.");
+        $container = new Container('user');
+        $this->assertNotNull($container->id, "User session container created.");
 
-    	$this->assertResponseHeaderContains('Content-Type', 'application/json; charset=utf-8');
-    	$this->assertJsonStringEqualsJsonString($this->getResponse()->getBody(),
-    	    '{"success": true, "url": "/admin/index"}');
+        $this->assertResponseHeaderContains('Content-Type', 'application/json; charset=utf-8');
+        $this->assertJsonStringEqualsJsonString($this->getResponse()->getBody(),
+            '{"success": true, "url": "/admin/index"}');
     }
 }

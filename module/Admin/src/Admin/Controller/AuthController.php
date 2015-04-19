@@ -7,11 +7,12 @@ use Zend\View\Model\JsonModel;
 use User\Entity\User;
 use Zend\Session\Container;
 use Zend\Crypt\Password\Bcrypt;
+use Zend\Console\Response;
 
 class AuthController extends AdminController implements \Zend\Mvc\InjectApplicationEventInterface
 {
     /**
-     * @return \Zend\View\Model\ViewModel|Zend\View\Model\JsonModel
+     * @return \Zend\View\Model\ViewModel|\Zend\View\Model\JsonModel
      */
     public function signinAction()
     {
@@ -34,17 +35,17 @@ class AuthController extends AdminController implements \Zend\Mvc\InjectApplicat
             ));
 
         if (!$user) {
-        	$response->setStatusCode(401);
-        	if ($request->isXmlHttpRequest()) {
-        		return new JsonModel(array(
-        				'success' => false,
-        		));
-        	} else {
-        		return new ViewModel(array(
-        				'email' => $email,
-        				'password' => $password,
-        		));
-        	}
+            $response->setStatusCode(401);
+            if ($request->isXmlHttpRequest()) {
+                return new JsonModel(array(
+                        'success' => false,
+                ));
+            } else {
+                return new ViewModel(array(
+                        'email' => $email,
+                        'password' => $password,
+                ));
+            }
         }
 
         $bcrypt = new Bcrypt();
@@ -58,18 +59,18 @@ class AuthController extends AdminController implements \Zend\Mvc\InjectApplicat
         $url = $this->url()->fromRoute('admin-index');
 
         $response->setStatusCode($validUser ? 201 : 401);
-        
+
         if ($request->isXmlHttpRequest()) {
-        	if ($validUser) {
-        		return new JsonModel(array(
-        				'url' => $url,
-        				'success' => true,
-        		));
-        	} else {
-	            return new JsonModel(array(
-	                'success' => false,
-	            ));
-        	}
+            if ($validUser) {
+                return new JsonModel(array(
+                        'url' => $url,
+                        'success' => true,
+                ));
+            } else {
+                return new JsonModel(array(
+                    'success' => false,
+                ));
+            }
         } elseif ($validUser) {
             $this->redirect()
                 ->toUrl($url)
@@ -111,7 +112,10 @@ class AuthController extends AdminController implements \Zend\Mvc\InjectApplicat
             $entityManager->getConnection()->rollback();
             $entityManager->close();
 
-            throw $e;
+            $response = new Response();
+            $response->setErrorLevel(1);
+
+            return $response;
         }
     }
 }
