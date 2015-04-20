@@ -8,13 +8,12 @@ use Application\Controller\ApplicationController;
 
 class AdminController extends ApplicationController
 {
+    /**
+     * @todo ACL
+     */
     public function onDispatch(MvcEvent $e)
     {
         $parent = parent::onDispatch($e);
-
-        if (!$this->user) {
-            die("stop");
-        }
 
         return $parent;
     }
