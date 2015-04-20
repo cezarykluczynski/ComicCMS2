@@ -1,4 +1,4 @@
-var signIn = angular.module('auth', [])
+var adminSignIn = angular.module('admin-signin', [])
     .config(['$httpProvider', function($httpProvider) {
         $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
     }])
@@ -27,3 +27,20 @@ var signIn = angular.module('auth', [])
                 });
         };
     }]);
+
+var admin = angular.module('admin', [])
+    .controller('TabController', function (){
+        this.tab = 'comic';
+
+        this.selectTab = function (newTab){
+            this.tab = newTab;
+        };
+
+        this.isSelected = function(tabToCheck) {
+            return this.tab === tabToCheck;
+        };
+    });
+
+var adminComic = angular.module('admin-comic', []);
+var adminComments = angular.module('admin-comments', []);
+var adminUsers = angular.module('admin-users', []);

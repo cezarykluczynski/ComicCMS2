@@ -1,4 +1,4 @@
-<div ng-app="auth" class="jumbotron admin-auth">
+<div ng-app="admin-signin" class="jumbotron admin-auth">
     <form method="post" name="signin" ng-submit="submit()" ng-controller="SigninController">
         <ng-messages for="signin">
             <ng-message ng-if="signin.error" class="alert alert-danger">

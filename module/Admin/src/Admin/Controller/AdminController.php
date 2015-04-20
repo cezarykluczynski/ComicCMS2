@@ -8,6 +8,17 @@ use Application\Controller\ApplicationController;
 
 class AdminController extends ApplicationController
 {
+    public function onDispatch(MvcEvent $e)
+    {
+        $parent = parent::onDispatch($e);
+
+        if (!$this->user) {
+            die("stop");
+        }
+
+        return $parent;
+    }
+
     /**
      * @return \Zend\View\Model\ViewModel
      */
