@@ -6,7 +6,7 @@ return array(
             'admin-index' => array(
                 'type' => 'Literal',
                 'options' => array(
-                    'route'    => '/admin/index',
+                    'route'    => '/admin',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Admin\Controller',
                         'controller'    => 'Admin',
@@ -50,6 +50,7 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
+            'Admin\Controller\Admin' => 'Admin\Controller\AdminController',
             'Admin\Controller\Auth' => 'Admin\Controller\AuthController'
         ),
     ),

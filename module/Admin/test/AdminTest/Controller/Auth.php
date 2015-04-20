@@ -126,14 +126,14 @@ class AuthControllerTest extends AbstractHttpControllerTestCase
         $this->getRequest()->setPost($p);
         $this->dispatch('/admin/signin');
         $this->assertResponseStatusCode(201);
-        $this->assertRedirectTo('/admin/index');
+        $this->assertRedirectTo('/admin');
 
         $container = new Container('user');
         $this->assertNotNull($container->id, "User session container created.");
 
         /** Test if user session is preserved between.  */
         $this->reset(true);
-        $this->dispatch('/admin/signin'); 
+        $this->dispatch('/admin/signin');
         $container = new Container('user');
         $this->assertNotNull($container->id, "User session preserved.");
     }
@@ -158,6 +158,6 @@ class AuthControllerTest extends AbstractHttpControllerTestCase
 
         $this->assertResponseHeaderContains('Content-Type', 'application/json; charset=utf-8');
         $this->assertJsonStringEqualsJsonString($this->getResponse()->getBody(),
-            '{"success": true, "url": "/admin/index"}');
+            '{"success": true, "url": "/admin"}');
     }
 }
