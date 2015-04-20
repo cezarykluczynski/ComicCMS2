@@ -9,7 +9,7 @@ return array(
                     'route'    => '/admin/index',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Admin\Controller',
-                        'controller'    => 'Auth',
+                        'controller'    => 'Admin',
                         'action'        => 'index',
                     ),
                 ),

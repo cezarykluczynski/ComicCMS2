@@ -130,6 +130,12 @@ class AuthControllerTest extends AbstractHttpControllerTestCase
 
         $container = new Container('user');
         $this->assertNotNull($container->id, "User session container created.");
+
+        /** Test if user session is preserved between.  */
+        $this->reset(true);
+        $this->dispatch('/admin/signin'); 
+        $container = new Container('user');
+        $this->assertNotNull($container->id, "User session preserved.");
     }
 
     /**
