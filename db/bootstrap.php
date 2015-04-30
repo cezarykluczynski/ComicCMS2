@@ -12,7 +12,7 @@ $conn = array(
     'host'     => 'localhost',
     'port'     => '5432',
     'dbname'   => 'comiccms',
-    'user'     => 'comiccms',
+    'user'     => getenv('TRAVIS') ? 'postgres' : 'comiccms',
     'password' => '',
 );
 // obtaining the entity manager
