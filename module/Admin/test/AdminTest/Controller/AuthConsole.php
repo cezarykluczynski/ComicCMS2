@@ -33,7 +33,7 @@ class AuthControllerConsoleTest extends AbstractConsoleControllerTestCase
         $this->dispatch('create-admin '.$email.' password');
         $this->assertModuleName('Admin');
         $this->assertControllerName('Admin\Controller\Auth');
-        $this->assertControllerClass('AUthController');
+        $this->assertControllerClass('AuthController');
         $this->assertMatchedRouteName('create-admin');
         $this->assertResponseStatusCode(0, "Exited with 0.");
         $this->assertConsoleOutputContains("Admin account for $email created.");

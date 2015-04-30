@@ -44,7 +44,7 @@ composer install
 
 Migrate database:
 ```sh
-vendor/bin/phinx migrate -e development
+vendor/bin/doctrine migrations:migrate -n
 ```
 
 Create admin user (adjust you credentials):

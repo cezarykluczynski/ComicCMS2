@@ -32,8 +32,11 @@
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./module/Admin/src/</directory>
             <directory suffix=".php">./module/Application/src/</directory>
+            <directory suffix=".php">./module/User/src/</directory>
             <exclude>
                 <directory suffix=".php">./vendor</directory>
+                <!-- Entities as for now just Simple rules copies from Doctrine docs, no need for tests. -->
+                <directory suffix=".php">./module/User/src/User/Entity/</directory>
             </exclude>
         </whitelist>
     </filter>

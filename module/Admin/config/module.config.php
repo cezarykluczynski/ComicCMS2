@@ -51,7 +51,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Admin\Controller\Admin' => 'Admin\Controller\AdminController',
-            'Admin\Controller\Auth' => 'Admin\Controller\AuthController'
+            'Admin\Controller\Auth' => 'Admin\Controller\AuthController',
         ),
     ),
     'module_layouts' => array(

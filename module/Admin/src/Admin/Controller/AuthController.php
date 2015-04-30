@@ -101,7 +101,12 @@ class AuthController extends AdminController implements \Zend\Mvc\InjectApplicat
 
             $user->email = $email;
             $user->password = $passwordHashed;
-            $user->admin = 1;
+
+            /** Admin should have all roles. */
+            $user->roles = $this
+                ->getEntityManager()
+                ->getRepository('User\Entity\Role')
+                ->findAll();
 
             $entityManager->persist($user);
             $entityManager->flush();
@@ -111,6 +116,8 @@ class AuthController extends AdminController implements \Zend\Mvc\InjectApplicat
         } catch (\Exception $e) {
             $entityManager->getConnection()->rollback();
             $entityManager->close();
+
+            print_r($e->getMessage());
 
             $response = new Response();
             $response->setErrorLevel(1);

@@ -3,6 +3,7 @@
 namespace User\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * User.
@@ -11,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="users")
  * @property string $email
  * @property string $password
+ * @property array $roles
  * @property int $id
  */
 class User
@@ -35,9 +37,17 @@ class User
     protected $password;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    protected $admin;
+     * @ORM\ManyToMany(targetEntity="User\Entity\Role")
+     * @ORM\JoinTable(name="user_role_linker",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")}
+     *      )
+     **/
+    private $roles;
+
+    public function __construct() {
+        $this->roles = new ArrayCollection();
+    }
 
     /**
      * Magic getter to expose protected properties.
@@ -61,8 +71,12 @@ class User
         $this->$property = $value;
     }
 
-    public function createAdmin($email, $password) {
-        $this->email = $email;
-        $this->password = $password;
+    /**
+     * Returns all user roles.
+     *
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getRoles() {
+        return $this->roles;
     }
 }

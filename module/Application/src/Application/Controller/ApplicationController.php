@@ -6,41 +6,33 @@ use Zend\Mvc\Controller\AbstractActionController;
 use User\Entity\User;
 use Zend\Session\Container;
 use Zend\Mvc\MvcEvent;
+use Zend\EventManager\EventManagerInterface;
 
 class ApplicationController extends AbstractActionController
 {
-    public $user_id = null;
     public $user = null;
-
-    /**
-     * @var DoctrineORMEntityManager
-     */
-    protected $entifyManager;
 
     public function onDispatch(MvcEvent $e)
     {
-        $this->user_id = (new Container('user'))->id;
+        $userContainer = new Container('user');
 
-        if (!is_null($this->user_id)) {
-            $this->user = $this
-            ->getEntityManager()
-            ->getRepository('User\Entity\User')
-            ->findById($this->user_id);
+        if (!is_null($userContainer->authenticatedUser)) {
+            $this->authenticatedUser = $userContainer->authenticatedUser;
         }
 
         return parent::onDispatch($e);
     }
 
     /**
-     * @var Object
+     * @var \Doctrine\ORM\EntityManager
      */
-    public $adapter;
+    protected $entityManager;
 
     public function getEntityManager()
     {
-        if (null === $this->entifyManager) {
-            $this->entifyManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+        if (null === $this->entityManager) {
+            $this->entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
         }
-        return $this->entifyManager;
+        return $this->entityManager;
     }
 }

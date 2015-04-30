@@ -8,6 +8,10 @@ return array(
         'SmartyModule',
         'DoctrineModule',
         'DoctrineORMModule',
+        'ZfcBase',
+        'ZfcUser',
+        'ZfcUserDoctrineORM',
+        'BjyAuthorize',
         'EdpModuleLayouts',
     ),
 
