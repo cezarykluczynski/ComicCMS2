@@ -6,7 +6,7 @@
 return [
     'db'=> array(
         'driver' => 'pgsql',
-        'username' => 'comiccms',
+        'username' => getenv('TRAVIS') ? 'postgres' : 'comiccms',
         'database' => 'comiccms',
         'password' => '',
         'host' => 'localhost',
