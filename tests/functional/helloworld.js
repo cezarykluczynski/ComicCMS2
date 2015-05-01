@@ -14,13 +14,18 @@ define([
         "Main page is loading.": function () {
             return this.remote
                 .get( mainPage )
-                .setFindTimeout( 3000 )
-                /** Open panel by clicking entry. */
-                .findByCssSelector( "body.application" )
-                .isDisplayed()
-                .then( function ( visible ) {
-                    assert.ok( visible, "Sign in form loaded." );
+                .setFindTimeout( 1000 )
+                /** Check if $panel property is null at first. */
+                .execute( function () {
+                    document.getElementsByTagName( "table" )[ 0 ].style.width = "500px";
                 });
+                // .setFindTimeout( 3000 )
+                // /** Open panel by clicking entry. */
+                // .findByCssSelector( "body.application" )
+                // .isDisplayed()
+                // .then( function ( visible ) {
+                //     assert.ok( visible, "Sign in form loaded." );
+                // });
         }
     });
 
