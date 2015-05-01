@@ -13,25 +13,19 @@ define([
         "Main page is loading.": function () {
             return this.remote
                 .get( mainPage )
-                .setExecuteAsyncTimeout( 10000 )
-                .executeAsync( function () {
-                    window.scrollTo( 1000, 0 );
+                .setFindTimeout( 3000 )
+                .findByCssSelector( "body.application" )
+                .isDisplayed()
+                .then( function ( visible ) {
+                    assert.ok( visible, "Sign in form loaded." );
                 });
-                // .setFindTimeout( 3000 )
-                // .findByCssSelector( "body.application" )
-                // .isDisplayed()
-                // .then( function ( visible ) {
-                //     assert.ok( visible, "Sign in form loaded." );
-                // });
         }
     });
-
-    return;
 
     registerSuite({
         name: "Admin auth.",
 
-        "Panel is loading.": function () {
+        "Sign in form is loading.": function () {
             return this.remote
                 .get( signIn )
                 .setFindTimeout( 3000 )
