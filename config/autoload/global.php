@@ -25,7 +25,7 @@ return array(
                     'host'     => 'localhost',
                     'port'     => '5432',
                     'dbname'   => 'comiccms',
-                    'user'     => getenv('TRAVIS') ? 'postgres' : 'comiccms',
+                    'user'     => 'comiccms',
                     'password' => '',
                 )
             )

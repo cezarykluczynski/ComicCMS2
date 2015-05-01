@@ -14,4 +14,7 @@ return array(
             )
         )
     ),
+    'db'=> array(
+        'username' => 'postgres',
+    ),
 );
