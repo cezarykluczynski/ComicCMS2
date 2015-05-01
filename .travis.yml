@@ -28,6 +28,9 @@ before_script:
   - sudo service apache2 restart
 script:
   - vendor/bin/phpunit
+  # Testing local servers
+  - curl -X GET http://localhost:9090/
+  - curl -X GET http://localhost:9091/
   - grunt test-ci
 after_success:
   - php vendor/bin/coveralls -v

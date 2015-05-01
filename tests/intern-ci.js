@@ -1,7 +1,7 @@
 define({
     suites: false,
-    proxyPort: 9090,
-    proxyUrl: "http://127.0.0.1:9090/",
+    proxyPort: 9091,
+    proxyUrl: "http://127.0.0.1:9091/",
     capabilities: {
         "selenium-version": "2.45.0"
     },
