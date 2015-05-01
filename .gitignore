@@ -6,6 +6,8 @@ vendor/
 data/
 tmp/
 build/
+!build/travis-ci-apache
+html-report/
 public/vendor/
 public/css/admin.css
 public/css/application.css

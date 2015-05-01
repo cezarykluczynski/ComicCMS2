@@ -1,8 +1,10 @@
+sudo: true
 language: php
 php:
   - 5.4
 addons:
-  postgresql: "9.3"
+  postgresql: '9.3'
+  sauce_connect: true
 install:
   - composer install --no-interaction --dev
 before_script:
@@ -15,7 +17,20 @@ before_script:
   - npm install
   - bower install
   - grunt sass
+  - sudo apt-get install apache2 libapache2-mod-fastcgi
+  - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
+  - sudo a2enmod rewrite actions fastcgi alias
+  - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
+  - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/default
+  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
+  - sudo service apache2 restart
 script:
   - vendor/bin/phpunit
+  - grunt test-ci
 after_success:
   - php vendor/bin/coveralls -v
+env:
+  global:
+  - secure: UlZEyedGNDsYx6c4M/GRNdLYqFQZHBA5gYRVbNa3/7LCryO6RzkOoJ2v1zxWX5rSm8db6nkWKpON2+D09Ij1ot+KOybGNjia38+MXrZSF6xUvWTcUGNpZv6NoMKx0HlknS5ZAWjjcek/yoTs7ZwZgleaC6Dy4fELHD2Wmbf9aIw=
+  - secure: BH1JzVc17vLddSi4af9a57GEfqraB/orIkEB2aaD4spc5OH7GIxNFY2vbJ8EYRqGwuRK1d9NjIC0/7IWr5uKbCLUjk4J+HEvP88T3M+pmCnESLGCu+oD3jjq6zaIFrSq0A8eleh+Q2V5SZTRQovkhNTwiyRRoTW5VYBK/arbVws=
