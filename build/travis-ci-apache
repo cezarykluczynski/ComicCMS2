@@ -2,7 +2,7 @@
   ServerName localhost:9090
   DocumentRoot %TRAVIS_BUILD_DIR%/public
 
-  <Directory "%TRAVIS_BUILD_DIR%"/public>
+  <Directory %TRAVIS_BUILD_DIR%/public>
     Options FollowSymLinks MultiViews ExecCGI
     DirectoryIndex index.php
     AllowOverride All
