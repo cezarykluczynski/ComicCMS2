@@ -5,6 +5,24 @@ define([
     "tests/support/helper"
 ], function ( registerSuite, assert, require, testHelper ) {
     var signIn = testHelper.getAppUrl( "admin/signin" );
+    var mainPage = testHelper.getAppUrl( "" );
+
+    registerSuite({
+        name: "Main page.",
+
+        /** Check if link to profile configuration is added. */
+        "Main page is loading.": function () {
+            return this.remote
+                .get( mainPage )
+                .setFindTimeout( 3000 )
+                /** Open panel by clicking entry. */
+                .findByCssSelector( "body.application" )
+                .isDisplayed()
+                .then( function ( visible ) {
+                    assert.ok( visible, "Sign in form loaded." );
+                });
+        }
+    });
 
     registerSuite({
         name: "Admin auth.",
@@ -13,7 +31,7 @@ define([
         "Panel is loading.": function () {
             return this.remote
                 .get( signIn )
-                .setFindTimeout( 1000 )
+                .setFindTimeout( 3000 )
                 /** Open panel by clicking entry. */
                 .findByCssSelector( "div.admin-auth" )
                 .isDisplayed()

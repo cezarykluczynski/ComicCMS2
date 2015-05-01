@@ -1,7 +1,7 @@
 define({
     suites: false,
     proxyPort: 9090,
-    proxyUrl: "http://127.0.01:9090/",
+    proxyUrl: "http://127.0.0.1:9090/",
     capabilities: {
         "selenium-version": "2.45.0"
     },
@@ -17,5 +17,5 @@ define({
     functionalSuites: [
         "tests/functional/helloworld",
     ],
-    excludeInstrumentation: /^(node_modules|bower_components|tests)/
+    excludeInstrumentation: /tests|node_modules/
 });
