@@ -25,7 +25,7 @@ define([
     registerSuite({
         name: "Admin auth.",
 
-        "Sign in form is loading.": function () {
+        "Sign in form is visible.": function () {
             return this.remote
                 .get( signIn )
                 .setFindTimeout( 3000 )

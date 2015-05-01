@@ -10,7 +10,8 @@ define({
         port: 4444
     },
     environments: [
-        // { browserName: "Firefox" },
+        { browserName: "Firefox" },
+        { browserName: "Internet Explorer", platform: "Windows 8.1", version: "11" },
         { browserName: "Chrome" }
     ],
     maxConcurrency: 3,

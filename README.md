@@ -3,6 +3,7 @@ Work in progress. Not production ready.
 ## Build status
 [![Build Status](https://travis-ci.org/cezarykluczynski/ComicCMS2.svg?branch=master)](https://travis-ci.org/cezarykluczynski/ComicCMS2)
 [![Coverage Status](https://coveralls.io/repos/cezarykluczynski/ComicCMS2/badge.svg?branch=master)](https://coveralls.io/r/cezarykluczynski/ComicCMS2?branch=master)
+[![Sauce Test Status](https://saucelabs.com/buildstatus/comiccms2)](https://saucelabs.com/u/comiccms2)
 
 ## About
 
@@ -52,15 +53,9 @@ Create admin user (adjust you credentials):
 vendor/bin/robo createadmin my-email@example.com password
 ```
 
-Install gem:
+Install gem for compiling SASS:
 ```sh
 gem install sass
-```
-
-Install selenium-standalone:
-```sh
-npm install --global selenium-standalone@latest
-selenium-standalone install
 ```
 
 Install frontend libraries:
@@ -78,6 +73,12 @@ grunt sass
 
 ### Tests
 
+Install selenium-standalone:
+```sh
+npm install --global selenium-standalone@latest
+selenium-standalone install
+```
+
 Start local Selenium server before running tests:
 ```sh
 selenium-standalone start
@@ -92,3 +93,4 @@ vendor/bin/phpunit
 
 * grunt sass - compile SASS files to CSS
 * grunt watch - watch SASS files, and compile them to CSS on change
+* grunt intern - run local JavaScript tests

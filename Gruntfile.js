@@ -57,7 +57,6 @@ module.exports = function(grunt) {
 
     grunt.registerTask('default', ['sass']);
 
-
     /** Main task for local testing. */
     grunt.registerTask( "test", function () {
         grunt.task.run( "delete-coverage-reports" );
