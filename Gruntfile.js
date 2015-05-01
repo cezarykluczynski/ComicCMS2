@@ -33,7 +33,7 @@ module.exports = function(grunt) {
                 options: {
                     runType: "runner",
                     config: "tests/intern-ci",
-                    reporters: [ "lcov" ]
+                    reporters: []
                 }
             }
         },

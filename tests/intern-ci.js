@@ -1,7 +1,7 @@
 define({
     suites: false,
     proxyPort: 9090,
-    proxyUrl: "http://localhost:9090/",
+    proxyUrl: "http://127.0.01:9090/",
     capabilities: {
         "selenium-version": "2.45.0"
     },
@@ -10,7 +10,7 @@ define({
         port: 4444
     },
     environments: [
-        { browserName: "Firefox" },
+        // { browserName: "Firefox" },
         { browserName: "Chrome" }
     ],
     maxConcurrency: 3,

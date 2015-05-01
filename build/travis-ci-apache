@@ -1,5 +1,4 @@
-<VirtualHost *:80>
-  ServerName localhost:9090
+<VirtualHost *:9090>
   DocumentRoot %TRAVIS_BUILD_DIR%/public
 
   <Directory %TRAVIS_BUILD_DIR%/public>
