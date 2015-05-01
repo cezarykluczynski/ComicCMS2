@@ -29,9 +29,11 @@ before_script:
 script:
   - vendor/bin/phpunit
   # Testing local servers
+  - curl -X GET http://localhost/
+  - curl -X GET http://localhost:9000/
   - curl -X GET http://localhost:9090/
   - curl -X GET http://localhost:9091/
-  - grunt test-ci
+  # - grunt test-ci
 after_success:
   - php vendor/bin/coveralls -v
 env:
