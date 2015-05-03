@@ -14,11 +14,13 @@
 >
     <php>
         <includePath>.</includePath>
+        <env name="BJYAUTHORIZE_IDENTITY_PROVIDER" value="User\Provider\Identity\UserIdentityProviderMock"/>
     </php>
     <testsuites>
         <testsuite name="application">
             <directory suffix=".php">./module/Admin/test/AdminTest/Controller</directory>
             <directory suffix=".php">./module/Application/test/ApplicationTest/Controller</directory>
+            <directory suffix=".php">./module/Comic/test/ComicTest/Controller</directory>
         </testsuite>
     </testsuites>
     <logging>

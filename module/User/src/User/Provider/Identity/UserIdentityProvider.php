@@ -16,9 +16,6 @@ class UserIdentityProvider implements
      */
     protected $defaultRole;
 
-    public function __construct() {
-    }
-
     protected $serviceLocator;
     protected $authenticatedUser;
 
@@ -35,7 +32,6 @@ class UserIdentityProvider implements
 
     public function getIdentityRoles()
     {
-
         $config = $this->getServiceLocator()->get('Config');
         $this->entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
 
@@ -47,17 +43,12 @@ class UserIdentityProvider implements
         $userContainer = new Container('user');
 
         if (!is_null($userContainer->id)) {
-            $this->authenticatedUser = $this
-            ->getServiceLocator()
-            ->get('doctrine.entitymanager.orm_default')
-            ->getRepository('User\Entity\User')
-            ->findOneById($userContainer->id);
+            $this->setAuthenticatedUser($userContainer->id);
         }
 
-        if (!is_null($this->authenticatedUser)) {
+        if ($this->userIsAuthenticated()) {
             /** Inject authenticated user into session for controllers to use. */
             $userContainer->authenticatedUser = $this->authenticatedUser;
-
 
             $roles = $this->authenticatedUser->getRoles();
 
@@ -69,6 +60,24 @@ class UserIdentityProvider implements
         }
 
         return array($this->getDefaultRole());
+    }
+
+    protected function setAuthenticatedUser($userId)
+    {
+        $this->authenticatedUser = $this
+            ->getServiceLocator()
+            ->get('doctrine.entitymanager.orm_default')
+            ->getRepository('User\Entity\User')
+            ->findOneById($userId);
+    }
+
+    protected function getAuthenticatedUser()
+    {
+        return $this->authenticatedUser;
+    }
+
+    protected function userIsAuthenticated() {
+        return !is_null($this->getAuthenticatedUser());
     }
 
     /**

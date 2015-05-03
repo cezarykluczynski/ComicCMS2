@@ -23,7 +23,7 @@ return [
          * for ZfcUser, this will be your default identity provider
         */
         // 'identity_provider' => 'BjyAuthorize\Provider\Identity\ZfcUserZendDb',
-        'identity_provider' => 'User\Provider\Identity\UserIdentityProvider',
+        'identity_provider' => getenv('BJYAUTHORIZE_IDENTITY_PROVIDER') ?: 'User\Provider\Identity\UserIdentityProvider',
 
         /* role providers simply provide a list of roles that should be inserted
          * into the Zend\Acl instance. the module comes with two providers, one
@@ -73,7 +73,7 @@ return [
 
                 /** Admin panel. */
                 ['controller' => 'Admin\Controller\Admin', 'action' => 'index', 'roles' => ['admin']],
-                ['controller' => 'Comic\Controller\Admin\Widget', 'action' => 'index', 'roles' => ['guest']],
+                ['controller' => 'Comic\Controller\Admin\Widget', 'action' => 'index', 'roles' => ['admin']],
 
                 /** Techically, console routing does not require ACL.
                  *  Anyone with access to CLI is authenticated enough, or cannot be stopped anyway. */
