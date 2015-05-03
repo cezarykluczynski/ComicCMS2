@@ -22,6 +22,9 @@
             <directory suffix=".php">./module/Application/test/ApplicationTest/Controller</directory>
             <directory suffix=".php">./module/Comic/test/ComicTest/Controller</directory>
         </testsuite>
+        <testsuite name="acl">
+            <directory suffix=".php">./module/Admin/test/AdminTest/ACL</directory>
+        </testsuite>
     </testsuites>
     <logging>
         <log type="coverage-html" target="./build/logs/report" lowUpperBound="90" highLowerBound="95"/>
