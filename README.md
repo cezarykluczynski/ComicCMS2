@@ -9,7 +9,7 @@ Work in progress. Not production ready.
 
 This project is aimed at recreating some of the functionalities of
 [ComicCMS](http://comiccms.com/). It does not share any common code,
-not does it offer any path of migration from the original.
+nor does it offer any path of migration from the original.
 
 It started as a learning project for some new technologies I wanted to
 familiarize myself with, and it could be abandonded at any time.

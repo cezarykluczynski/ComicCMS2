@@ -70,7 +70,10 @@ return [
             'BjyAuthorize\Guard\Controller' => [
                 ['controller' => 'Application\Controller\Index', 'action' => 'index', 'roles' => ['guest']],
                 ['controller' => 'Admin\Controller\Auth', 'action' => 'signin', 'roles' => ['guest']],
+
+                /** Admin panel. */
                 ['controller' => 'Admin\Controller\Admin', 'action' => 'index', 'roles' => ['admin']],
+                ['controller' => 'Comic\Controller\Admin\Widget', 'action' => 'index', 'roles' => ['guest']],
 
                 /** Techically, console routing does not require ACL.
                  *  Anyone with access to CLI is authenticated enough, or cannot be stopped anyway. */

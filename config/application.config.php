@@ -4,7 +4,9 @@ return array(
     'modules' => array(
         'Application',
         'Admin',
+        'Assets',
         'User',
+        'Comic',
         'SmartyModule',
         'DoctrineModule',
         'DoctrineORMModule',

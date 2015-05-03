@@ -1,5 +1,8 @@
 <div ng-app="admin" ng-controller="TabController as panel">
     <ul {literal}ng-init="tab = comic"{/literal} class="nav nav-tabs">
+        <li {literal}ng-class="{active:panel.isSelected('dashboard') }"{/literal}>
+            <a href ng-click="panel.selectTab('dashboard')">{$this->translate("Dashboard")}</a>
+        </li>
         <li {literal}ng-class="{active:panel.isSelected('comic') }"{/literal}>
             <a href ng-click="panel.selectTab('comic')">{$this->translate("Comics")}</a>
         </li>
@@ -11,6 +14,9 @@
         </li>
     </ul>
 
+    <div ng-show="panel.isSelected('dashboard')" ng-app="admin-dashboard">
+        Dashboard
+    </div>
     <div ng-show="panel.isSelected('comic')" ng-app="admin-comic">
         Comics
     </div>

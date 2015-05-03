@@ -1,9 +1,8 @@
 <?php
 
-namespace User;
+namespace Assets;
 
 return array(
-    // Doctrine config
     'doctrine' => array(
         'driver' => array(
             __NAMESPACE__ . '_driver' => array(
