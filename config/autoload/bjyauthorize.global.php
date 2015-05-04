@@ -17,15 +17,16 @@ return [
         // set the 'guest' role as default (must be defined in a role provider)
         'default_role' => 'guest',
 
-        /* this module uses a meta-role that inherits from any roles that should
+        /**
+         * this module uses a meta-role that inherits from any roles that should
          * be applied to the active user. the identity provider tells us which
          * roles the "identity role" should inherit from.
          * for ZfcUser, this will be your default identity provider
-        */
-        // 'identity_provider' => 'BjyAuthorize\Provider\Identity\ZfcUserZendDb',
+         */
         'identity_provider' => getenv('BJYAUTHORIZE_IDENTITY_PROVIDER') ?: 'User\Provider\Identity\UserIdentityProvider',
 
-        /* role providers simply provide a list of roles that should be inserted
+        /**
+         * role providers simply provide a list of roles that should be inserted
          * into the Zend\Acl instance. the module comes with two providers, one
          * to specify roles in a config file and one to load roles using a
          * Zend\Db adapter.
@@ -42,14 +43,17 @@ return [
             ],
         ],
 
-        // resource providers provide a list of resources that will be tracked
-        // in the ACL. like roles, they can be hierarchical
+        /**
+         * resource providers provide a list of resources that will be tracked
+         * in the ACL. like roles, they can be hierarchical
+         */
         'resource_providers' => [
             'BjyAuthorize\Provider\Resource\Config' => [
             ],
         ],
 
-        /* rules can be specified here with the format:
+        /**
+         * rules can be specified here with the format:
          * [roles (array], resource, [privilege (array|string], assertion])
          * assertions will be loaded using the service manager and must implement
          * Zend\Acl\Assertion\AssertionInterface.
@@ -59,8 +63,7 @@ return [
             'BjyAuthorize\Provider\Rule\Config' => [
                 'allow' => [
                 ],
-                // Don't mix allow/deny rules if you are using role inheritance.
-                // There are some weird bugs.
+                // Don't mix allow/deny rules if you are using role inheritance. There are some weird bugs.
                 'deny' => [
                 ],
             ],

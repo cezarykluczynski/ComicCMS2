@@ -41,8 +41,7 @@ class MultipleEntities implements FixtureInterface
         foreach($this->entities as $entity)
         {
             $newEntity = $this->manager
-                ->getRepository('Comic\Entity\Comic')
-                ->findOneById($entity->id);
+                ->find('Comic\Entity\Comic', $entity->id);
 
             $this->manager->remove($newEntity);
         }

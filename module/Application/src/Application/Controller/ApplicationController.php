@@ -10,7 +10,10 @@ use Zend\EventManager\EventManagerInterface;
 
 class ApplicationController extends AbstractActionController
 {
-    public $user = null;
+    /**
+     * @var \User\Entity\User|null
+     */
+    protected $authenticatedUser;
 
     public function onDispatch(MvcEvent $e)
     {

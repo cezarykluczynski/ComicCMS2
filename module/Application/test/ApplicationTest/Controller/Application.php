@@ -16,10 +16,10 @@ class ApplicationControllerTest extends AbstractHttpControllerTestCase
 
     public function testGetEntityManagerReturnsInstanceOfDoctrineEntityManager() {
         $serviceManager = Bootstrap::getServiceManager();
-        $this->controller = new ApplicationController();
-        $this->controller->setServiceLocator($serviceManager);
-        $this->applicationControllerEntityManager = $this->controller->getEntityManager();
+        $controller = new ApplicationController();
+        $controller->setServiceLocator($serviceManager);
+        $applicationControllerEntityManager = $controller->getEntityManager();
 
-        $this->assertInstanceOf('Doctrine\ORM\EntityManager', $this->applicationControllerEntityManager);
+        $this->assertInstanceOf('Doctrine\ORM\EntityManager', $applicationControllerEntityManager);
     }
 }
