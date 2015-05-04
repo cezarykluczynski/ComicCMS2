@@ -18,13 +18,13 @@ class WidgetController extends ApplicationController
 
         /** Find all comics. */
         $entityManager = $this->getEntityManager();
-        $comic = $entityManager
+        $comics = $entityManager
             ->getRepository('Comic\Entity\Comic')
-            ->findAll();
+            ->findBy(array(), null, 5);
 
         /** Show a introductory message if no comics are present,
          *  and a comics list, if some comics were found. */
-        if (empty($comic))
+        if (empty($comics))
         {
             $view->setTemplate('comic/admin/widget/empty');
         }

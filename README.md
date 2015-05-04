@@ -4,6 +4,7 @@ Work in progress. Not production ready.
 [![Build Status](https://travis-ci.org/cezarykluczynski/ComicCMS2.svg?branch=master)](https://travis-ci.org/cezarykluczynski/ComicCMS2)
 [![Coverage Status](https://coveralls.io/repos/cezarykluczynski/ComicCMS2/badge.svg?branch=master)](https://coveralls.io/r/cezarykluczynski/ComicCMS2?branch=master)
 [![Sauce Test Status](https://saucelabs.com/buildstatus/comiccms2)](https://saucelabs.com/u/comiccms2)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/cezarykluczynski/ComicCMS2/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/cezarykluczynski/ComicCMS2/?branch=master)
 
 ## About
 

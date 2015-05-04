@@ -4,7 +4,6 @@ namespace DoctrineMigrations;
 
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
-use Doctrine\Common\DataFixtures\Loader;
 
 class Version20150426151836 extends AbstractMigration
 {

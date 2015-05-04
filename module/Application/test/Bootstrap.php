@@ -92,6 +92,11 @@ class Bootstrap
                 'autoregister_zf' => true,
                 'namespaces' => array(
                     __NAMESPACE__ => __DIR__ . '/' . __NAMESPACE__,
+                    /**
+                     * For namespaces with fixtures, let's keep the namespaces here for now.
+                     * @todo One day, it should be moved.
+                     */
+                    'ComicTest' =>  dirname(__DIR__) . '/../Comic/test/ComicTest',
                 ),
             ),
         ));

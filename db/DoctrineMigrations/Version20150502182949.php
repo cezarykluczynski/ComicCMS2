@@ -5,9 +5,6 @@ namespace DoctrineMigrations;
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 
-/**
- * Auto-generated Migration: Please modify to your needs!
- */
 class Version20150502182949 extends AbstractMigration
 {
     /**
@@ -19,8 +16,8 @@ class Version20150502182949 extends AbstractMigration
         $comics = $schema->createTable('comics');
         $comics->addColumn('id', 'integer', array('autoincrement' => true));
         $comics->addColumn('title', 'string', array('limit' => 255));
-        $comics->addColumn('tagline', 'string', array('limit' => 255));
-        $comics->addColumn('description', 'string', array('limit' => 255));
+        $comics->addColumn('tagline', 'string', array('limit' => 255, 'notNull' => false));
+        $comics->addColumn('description', 'string', array('limit' => 255, 'notNull' => false));
         $comics->addColumn('logo_id', 'integer', array('notNull' => false));
         $comics->addColumn('slug_id', 'integer', array('notNull' => false));
         $comics->addColumn('role_id', 'integer', array('notNull' => false));
