@@ -20,7 +20,7 @@ class AdminControllerTest extends AbstractHttpControllerTestCase
      * Process isolation is required so exit() wouldn't break PHPUnit.
      * @runInSeparateProcess
      */
-    public function testIndexActionCantBeAccessed()
+    public function testAdminIndexActionCantBeAccessed()
     {
         $self = $this;
         $this->reset();
@@ -41,13 +41,13 @@ class AdminControllerTest extends AbstractHttpControllerTestCase
                 exit;
             }, 10);
         $this->dispatch('/admin');
-        $this->assertNotOk(false, 'Dispatch error not generated, admin panel can be accessed.');
+        $this->assertTrue(false, 'Dispatch error not generated, admin panel can be accessed.');
     }
 
     /**
      * Index action can be accessed after authentication.
      */
-    public function testIndexActionCanBeAccessedAfterAuthentication()
+    public function testAdminIndexActionCanBeAccessedAfterAuthentication()
     {
         $this->reset();
 

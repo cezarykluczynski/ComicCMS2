@@ -18,6 +18,7 @@ class UserIdentityProvider implements
 
     protected $serviceLocator;
     protected $authenticatedUser;
+    protected $entityManager;
 
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {

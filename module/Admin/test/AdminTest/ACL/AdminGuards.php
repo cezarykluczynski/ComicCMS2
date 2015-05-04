@@ -25,7 +25,7 @@ class AdminGuardsTest extends AbstractHttpControllerTestCase
             if (isset($consoleRoutes['options']['default']))
             {
                 $currentConfig = $consoleRoutes['options']['default'];
-                if ($controller === $currentConfig['controller'] AND $action === $currentConfig['action'])
+                if ($controller === $currentConfig['controller'] && $action === $currentConfig['action'])
                 {
                     return true;
                 }
@@ -65,7 +65,7 @@ class AdminGuardsTest extends AbstractHttpControllerTestCase
                 continue;
             }
 
-            if (count($guard['roles']) !== 1 OR !in_array('admin', $guard['roles']))
+            if (count($guard['roles']) !== 1 || !in_array('admin', $guard['roles']))
             {
                 $this->assertTrue(false, 'Controller '.$guard['controller'].'::'.$guard['action'].' is not secured.');
             }

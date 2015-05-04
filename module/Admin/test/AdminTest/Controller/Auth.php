@@ -34,8 +34,8 @@ class AuthControllerTest extends AbstractHttpControllerTestCase
     {
         $this->reset();
         $p = new Parameters();
-        $p->set('email','nope@example.com');
-        $p->set('password','justTooEasy');
+        $p->email = 'nope@example.com';
+        $p->password = 'justTooEasy';
         $this->getRequest()->setMethod('POST');
         $this->getRequest()->setPost($p);
         $this->dispatch('/admin/signin');
@@ -44,8 +44,8 @@ class AuthControllerTest extends AbstractHttpControllerTestCase
         $container = new Container('user');
         $this->assertNull($container->id, 'User session container not created.');
 
-        $this->assertQuery('#email[value="nope@example.com"]', 'Email passed to view.');
-        $this->assertQuery('#password[value="justTooEasy"]', 'Password passed to view.');
+        $this->assertQuery('#email[value="nope@example.com"]');
+        $this->assertQuery('#password[value="justTooEasy"]');
     }
 
     /**
@@ -55,8 +55,8 @@ class AuthControllerTest extends AbstractHttpControllerTestCase
     {
         $this->reset();
         $p = new Parameters();
-        $p->set('email','nope@example.com');
-        $p->set('password','justTooEasy');
+        $p->email = 'nope@example.com';
+        $p->password = 'justTooEasy';
         $this->getRequest()->setMethod('POST');
         $this->getRequest()->setHeaders(\Zend\Http\Headers::fromString('X-Requested-With: XMLHttpRequest'));
         $this->getRequest()->setPost($p);
@@ -77,8 +77,8 @@ class AuthControllerTest extends AbstractHttpControllerTestCase
     {
         $this->reset();
         $p = new Parameters();
-        $p->set('email','admin@example.com');
-        $p->set('password','justTooEasy');
+        $p->email = 'admin@example.com';
+        $p->password = 'justTooEasy';
         $this->getRequest()->setMethod('POST');
         $this->getRequest()->setPost($p);
         $this->dispatch('/admin/signin');
@@ -87,8 +87,8 @@ class AuthControllerTest extends AbstractHttpControllerTestCase
         $container = new Container('user');
         $this->assertNull($container->id, "User session container not created.");
 
-        $this->assertQuery('#email[value="admin@example.com"]', 'Email passed to view.');
-        $this->assertQuery('#password[value="justTooEasy"]', 'Password passed to view.');
+        $this->assertQuery('#email[value="admin@example.com"]');
+        $this->assertQuery('#password[value="justTooEasy"]');
     }
 
     /**
@@ -98,8 +98,8 @@ class AuthControllerTest extends AbstractHttpControllerTestCase
     {
         $this->reset();
         $p = new Parameters();
-        $p->set('email','admin@example.com');
-        $p->set('password','justTooEasy');
+        $p->email = 'admin@example.com';
+        $p->password = 'justTooEasy';
         $this->getRequest()->setMethod('POST');
         $this->getRequest()->setHeaders(\Zend\Http\Headers::fromString('X-Requested-With: XMLHttpRequest'));
         $this->getRequest()->setPost($p);
@@ -120,8 +120,8 @@ class AuthControllerTest extends AbstractHttpControllerTestCase
     {
         $this->reset();
         $p = new Parameters();
-        $p->set('email','admin@example.com');
-        $p->set('password','password');
+        $p->email = 'admin@example.com';
+        $p->password = 'password';
         $this->getRequest()->setMethod('POST');
         $this->getRequest()->setPost($p);
         $this->dispatch('/admin/signin');
@@ -145,8 +145,8 @@ class AuthControllerTest extends AbstractHttpControllerTestCase
     {
         $this->reset();
         $p = new Parameters();
-        $p->set('email','admin@example.com');
-        $p->set('password','password');
+        $p->email = 'admin@example.com';
+        $p->password = 'password';
         $this->getRequest()->setMethod('POST');
         $this->getRequest()->setHeaders(\Zend\Http\Headers::fromString('X-Requested-With: XMLHttpRequest'));
         $this->getRequest()->setPost($p);
