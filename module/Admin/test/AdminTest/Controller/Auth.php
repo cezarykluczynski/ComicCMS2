@@ -34,8 +34,9 @@ class AuthControllerTest extends AbstractHttpControllerTestCase
     {
         $this->reset();
         $p = new Parameters();
-        $p->email = 'nope@example.com';
-        $p->password = 'justTooEasy';
+        $p
+            ->set('email','nope@example.com')
+            ->set('password','justTooEasy');
         $this->getRequest()->setMethod('POST');
         $this->getRequest()->setPost($p);
         $this->dispatch('/admin/signin');
@@ -55,8 +56,9 @@ class AuthControllerTest extends AbstractHttpControllerTestCase
     {
         $this->reset();
         $p = new Parameters();
-        $p->email = 'nope@example.com';
-        $p->password = 'justTooEasy';
+        $p
+            ->set('email','nope@example.com')
+            ->set('password','justTooEasy');
         $this->getRequest()->setMethod('POST');
         $this->getRequest()->setHeaders(\Zend\Http\Headers::fromString('X-Requested-With: XMLHttpRequest'));
         $this->getRequest()->setPost($p);
@@ -77,8 +79,9 @@ class AuthControllerTest extends AbstractHttpControllerTestCase
     {
         $this->reset();
         $p = new Parameters();
-        $p->email = 'admin@example.com';
-        $p->password = 'justTooEasy';
+        $p
+            ->set('email','admin@example.com')
+            ->set('password','justTooEasy');
         $this->getRequest()->setMethod('POST');
         $this->getRequest()->setPost($p);
         $this->dispatch('/admin/signin');
@@ -98,8 +101,9 @@ class AuthControllerTest extends AbstractHttpControllerTestCase
     {
         $this->reset();
         $p = new Parameters();
-        $p->email = 'admin@example.com';
-        $p->password = 'justTooEasy';
+        $p
+            ->set('email','admin@example.com')
+            ->set('password','justTooEasy');
         $this->getRequest()->setMethod('POST');
         $this->getRequest()->setHeaders(\Zend\Http\Headers::fromString('X-Requested-With: XMLHttpRequest'));
         $this->getRequest()->setPost($p);
@@ -120,8 +124,9 @@ class AuthControllerTest extends AbstractHttpControllerTestCase
     {
         $this->reset();
         $p = new Parameters();
-        $p->email = 'admin@example.com';
-        $p->password = 'password';
+        $p
+            ->set('email','admin@example.com')
+            ->set('password','password');
         $this->getRequest()->setMethod('POST');
         $this->getRequest()->setPost($p);
         $this->dispatch('/admin/signin');
@@ -145,8 +150,9 @@ class AuthControllerTest extends AbstractHttpControllerTestCase
     {
         $this->reset();
         $p = new Parameters();
-        $p->email = 'admin@example.com';
-        $p->password = 'password';
+        $p
+            ->set('email','admin@example.com')
+            ->set('password','password');
         $this->getRequest()->setMethod('POST');
         $this->getRequest()->setHeaders(\Zend\Http\Headers::fromString('X-Requested-With: XMLHttpRequest'));
         $this->getRequest()->setPost($p);

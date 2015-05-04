@@ -18,32 +18,24 @@ class MultipleEntities implements FixtureInterface
      {
         $this->manager = $manager;
 
-        $this->entities[] = $comic = new Comic();
-        $comic->title = 'Batman';
+        $titles = array(
+            'Batman', 'Garfield', 'Superman',
+            'xkcd', 'UserFriendly', 'Saturday Morning Breakfast Cereal',
+        );
 
-        $this->entities[] = $comic = new Comic();
-        $comic->title = 'Garfield';
-
-        $this->entities[] = $comic = new Comic();
-        $comic->title = 'Superman';
-
-        $this->entities[] = $comic = new Comic();
-        $comic->title = "xkcd";
-
-        $this->entities[] = $comic = new Comic();
-        $comic->title = "UserFriendly";
-
-        $this->entities[] = $comic = new Comic();
-        $comic->title = "Saturday Morning Breakfast Cereal";
-
-        foreach($this->entities as $entity)
+        foreach($titles as $title)
         {
+            $entity = $this->produceComicInstance($title);
             $this->manager->persist($entity);
         }
 
         $this->manager->flush();
      }
 
+     /**
+      * Removes fixtures previously loaded by this fixture.
+      * @return void
+      */
      public function unload()
      {
         foreach($this->entities as $entity)
@@ -56,5 +48,18 @@ class MultipleEntities implements FixtureInterface
         }
 
         $this->manager->flush();
+     }
+
+     /**
+      * Produces an instance of Comic object, with given title.
+      * @param string $title Comic title.
+      * @return \Comic\Entity\Comic
+      */
+     public function produceComicInstance($title)
+     {
+         $comic = new Comic();
+         $this->entities[] = $comic;
+         $comic->title = $title;
+         return $comic;
      }
  }
