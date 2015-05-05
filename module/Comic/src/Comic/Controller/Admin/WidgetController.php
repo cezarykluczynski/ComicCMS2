@@ -12,7 +12,7 @@ class WidgetController extends ApplicationController
      */
     public function indexAction()
     {
-        /** Initialize response template. */
+        /** Initialize response template without layout. */
         $view = new ViewModel();
         $view->setTerminal(true);
 

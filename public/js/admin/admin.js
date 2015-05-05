@@ -1,8 +1,8 @@
 var admin = angular.module('admin', [])
-    .controller('TabController', function (){
+    .controller('TabController', function () {
         this.tab = 'dashboard';
 
-        this.selectTab = function (newTab){
+        this.selectTab = function (newTab) {
             this.tab = newTab;
         };
 
@@ -11,7 +11,6 @@ var admin = angular.module('admin', [])
         };
     });
 
-var adminDashboard = angular.module('admin-dashboard', []);
 var adminComic = angular.module('admin-comic', []);
 var adminComments = angular.module('admin-comments', []);
 var adminUsers = angular.module('admin-users', []);

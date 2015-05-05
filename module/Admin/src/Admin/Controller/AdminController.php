@@ -9,20 +9,27 @@ use Application\Controller\ApplicationController;
 class AdminController extends ApplicationController
 {
     /**
-     * @todo ACL
-     */
-    public function onDispatch(MvcEvent $e)
-    {
-        $parent = parent::onDispatch($e);
-
-        return $parent;
-    }
-
-    /**
      * @return \Zend\View\Model\ViewModel
      */
     public function indexAction() {
-        return new ViewModel();
+        $view = new ViewModel();
+
+        $config = $this->getServiceLocator()->get('Config');
+        $widgets = $config['admin']['dashboard']['widgets'];
+
+        $id = 0;
+
+        foreach($widgets as &$widget)
+        {
+            /** Set URL to data passed to view, unset route name. */
+            $widget['url'] = $url = $this->url()->fromRoute($widget['route']);
+            $widget['id'] = $id++;
+            unset($widget['route']);
+        }
+
+        $view->setVariable('dashboardWidgets', $widgets);
+
+        return $view;
     }
 }
 

@@ -29,6 +29,13 @@ return array(
                     'password' => '',
                 )
             )
-        )
+        ),
+        'configuration' => array(
+            'orm_default' => array(
+                /** Don't generate proxy classes: otherwise some rename bugs would randomly happen. */
+                'generate_proxies' => false,
+            ),
+        ),
+
     ),
 );

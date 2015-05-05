@@ -52,8 +52,9 @@ class AdminControllerTest extends AbstractHttpControllerTestCase
         $this->reset();
 
         $p = new Parameters();
-        $p->set('email','admin@example.com');
-        $p->set('password','password');
+        $p
+            ->set('email','admin@example.com')
+            ->set('password','password');
         $this->getRequest()->setMethod('POST');
         $this->getRequest()->setPost($p);
 

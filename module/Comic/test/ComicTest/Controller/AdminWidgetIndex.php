@@ -6,7 +6,7 @@ use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 use User\Provider\Identity\UserIdentityProviderMockInterface;
 use ApplicationTest\Fixture\FixtureProvider;
 
-class IndexControllerTest extends AbstractHttpControllerTestCase
+class AdminWidgetIndexControllerTest extends AbstractHttpControllerTestCase
 {
     use UserIdentityProviderMockInterface;
     use FixtureProvider;
@@ -17,7 +17,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         parent::setUp();
     }
 
-    public function testIndexActionShowsInvitationForWhenTheresNoComics()
+    public function testComicAdminWidgetIndexActionShowsInvitationForWhenTheresNoComics()
     {
         $this->reset();
         $this->grantAllRolesToUser();
@@ -29,7 +29,7 @@ class IndexControllerTest extends AbstractHttpControllerTestCase
         $this->setOriginalUserRoles();
     }
 
-    public function testIndexActionShowsFiveComicsWhenThereAreMoreThanFiveComics()
+    public function testComicAdminWidgetIndexActionShowsFiveComicsWhenThereAreMoreThanFiveComics()
     {
         $this->reset();
         $this->grantAllRolesToUser();

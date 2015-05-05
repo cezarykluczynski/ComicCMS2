@@ -15,7 +15,7 @@
     </ul>
 
     <div ng-show="panel.isSelected('dashboard')" ng-app="admin-dashboard">
-        Dashboard
+        {$this->partial('partial/_dashboard')}
     </div>
     <div ng-show="panel.isSelected('comic')" ng-app="admin-comic">
         Comics

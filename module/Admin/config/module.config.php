@@ -90,4 +90,18 @@ return array(
             )
         )
     ),
+    'admin' => array(
+        'dashboard' => array(
+            'widgets' => array(
+                array(
+                    'route' => 'admin-comic-widget-index',
+                    'name' => 'Comics',
+                ),
+                array(
+                    'route' => 'admin-user-widget-index',
+                    'name' => 'Users',
+                ),
+            ),
+        ),
+    ),
 );

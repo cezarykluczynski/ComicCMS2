@@ -92,6 +92,10 @@ return array(
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
+        'smarty_defaults' => array(
+            'caching' => false,
+            'error_reporting' => false,
+        ),
     ),
     // Placeholder for console routes
     'console' => array(

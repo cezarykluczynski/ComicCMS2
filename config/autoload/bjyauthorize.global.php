@@ -77,6 +77,7 @@ return [
                 /** Admin panel. */
                 ['controller' => 'Admin\Controller\Admin', 'action' => 'index', 'roles' => ['admin']],
                 ['controller' => 'Comic\Controller\Admin\Widget', 'action' => 'index', 'roles' => ['admin']],
+                ['controller' => 'User\Controller\Admin\Widget', 'action' => 'index', 'roles' => ['admin']],
 
                 /** Techically, console routing does not require ACL.
                  *  Anyone with access to CLI is authenticated enough, or cannot be stopped anyway. */
