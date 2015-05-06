@@ -8,6 +8,7 @@ addons:
 install:
   - composer install --no-interaction
 before_script:
+  - cp config/autoload/travis.php config/autoload/local.php
   - psql -c 'create database comiccms;' -U postgres
   - vendor/bin/doctrine migrations:migrate -n
   - vendor/bin/robo createadmin admin@example.com password
