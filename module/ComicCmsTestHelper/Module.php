@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin;
+namespace ComicCmsTestHelper;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;

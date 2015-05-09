@@ -96,10 +96,12 @@ return array(
                 array(
                     'route' => 'admin-comic-widget-index',
                     'name' => 'Comics',
+                    'controller' => 'comic',
                 ),
                 array(
                     'route' => 'admin-user-widget-index',
                     'name' => 'Users',
+                    'controller' => 'user',
                 ),
             ),
         ),

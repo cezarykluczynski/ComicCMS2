@@ -1,22 +1,11 @@
 <?php
 
-namespace ComicTest\Controller;
+namespace ComicTest\Controller\Admin;
 
-use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
-use User\Provider\Identity\UserIdentityProviderMockInterface;
-use ApplicationTest\Fixture\FixtureProvider;
+use ComicCmsTestHelper\Controller\AbstractHttpControllerTestCase;
 
-class AdminWidgetIndexControllerTest extends AbstractHttpControllerTestCase
+class WidgetControllerTest extends AbstractHttpControllerTestCase
 {
-    use UserIdentityProviderMockInterface;
-    use FixtureProvider;
-
-    public function setUp()
-    {
-        $this->setApplicationConfig(include 'config/application.config.php');
-        parent::setUp();
-    }
-
     public function testComicAdminWidgetIndexActionShowsInvitationForWhenTheresNoComics()
     {
         $this->reset();
@@ -26,14 +15,14 @@ class AdminWidgetIndexControllerTest extends AbstractHttpControllerTestCase
         $this->assertResponseStatusCode(200);
         $this->assertTemplateName('comic/admin/widget/empty');
 
-        $this->setOriginalUserRoles();
+        $this->revokeGrantedRoles();
     }
 
     public function testComicAdminWidgetIndexActionShowsFiveComicsWhenThereAreMoreThanFiveComics()
     {
         $this->reset();
         $this->grantAllRolesToUser();
-        $this->addFixtures('ComicTest\Fixture\MultipleEntities');
+        $this->loadFixtures('ComicTest\Fixture\Comics');
 
         $this->dispatch('/admin/comic/widget/index');
         $this->assertResponseStatusCode(200);
@@ -41,6 +30,6 @@ class AdminWidgetIndexControllerTest extends AbstractHttpControllerTestCase
         $this->assertQueryCount('div.comic', 5);
 
         $this->removeFixtures();
-        $this->setOriginalUserRoles();
+        $this->revokeGrantedRoles();
     }
 }

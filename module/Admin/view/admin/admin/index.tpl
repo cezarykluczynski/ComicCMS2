@@ -14,16 +14,16 @@
         </li>
     </ul>
 
-    <div ng-show="panel.isSelected('dashboard')" ng-app="admin-dashboard">
+    <div ng-show="panel.isSelected('dashboard')">
         {$this->partial('partial/_dashboard')}
     </div>
-    <div ng-show="panel.isSelected('comic')" ng-app="admin-comic">
+    <div ng-show="panel.isSelected('comic')">
         Comics
     </div>
-    <div ng-show="panel.isSelected('comments')" np=app="admin-comments">
+    <div ng-show="panel.isSelected('comments')">
         Comments
     </div>
-    <div ng-show="panel.isSelected('users')" np=app="admin-users">
-        Users
+    <div ng-show="panel.isSelected('users')">
+        {$this->partial('partial/_users')}
     </div>
 </div>

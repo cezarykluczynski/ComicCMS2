@@ -1,6 +1,6 @@
 <?php
 
-namespace ApplicationTest;
+namespace ComicCmsTestHelper;
 
 use Zend\Loader\AutoloaderFactory;
 use Zend\Mvc\Service\ServiceManagerConfig;
@@ -96,7 +96,9 @@ class Bootstrap
                      * For namespaces with fixtures, let's keep the namespaces here for now.
                      * @todo One day, it should be moved.
                      */
+                    'ApplicationTest' =>  dirname(__DIR__) . '/../Application/test/ApplicationTest',
                     'ComicTest' =>  dirname(__DIR__) . '/../Comic/test/ComicTest',
+                    'UserTest' =>  dirname(__DIR__) . '/../User/test/UserTest',
                 ),
             ),
         ));

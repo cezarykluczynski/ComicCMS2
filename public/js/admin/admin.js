@@ -1,4 +1,4 @@
-var admin = angular.module('admin', [])
+var admin = angular.module('admin', ['angularUtils.directives.dirPagination'])
     .controller('TabController', function () {
         this.tab = 'dashboard';
 

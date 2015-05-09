@@ -7,18 +7,18 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * User.
+ * Simple entity classes are excluded from coverage reports, for now.
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\User\Entity\UserRepository")
  * @ORM\Table(name="users")
  * @property string $email
  * @property string $password
  * @property array $roles
  * @property int $id
+ * @codeCoverageIgnore
  */
 class User
 {
-    protected $inputFilter;
-
     /**
      * @ORM\Id
      * @ORM\Column(type="integer");
@@ -78,5 +78,21 @@ class User
      */
     public function getRoles() {
         return $this->roles;
+    }
+
+    /**
+     * Returns all user roles as a flatten array.
+     *
+     * @return array
+     */
+    public function getRolesIdsAsArray() {
+        $rolesIds = [];
+
+        foreach($this->getRoles() as $role)
+        {
+            $rolesIds[] = $role->getRoleId();
+        }
+
+        return $rolesIds;
     }
 }

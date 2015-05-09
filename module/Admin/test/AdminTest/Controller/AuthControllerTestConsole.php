@@ -1,17 +1,10 @@
 <?php
 
-use Zend\Test\PHPUnit\Controller\AbstractConsoleControllerTestCase;
+use ComicCmsTestHelper\Controller\AbstractConsoleControllerTestCase;
 use Zend\Math\Rand;
-use Admin\Controller\AuthController;
 
-class AuthControllerConsoleTest extends AbstractConsoleControllerTestCase
+class AuthControllerTestConsole extends AbstractConsoleControllerTestCase
 {
-    public function setUp()
-    {
-        $this->setApplicationConfig(include 'config/application.config.php');
-        parent::setUp();
-    }
-
     /**
      * Admin can be created from command line.
      */
@@ -20,7 +13,7 @@ class AuthControllerConsoleTest extends AbstractConsoleControllerTestCase
         $this->assertResponseStatusCode(1, 'No params: no clean exit.');
 
         $this->dispatch('create-admin test@example.com');
-        $this->assertResponseStatusCode(1, 'Ona param: no clean exit.');
+        $this->assertResponseStatusCode(1, 'One param: no clean exit.');
     }
 
     /**
@@ -38,11 +31,9 @@ class AuthControllerConsoleTest extends AbstractConsoleControllerTestCase
         $this->assertResponseStatusCode(0, "Exited with 0.");
         $this->assertConsoleOutputContains("Admin account for $email created.");
 
-        $entityManager = $this->getApplication()
-            ->getServiceManager()
-            ->get('doctrine.entitymanager.orm_default');
+        $this->getEntityManager();
 
-        $admin = $entityManager->getRepository('User\Entity\User')
+        $admin = $this->em->getRepository('User\Entity\User')
             ->findOneBy(array(
                 'email' => $email,
             ));
@@ -52,8 +43,8 @@ class AuthControllerConsoleTest extends AbstractConsoleControllerTestCase
         $this->assertEquals($email, $admin->email, "Admin created within this test found.");
 
         /** Teardown. */
-        $entityManager->remove($admin);
-        $entityManager->flush();
+        $this->em->remove($admin);
+        $this->em->flush();
     }
 
     public function testCreateAdminActionCreatesAccountOnce() {
@@ -62,28 +53,30 @@ class AuthControllerConsoleTest extends AbstractConsoleControllerTestCase
 
         $this->dispatch('create-admin '.$email.' password');
         $this->assertResponseStatusCode(0, 'First user created.');
-        $this->dispatch('create-admin '.$email.' password');
-        $this->assertResponseStatusCode(1, 'Second user not created.');
 
-        $entityManager = $this->getApplication()
-            ->getServiceManager()
-            ->get('doctrine.entitymanager.orm_default');
-        
+        /** Silence second try output. */
+        ob_start();
+        $this->dispatch('create-admin '.$email.' password');
+        ob_end_clean();
+
+        $this->assertResponseStatusCode(1, 'Second user not created.');
+        $this->getEntityManager();
+
         /** Reopen entity manager after a DBAL exception. */
-        if (!$entityManager->isOpen()) {
-            $entityManager = $entityManager->create(
-                $entityManager->getConnection(),
-                $entityManager->getConfiguration()
+        if (!$this->em->isOpen()) {
+            $this->em = $this->em->create(
+                $this->em->getConnection(),
+                $this->em->getConfiguration()
             );
         }
 
-        $admin = $entityManager->getRepository('User\Entity\User')
+        $admin = $this->em->getRepository('User\Entity\User')
             ->findOneBy(array(
                 'email' => $email,
             ));
 
         /** Teardown. */
-        $entityManager->remove($admin);
-        $entityManager->flush();
+        $this->em->remove($admin);
+        $this->em->flush();
     }
 }

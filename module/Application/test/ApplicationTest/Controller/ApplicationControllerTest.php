@@ -2,18 +2,12 @@
 
 namespace ApplicationTest\Controller;
 
-use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
+use ComicCmsTestHelper\Controller\AbstractHttpControllerTestCase;
 use Application\Controller\ApplicationController;
-use ApplicationTest\Bootstrap;
+use ComicCmsTestHelper\Bootstrap;
 
 class ApplicationControllerTest extends AbstractHttpControllerTestCase
 {
-    public function setUp()
-    {
-        $this->setApplicationConfig(include 'config/application.config.php');
-        parent::setUp();
-    }
-
     public function testGetEntityManagerReturnsInstanceOfDoctrineEntityManager() {
         $serviceManager = Bootstrap::getServiceManager();
         $controller = new ApplicationController();

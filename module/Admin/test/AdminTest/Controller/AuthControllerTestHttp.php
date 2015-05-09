@@ -2,18 +2,12 @@
 
 namespace AdminTest\Controller;
 
-use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
+use ComicCmsTestHelper\Controller\AbstractHttpControllerTestCase;
 use Zend\Stdlib\Parameters;
 use Zend\Session\Container;
 
-class AuthControllerTest extends AbstractHttpControllerTestCase
+class AuthControllerTestHttp extends AbstractHttpControllerTestCase
 {
-    public function setUp()
-    {
-        $this->setApplicationConfig(include 'config/application.config.php');
-        parent::setUp();
-    }
-
     /**
      * Sign in action can be accessed.
      */

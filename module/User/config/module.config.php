@@ -17,6 +17,18 @@ return array(
                 ),
                 'may_terminate' => true,
             ),
+            'admin-user-widget-users' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route'    => '/admin/user/widget/users',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'User\Controller\Admin',
+                        'controller'    => 'Widget',
+                        'action'        => 'users',
+                    ),
+                ),
+                'may_terminate' => true,
+            ),
         ),
     ),
     'controllers' => array(
@@ -27,6 +39,9 @@ return array(
     'view_manager' => array(
         'template_map' => array(
             'user/admin/widget/index' => __DIR__ . '/../view/user/admin/widget/index.tpl',
+        ),
+        'strategies' => array(
+            'ViewJsonStrategy',
         ),
     ),
     // Doctrine config

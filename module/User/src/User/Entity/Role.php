@@ -7,9 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Role.
+ * Simple entity classes are excluded from coverage reports, for now.
  *
  * @ORM\Entity
  * @ORM\Table(name="roles")
+ * @codeCoverageIgnore
  *
  * @author Tom Oram <tom@scl.co.uk>
  */

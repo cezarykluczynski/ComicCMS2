@@ -2,16 +2,10 @@
 
 namespace AdminTest\ACL;
 
-use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
+use ComicCmsTestHelper\Controller\AbstractHttpControllerTestCase;
 
 class AdminGuardsTest extends AbstractHttpControllerTestCase
 {
-    public function setUp()
-    {
-        $this->setApplicationConfig(include 'config/application.config.php');
-        parent::setUp();
-    }
-
     /**
      * Helper for detecting console routes.
      * @return boolean
