@@ -1,5 +1,5 @@
 {
-  "name" : "zendframework/comiccms",
+  "name" : "comiccms",
   "description" : "ComicCMS2, a project",
   "version" : "0.0.1",
   "require" : {

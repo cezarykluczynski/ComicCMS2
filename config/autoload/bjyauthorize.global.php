@@ -1,7 +1,11 @@
 <?php
-
-// For PHP <= 5.4, you should replace any ::class references with strings
-// remove the first \ and the ::class part and encase in single quotes
+/**
+ * ACL config. More information available {@link https://github.com/bjyoungblood/BjyAuthorize here}.
+ *
+ * @package ComicCMS2
+ * @author Cezary Kluczyński
+ * @license https://github.com/cezarykluczynski/ComicCMS2/blob/master/LICENSE.txt MIT
+ */
 
 return [
     'db'=> array(
@@ -13,27 +17,9 @@ return [
         'port'=> '5432',
     ),
     'bjyauthorize' => [
-
-        // set the 'guest' role as default (must be defined in a role provider)
         'default_role' => 'guest',
-
-        /**
-         * this module uses a meta-role that inherits from any roles that should
-         * be applied to the active user. the identity provider tells us which
-         * roles the "identity role" should inherit from.
-         * for ZfcUser, this will be your default identity provider
-         */
         'identity_provider' => getenv('BJYAUTHORIZE_IDENTITY_PROVIDER') ?: 'User\Provider\Identity\UserIdentityProvider',
-
-        /**
-         * role providers simply provide a list of roles that should be inserted
-         * into the Zend\Acl instance. the module comes with two providers, one
-         * to specify roles in a config file and one to load roles using a
-         * Zend\Db adapter.
-         */
         'role_providers' => [
-            // this will load roles from the user_role table in a database
-            // format: user_role(role_id(varchar], parent(varchar))
             'BjyAuthorize\Provider\Role\ZendDb' => [
                 'table'                 => 'roles',
                 'identifier_field_name' => 'role_id',
@@ -43,27 +29,15 @@ return [
             ],
         ],
 
-        /**
-         * resource providers provide a list of resources that will be tracked
-         * in the ACL. like roles, they can be hierarchical
-         */
         'resource_providers' => [
             'BjyAuthorize\Provider\Resource\Config' => [
             ],
         ],
 
-        /**
-         * rules can be specified here with the format:
-         * [roles (array], resource, [privilege (array|string], assertion])
-         * assertions will be loaded using the service manager and must implement
-         * Zend\Acl\Assertion\AssertionInterface.
-         * *if you use assertions, define them using the service manager!*
-         */
         'rule_providers' => [
             'BjyAuthorize\Provider\Rule\Config' => [
                 'allow' => [
                 ],
-                // Don't mix allow/deny rules if you are using role inheritance. There are some weird bugs.
                 'deny' => [
                 ],
             ],

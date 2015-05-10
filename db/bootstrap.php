@@ -1,4 +1,13 @@
 <?php
+/**
+ * Migrations bootstrap.
+ *
+ * @todo Move database config to single file.
+ * @package ComicCMS2
+ * @author Cezary Kluczyński
+ * @license https://github.com/cezarykluczynski/ComicCMS2/blob/master/LICENSE.txt MIT
+ */
+
 use Doctrine\ORM\Tools\Setup;
 use \Doctrine\ORM\EntityManager;
 

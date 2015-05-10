@@ -1,4 +1,11 @@
 <?php
+/**
+ * Migration. Creates tables "comics", "slugs", "strips", and "comics_slugs", and "comics_strips".
+ *
+ * @package ComicCMS2
+ * @author Cezary Kluczyński
+ * @license https://github.com/cezarykluczynski/ComicCMS2/blob/master/LICENSE.txt MIT
+ */
 
 namespace DoctrineMigrations;
 

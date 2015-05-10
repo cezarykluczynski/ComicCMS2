@@ -17,6 +17,7 @@ class Users extends FixtureRepository
     public function load(ObjectManager $manager)
     {
         $this->manager = $manager;
+        $users = [];
 
         for($i = 0; $i < $this->options['count']; $i++)
         {

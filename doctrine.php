@@ -1,4 +1,11 @@
 <?php
+/**
+ * Doctrine CLI bootrsrap file. Pretty standard stuff, with addition of migrations commands.
+ *
+ * @package ComicCMS
+ * @author Cezary Kluczyński
+ * @license https://github.com/cezarykluczynski/ComicCMS2/blob/master/LICENSE.txt MIT
+ */
 
 use Symfony\Component\Console\Helper\HelperSet;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
