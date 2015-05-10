@@ -1,4 +1,5 @@
 <div ng-app="admin" ng-controller="TabController as panel">
+    {$this->partial('partial/_navbar')}
     <ul {literal}ng-init="tab = comic"{/literal} class="nav nav-tabs">
         <li {literal}ng-class="{active:panel.isSelected('dashboard') }"{/literal}>
             <a href ng-click="panel.selectTab('dashboard')">{$this->translate("Dashboard")}</a>

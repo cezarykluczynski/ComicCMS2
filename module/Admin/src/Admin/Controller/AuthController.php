@@ -83,6 +83,15 @@ class AuthController extends AdminController implements \Zend\Mvc\InjectApplicat
         ));
     }
 
+    public function signoutAction()
+    {
+        $userContainer = new Container('user');
+        $userContainer->id = null;
+        $userContainer->authenticatedUser = null;
+
+        return $this->redirect()->toRoute('admin-signin');
+    }
+
     public function createAdminAction() {
         $request = $this->getRequest();
 

@@ -73,6 +73,7 @@ return [
             'BjyAuthorize\Guard\Controller' => [
                 ['controller' => 'Application\Controller\Index', 'action' => 'index', 'roles' => ['guest']],
                 ['controller' => 'Admin\Controller\Auth', 'action' => 'signin', 'roles' => ['guest']],
+                ['controller' => 'Admin\Controller\Auth', 'action' => 'signout', 'roles' => ['guest']],
 
                 /** Admin panel. */
                 ['controller' => 'Admin\Controller\Admin', 'action' => 'index', 'roles' => ['admin']],

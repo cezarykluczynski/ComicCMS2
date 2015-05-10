@@ -27,6 +27,18 @@ return array(
                 ),
                 'may_terminate' => true,
             ),
+            'admin-signout' => array(
+               'type' => 'Literal',
+                'options' => array(
+                    'route'    => '/admin/signout',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Admin\Controller',
+                        'controller'    => 'Auth',
+                        'action'        => 'signout',
+                    ),
+                ),
+                'may_terminate' => true,
+            ),
         ),
     ),
     'service_manager' => array(

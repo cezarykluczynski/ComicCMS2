@@ -7,7 +7,6 @@ define({
     },
     /** "Chrome", nor "Firefox", won't work here. */
     environments: [
-        // { browserName: "firefox" },
         { browserName: "chrome" }
     ],
     maxConcurrency: 1,

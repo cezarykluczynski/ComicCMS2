@@ -8,6 +8,11 @@ use Zend\Session\Container;
 
 class AuthControllerTestHttp extends AbstractHttpControllerTestCase
 {
+    public function dispatchCorrectLoginCredentials()
+    {
+
+    }
+
     /**
      * Sign in action can be accessed.
      */
@@ -128,13 +133,13 @@ class AuthControllerTestHttp extends AbstractHttpControllerTestCase
         $this->assertRedirectTo('/admin');
 
         $container = new Container('user');
-        $this->assertNotNull($container->id, "User session container created.");
+        $this->assertNotNull($container->id, "User ID stored in session.");
 
         /** Test if user session is preserved between.  */
         $this->reset(true);
         $this->dispatch('/admin/signin');
         $container = new Container('user');
-        $this->assertNotNull($container->id, "User session preserved.");
+        $this->assertNotNull($container->id, "User ID preserved in session.");
     }
 
     /**
@@ -148,16 +153,50 @@ class AuthControllerTestHttp extends AbstractHttpControllerTestCase
             ->set('email','admin@example.com')
             ->set('password','password');
         $this->getRequest()->setMethod('POST');
-        $this->getRequest()->setHeaders(\Zend\Http\Headers::fromString('X-Requested-With: XMLHttpRequest'));
         $this->getRequest()->setPost($p);
-        $this->dispatch('/admin/signin');
+        $this->dispatch('/admin/signin', null, array(), true);
         $this->assertResponseStatusCode(201);
 
         $container = new Container('user');
-        $this->assertNotNull($container->id, "User session container created.");
+        $this->assertNotNull($container->id, "User ID stored in session.");
 
         $this->assertResponseHeaderContains('Content-Type', 'application/json; charset=utf-8');
         $this->assertJsonStringEqualsJsonString($this->getResponse()->getBody(),
             '{"success": true, "url": "/admin"}');
+    }
+
+    /**
+     * Sign out removes user from session.
+     */
+    public function testSignoutActionRemovesUserFromSession()
+    {
+        $this->reset();
+        $p = new Parameters();
+        $p
+            ->set('email','admin@example.com')
+            ->set('password','password');
+        $this->getRequest()->setMethod('POST');
+        $this->getRequest()->setPost($p);
+        $this->dispatch('/admin/signin');
+        $this->assertResponseStatusCode(201);
+
+        /** Test if user ID was stored in session. */
+        $container = new Container('user');
+        $this->assertNotNull($container->id, "User ID stored in session before sign out.");
+
+        $this->dispatch('/admin/signout');
+
+        /** Test if user ID was removed from session. */
+        $container = new Container('user');
+        $this->assertNull($container->id, "User ID removed from session after sign out.");
+    }
+
+    /**
+     * Sign out removes redirects to sign in form.
+     */
+    public function testSignoutActionedirectsToSignInForm()
+    {
+        $this->dispatch('/admin/signout');
+        $this->assertRedirectTo('/admin/signin');
     }
 }

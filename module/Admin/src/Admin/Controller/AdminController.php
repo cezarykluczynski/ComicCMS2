@@ -14,9 +14,10 @@ class AdminController extends ApplicationController
     public function indexAction() {
         $view = new ViewModel();
 
-        $config = $this->getServiceLocator()->get('Config');
-        $widgets = $config['admin']['dashboard']['widgets'];
+        /** @var array */
+        $widgets = $this->getServiceLocator()->get('Config')['admin']['dashboard']['widgets'];
 
+        /** @var integer */
         $id = 0;
 
         foreach($widgets as &$widget)
@@ -27,7 +28,10 @@ class AdminController extends ApplicationController
             unset($widget['route']);
         }
 
-        $view->setVariable('dashboardWidgets', $widgets);
+        $view->setVariables([
+            'dashboardWidgets' => $widgets,
+            'authenticatedUser' => $this->authenticatedUser,
+        ]);
 
         return $view;
     }
