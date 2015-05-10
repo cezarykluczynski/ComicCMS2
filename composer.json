@@ -10,8 +10,6 @@
     "evandotpro/edp-module-layouts": "dev-master",
     "codegyre/robo": "*",
     "bjyoungblood/bjy-authorize": "1.5.*@dev",
-    "zf-commons/zfc-user": "*",
-    "zf-commons/zfc-user-doctrine-orm": "*",
     "doctrine/doctrine-fixtures-bundle": "dev-master"
   },
   "require-dev": {
