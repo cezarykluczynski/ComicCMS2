@@ -41,6 +41,6 @@ $db = $entityManager->getConnection();
 $helperSet = new \Symfony\Component\Console\Helper\HelperSet(array(
     'em' => new \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper($entityManager),
     'db' => new \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper($db),
-    'dialog' => new \Symfony\Component\Console\Helper\QuestionHelper(),
+    'dialog' => new \Symfony\Component\Console\Helper\DialogHelper(),
 ));
 \Doctrine\ORM\Tools\Console\ConsoleRunner::run($helperSet, $commands);

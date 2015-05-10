@@ -12,7 +12,20 @@ class Version20150502182949 extends AbstractMigration
      */
     public function up(Schema $schema)
     {
-        /** Create "comics" table. */
+        $this->createTableComics($schema);
+        $this->createTableSlugs($schema);
+        $this->createTableStrips($schema);
+        $this->createTableComicsSlugs($schema);
+        $this->createTableComicsStrips($schema);
+    }
+
+    /**
+     * Create "comics" table.
+     *
+     * @param Schema $schema
+     * @return void
+     */
+    public function createTableComics(Schema $schema) {
         $comics = $schema->createTable('comics');
         $comics->addColumn('id', 'integer', array('autoincrement' => true));
         $comics->addColumn('title', 'string', array('limit' => 255));
@@ -22,27 +35,58 @@ class Version20150502182949 extends AbstractMigration
         $comics->addColumn('slug_id', 'integer', array('notNull' => false));
         $comics->addColumn('role_id', 'integer', array('notNull' => false));
         $comics->setPrimaryKey(array('id'));
+    }
 
+    /**
+     * Create "slugs" table.
+     *
+     * @param Schema $schema
+     * @return void
+     */
+    public function createTableSlugs(Schema $schema) {
         /** Create "comic_slugs" table. */
         $comicSlugs = $schema->createTable('slugs');
         $comicSlugs->addColumn('id', 'integer', array('autoincrement' => true));
         $comicSlugs->addColumn('slug', 'string', array('limit' => 255));
         $comicSlugs->addColumn('parent_id', 'integer', array('notNull' => false));
         $comicSlugs->setPrimaryKey(array('id'));
+    }
 
+    /**
+     * Create "strips" table.
+     *
+     * @param Schema $schema
+     * @return void
+     */
+    public function createTableStrips(Schema $schema) {
         /** Create "strips" table. */
         $strips = $schema->createTable('strips');
         $strips->addColumn('id', 'integer', array('autoincrement' => true));
         $strips->setPrimaryKey(array('id'));
+    }
 
+    /**
+     * Create "comics_slugs" table.
+     *
+     * @param Schema $schema
+     * @return void
+     */
+    function createTableComicsSlugs(Schema $schema) {
         /** Create "comics_slugs" table. */
         $comicsSlugs = $schema->createTable('comics_slugs');
         $comicsSlugs->addColumn('comic_id', 'integer');
         $comicsSlugs->addColumn('slug_id', 'integer');
         $comicsSlugs->addForeignKeyConstraint('comics', array('comic_id'), array('id'));
         $comicsSlugs->addForeignKeyConstraint('slugs', array('slug_id'), array('id'));
+    }
 
-        /** Create "comics_slugs" table. */
+    /**
+     * Create "comics_strips" table.
+     *
+     * @param Schema $schema
+     * @return void
+     */
+    function createTableComicsStrips(Schema $schema) {
         $comicsSlugs = $schema->createTable('comics_strips');
         $comicsSlugs->addColumn('comic_id', 'integer');
         $comicsSlugs->addColumn('strip_id', 'integer');

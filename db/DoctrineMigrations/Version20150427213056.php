@@ -24,5 +24,8 @@ class Version20150427213056 extends AbstractMigration
      */
     public function down(Schema $schema)
     {
+        $this->addSql("DELETE FROM roles WHERE role_id='guest'");
+        $this->addSql("DELETE FROM roles WHERE role_id='user'");
+        $this->addSql("DELETE FROM roles WHERE role_id='admin'");
     }
 }

@@ -12,6 +12,16 @@ class Version20150503201318 extends AbstractMigration
      */
     public function up(Schema $schema)
     {
+        $this->createTableImages($schema);
+    }
+
+    /**
+     * Create "images" table.
+     *
+     * @param Schema $schema
+     * @return void
+     */
+    public function createTableImages(Schema $schema) {
         $images = $schema->createTable('images');
         $images->addColumn('id', 'integer', array('autoincrement' => true));
         $images->addColumn('original_name', 'string', array('limit' => 255));
