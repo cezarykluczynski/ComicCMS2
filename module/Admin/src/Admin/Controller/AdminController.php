@@ -23,7 +23,7 @@ class AdminController extends ApplicationController
         foreach($widgets as &$widget)
         {
             /** Set URL to data passed to view, unset route name. */
-            $widget['url'] = $url = $this->url()->fromRoute($widget['route']);
+            $widget['url'] = $this->url()->fromRoute($widget['route']);
             $widget['id'] = $id++;
             unset($widget['route']);
         }

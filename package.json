@@ -4,6 +4,6 @@
     "grunt-contrib-sass": "^0.9.2",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-coveralls": "^1.0.0",
-    "intern": "theintern/intern#master"
+    "intern": "theintern/intern#28ce9fe8dc258864cd32415156bb141313266a19"
   }
 }
