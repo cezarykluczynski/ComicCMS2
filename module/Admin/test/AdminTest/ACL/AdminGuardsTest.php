@@ -51,6 +51,7 @@ class AdminGuardsTest extends AbstractHttpControllerTestCase
         }
 
         $guards = $config['bjyauthorize']['guards']['BjyAuthorize\Guard\Controller'];
+        $success = true;
 
         foreach($guards as $guard)
         {
@@ -68,8 +69,14 @@ class AdminGuardsTest extends AbstractHttpControllerTestCase
 
             if (count($guard['roles']) !== 1 || !in_array('admin', $guard['roles']))
             {
+                $success = false;
                 $this->assertTrue(false, 'Controller '.$guard['controller'].'::'.$guard['action'].' is not secured.');
             }
+        }
+
+        if ($success)
+        {
+            $this->assertTrue(true, 'Routes are secured.');
         }
     }
 }

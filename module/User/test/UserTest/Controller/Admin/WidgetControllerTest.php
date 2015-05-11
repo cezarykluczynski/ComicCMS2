@@ -12,8 +12,18 @@ namespace UserTest\Controller\Admin;
 use ComicCmsTestHelper\Controller\AbstractHttpControllerTestCase;
 use Zend\Json\Json;
 
+/**
+ * @coversDefaultClass \User\Controller\Admin\WidgetController
+ * @uses \Application\Controller\ApplicationController
+ * @uses \User\Entity\UserRepository
+ * @uses \User\Provider\Identity\UserIdentityProvider
+ * @uses \User\Provider\Identity\UserIdentityProviderMock
+ */
 class WidgetControllerTest extends AbstractHttpControllerTestCase
 {
+    /**
+     * @covers ::indexAction
+     */
     public function testUserAdminWidgetIndexCanBeAccessed()
     {
         $this->grantAllRolesToUser();
@@ -25,6 +35,9 @@ class WidgetControllerTest extends AbstractHttpControllerTestCase
         $this->revokeGrantedRoles();
     }
 
+    /**
+     * @covers ::usersAction
+     */
     public function testUsersCanBeRetrievedAsJSON()
     {
         $this->grantAllRolesToUser();
@@ -40,8 +53,8 @@ class WidgetControllerTest extends AbstractHttpControllerTestCase
         $this->dispatch('/admin/user/widget/users?limit=2&page=' . $page);
 
         /**
-         * Test only if response is JSON and JSON has 2 items. UserRepository has it own tests.
-         * @see \UserTest\Controller\Admin\UserRepositoryTest::testUserReposityPaginator()
+         * Test only if response is JSON and JSON has 2 items. UserRepository has it own tests in
+         * {@link \UserTest\Controller\Admin\UserRepositoryTest::testUserReposityPaginator()}.
          */
         $this->assertResponseHeaderContains('Content-Type', 'application/json; charset=utf-8');
         $response = Json::decode($this->getResponse()->getContent(), true);

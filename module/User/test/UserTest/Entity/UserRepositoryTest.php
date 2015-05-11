@@ -11,6 +11,12 @@ namespace UserTest\Controller\Admin;
 
 use ComicCmsTestHelper\Controller\AbstractHttpControllerTestCase;
 
+/**
+ * @coversDefaultClass \User\Entity\UserRepository
+ * @uses \Application\Controller\ApplicationController
+ * @uses \User\Provider\Identity\UserIdentityProvider
+ * @uses \User\Provider\Identity\UserIdentityProviderMock
+ */
 class UserRepositoryTest extends AbstractHttpControllerTestCase
 {
     public function setUp()
@@ -20,6 +26,10 @@ class UserRepositoryTest extends AbstractHttpControllerTestCase
         $this->getEntityManager();
     }
 
+    /**
+     * @covers ::paginate
+     * @covers ::count
+     */
     public function testUserReposityPaginator()
     {
         $userRepository = $this->em->getRepository('User\Entity\User');
@@ -53,6 +63,9 @@ class UserRepositoryTest extends AbstractHttpControllerTestCase
         $this->revokeGrantedRoles();
     }
 
+    /**
+     * @covers ::paginate
+     */
     public function testUserReposityPaginatorThrowsExceptionForMissingLimitOption()
     {
         $userRepository = $this->em->getRepository('User\Entity\User');
@@ -63,6 +76,9 @@ class UserRepositoryTest extends AbstractHttpControllerTestCase
         ]);
     }
 
+    /**
+     * @covers ::paginate
+     */
     public function testUserReposityPaginatorThrowsExceptionForLimitOptionNotBeingAPositiveInteger()
     {
         $userRepository = $this->em->getRepository('User\Entity\User');
@@ -73,6 +89,9 @@ class UserRepositoryTest extends AbstractHttpControllerTestCase
         ]);
     }
 
+    /**
+     * @covers ::paginate
+     */
     public function testUserReposityPaginatorThrowsExceptionForMissingOffsetOption()
     {
         $userRepository = $this->em->getRepository('User\Entity\User');
@@ -83,6 +102,9 @@ class UserRepositoryTest extends AbstractHttpControllerTestCase
         ]);
     }
 
+    /**
+     * @covers ::paginate
+     */
     public function testUserReposityPaginatorThrowsExceptionForNegativeOffsetOption()
     {
         $userRepository = $this->em->getRepository('User\Entity\User');
