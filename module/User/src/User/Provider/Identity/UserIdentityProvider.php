@@ -1,4 +1,11 @@
 <?php
+/**
+ * This class provides user identity to BjyAuthorize by exposing logged in user roles.
+ *
+ * @package ComicCMS2
+ * @author Cezary Kluczyński
+ * @license https://github.com/cezarykluczynski/ComicCMS2/blob/master/LICENSE.txt MIT
+ */
 
 namespace User\Provider\Identity;
 
@@ -11,13 +18,13 @@ class UserIdentityProvider implements
     ProviderInterface,
     ServiceLocatorAwareInterface
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $defaultRole;
 
     protected $serviceLocator;
+
     protected $authenticatedUser;
+
     protected $entityManager;
 
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)

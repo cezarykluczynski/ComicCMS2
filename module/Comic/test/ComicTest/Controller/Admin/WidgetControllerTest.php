@@ -1,4 +1,11 @@
 <?php
+/**
+ * Tests for controller for comic functionalities in admin panel.
+ *
+ * @package ComicCMS2
+ * @author Cezary Kluczyński
+ * @license https://github.com/cezarykluczynski/ComicCMS2/blob/master/LICENSE.txt MIT
+ */
 
 namespace ComicTest\Controller\Admin;
 
@@ -6,6 +13,9 @@ use ComicCmsTestHelper\Controller\AbstractHttpControllerTestCase;
 
 class WidgetControllerTest extends AbstractHttpControllerTestCase
 {
+    /**
+     * Test if correct template is show for when theres no comics.
+     */
     public function testComicAdminWidgetIndexActionShowsInvitationForWhenTheresNoComics()
     {
         $this->reset();
@@ -18,6 +28,9 @@ class WidgetControllerTest extends AbstractHttpControllerTestCase
         $this->revokeGrantedRoles();
     }
 
+    /**
+     * Test if correct template is shown for when there's more than five comics.
+     */
     public function testComicAdminWidgetIndexActionShowsFiveComicsWhenThereAreMoreThanFiveComics()
     {
         $this->reset();

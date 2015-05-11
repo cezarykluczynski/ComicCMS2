@@ -1,4 +1,11 @@
 <?php
+/**
+ * Tests for controller for user functionalities in admin panel.
+ *
+ * @package ComicCMS2
+ * @author Cezary Kluczyński
+ * @license https://github.com/cezarykluczynski/ComicCMS2/blob/master/LICENSE.txt MIT
+ */
 
 namespace UserTest\Controller\Admin;
 

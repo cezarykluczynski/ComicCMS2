@@ -1,4 +1,11 @@
 <?php
+/**
+ * Assets module main class.
+ *
+ * @package ComicCMS2
+ * @author Cezary Kluczyński
+ * @license https://github.com/cezarykluczynski/ComicCMS2/blob/master/LICENSE.txt MIT
+ */
 
 namespace Assets;
 
@@ -12,12 +19,6 @@ class Module
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
                 ),
             ),
-        );
-    }
-
-    public function getServiceConfig()
-    {
-        return array(
         );
     }
 

@@ -1,4 +1,11 @@
 <?php
+/**
+ * Test for a controller class extended by all other classes in the project.
+ *
+ * @package ComicCMS2
+ * @author Cezary Kluczyński
+ * @license https://github.com/cezarykluczynski/ComicCMS2/blob/master/LICENSE.txt MIT
+ */
 
 namespace ApplicationTest\Controller;
 

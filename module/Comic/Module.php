@@ -1,4 +1,11 @@
 <?php
+/**
+ * Comic module main class.
+ *
+ * @package ComicCMS2
+ * @author Cezary Kluczyński
+ * @license https://github.com/cezarykluczynski/ComicCMS2/blob/master/LICENSE.txt MIT
+ */
 
 namespace Comic;
 
@@ -15,11 +22,6 @@ class Module
         );
     }
 
-    public function getServiceConfig()
-    {
-        return array(
-        );
-    }
 
     public function getConfig()
     {

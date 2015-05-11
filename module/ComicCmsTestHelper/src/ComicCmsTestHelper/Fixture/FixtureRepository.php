@@ -1,4 +1,11 @@
 <?php
+/**
+ * Abstract class for fixture classes. It provides some automatization of unloading fixtures.
+ *
+ * @package ComicCMS2
+ * @author Cezary Kluczyński
+ * @license https://github.com/cezarykluczynski/ComicCMS2/blob/master/LICENSE.txt MIT
+ */
 
 namespace ComicCmsTestHelper\Fixture;
 

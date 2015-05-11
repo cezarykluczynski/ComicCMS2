@@ -1,4 +1,11 @@
 <?php
+/**
+ * Tests. They will make sure that no admin route, except auth, can by accessed by user without admin role.
+ *
+ * @package ComicCMS2
+ * @author Cezary Kluczyński
+ * @license https://github.com/cezarykluczynski/ComicCMS2/blob/master/LICENSE.txt MIT
+ */
 
 namespace AdminTest\ACL;
 

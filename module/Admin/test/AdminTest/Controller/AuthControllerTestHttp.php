@@ -1,4 +1,11 @@
 <?php
+/**
+ * Tests for HTTP auth actions: signin in with correct in incorrect credentials, and sign out.
+ *
+ * @package ComicCMS2
+ * @author Cezary Kluczyński
+ * @license https://github.com/cezarykluczynski/ComicCMS2/blob/master/LICENSE.txt MIT
+ */
 
 namespace AdminTest\Controller;
 
@@ -8,11 +15,6 @@ use Zend\Session\Container;
 
 class AuthControllerTestHttp extends AbstractHttpControllerTestCase
 {
-    public function dispatchCorrectLoginCredentials()
-    {
-
-    }
-
     /**
      * Sign in action can be accessed.
      */

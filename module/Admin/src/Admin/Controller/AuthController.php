@@ -1,4 +1,12 @@
 <?php
+/**
+ * Admin auth controller. Only admin account are currently supported,
+ * and this is where all the authentication take place.
+ *
+ * @package ComicCMS2
+ * @author Cezary Kluczyński
+ * @license https://github.com/cezarykluczynski/ComicCMS2/blob/master/LICENSE.txt MIT
+ */
 
 namespace Admin\Controller;
 
