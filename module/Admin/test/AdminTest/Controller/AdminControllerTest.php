@@ -14,12 +14,21 @@ use Zend\Stdlib\Parameters;
 use Zend\Mvc\MvcEvent;
 use BjyAuthorize\Guard\Controller;
 
+/**
+ * @coversDefaultClass \Admin\Controller\AdminController
+ * @uses \Application\Controller\ApplicationController
+ * @uses \User\Provider\Identity\UserIdentityProvider
+ * @uses \User\Provider\Identity\UserIdentityProviderMock
+ */
 class AdminControllerTest extends AbstractHttpControllerTestCase
 {
     /**
      * Index action can't be accessed.
      * Process isolation is required so exit() wouldn't break PHPUnit.
+     * This test covers nothing, because it's BjyAuthorize that should work before controller is dispatched.
+     *
      * @runInSeparateProcess
+     * @coversNothing
      */
     public function testAdminIndexActionCantBeAccessed()
     {
@@ -47,6 +56,9 @@ class AdminControllerTest extends AbstractHttpControllerTestCase
 
     /**
      * Index action can be accessed after authentication.
+     *
+     * @covers ::indexAction
+     * @uses \Admin\Controller\AuthController
      */
     public function testAdminIndexActionCanBeAccessedAfterAuthentication()
     {
@@ -62,7 +74,7 @@ class AdminControllerTest extends AbstractHttpControllerTestCase
         /** Sign in successfully. */
         $this->dispatch('/admin/signin');
 
-        /** Go to admin view next. */
+        /** NExt, go to admin view. */
         $this->reset(true);
         $this->getRequest()->setMethod('GET');
         $this->dispatch('/admin');

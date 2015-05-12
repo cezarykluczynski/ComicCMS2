@@ -13,10 +13,18 @@ use ComicCmsTestHelper\Controller\AbstractHttpControllerTestCase;
 use Zend\Stdlib\Parameters;
 use Zend\Session\Container;
 
+/**
+ * @coversDefaultClass \Admin\Controller\AuthController
+ * @uses \Application\Controller\ApplicationController
+ * @uses \User\Provider\Identity\UserIdentityProvider
+ * @uses \User\Provider\Identity\UserIdentityProviderMock
+ */
 class AuthControllerTestHttp extends AbstractHttpControllerTestCase
 {
     /**
      * Sign in action can be accessed.
+     *
+     * @covers ::signinAction
      */
     public function testSigninActionCanBeAccessed()
     {
@@ -30,6 +38,8 @@ class AuthControllerTestHttp extends AbstractHttpControllerTestCase
 
     /**
      * Invalid credentials generate an error for POST request.
+     *
+     * @covers ::signinAction
      */
     public function testSigninActionRespondToInvalidCredentials()
     {
@@ -52,6 +62,8 @@ class AuthControllerTestHttp extends AbstractHttpControllerTestCase
 
     /**
      * Invalid credentials generate an error for AJAX request.
+     *
+     * @covers ::signinAction
      */
     public function testSigninActionRespondToInvalidCredentialsAJAX()
     {
@@ -75,6 +87,8 @@ class AuthControllerTestHttp extends AbstractHttpControllerTestCase
 
     /**
      * Invalid password generate an error for POST request.
+     *
+     * @covers ::signinAction
      */
     public function testSigninActionRespondToInvalidPassword()
     {
@@ -97,6 +111,8 @@ class AuthControllerTestHttp extends AbstractHttpControllerTestCase
 
     /**
      * Invalid password generate an error for AJAX request.
+     *
+     * @covers ::signinAction
      */
     public function testSigninActionRespondToInvalidPasswordAJAX()
     {
@@ -120,6 +136,12 @@ class AuthControllerTestHttp extends AbstractHttpControllerTestCase
 
     /**
      * Valid credentials create a redirect and a user session container for POST request.
+     * This test also covers other routines related to user authentication.
+     *
+     * @covers ::signinAction
+     * @covers \Application\Controller\ApplicationController::onDispatch
+     * @covers \User\Provider\Identity\UserIdentityProvider::getIdentityRoles
+     * @covers \User\Provider\Identity\UserIdentityProvider::setAuthenticatedUser
      */
     public function testSigninActionCreatesValidSessionAndARedirect()
     {
@@ -146,6 +168,8 @@ class AuthControllerTestHttp extends AbstractHttpControllerTestCase
 
     /**
      * Valid credentials create a redirect and a user session container for AJAX request.
+     *
+     * @covers ::signinAction
      */
     public function testSigninActionCreatesValidSessionAndARedirectAJAX()
     {
@@ -169,6 +193,9 @@ class AuthControllerTestHttp extends AbstractHttpControllerTestCase
 
     /**
      * Sign out removes user from session.
+     *
+     * @covers ::signoutAction
+     * @uses \Admin\Controller\AuthController::signinAction
      */
     public function testSignoutActionRemovesUserFromSession()
     {
@@ -194,7 +221,9 @@ class AuthControllerTestHttp extends AbstractHttpControllerTestCase
     }
 
     /**
-     * Sign out removes redirects to sign in form.
+     * Sign out redirects to sign in form.
+     *
+     * @covers ::signoutAction
      */
     public function testSignoutActionedirectsToSignInForm()
     {

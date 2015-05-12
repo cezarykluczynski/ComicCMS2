@@ -15,7 +15,11 @@ class AdminGuardsTest extends AbstractHttpControllerTestCase
 {
     /**
      * Helper for detecting console routes.
-     * @return boolean
+     *
+     * @param string $controller Controller name to check.
+     * @param string $action     Action name to check.
+     * @return boolean           True, is controller and action combined are accessed via console routing,
+     *                           false otherwise.
      */
     public function isConsoleRouting($controller, $action)
     {
@@ -39,6 +43,8 @@ class AdminGuardsTest extends AbstractHttpControllerTestCase
     /**
      * Checks config for any admin-related routes, if they are only accesible by role admin.
      * You can never be too sure with this.
+     *
+     * @coversNothing
      */
     public function testAdminRelatedControllersAreOnlyAccessibleByAdmin()
     {
@@ -50,7 +56,10 @@ class AdminGuardsTest extends AbstractHttpControllerTestCase
             return;
         }
 
+        /** @var array */
         $guards = $config['bjyauthorize']['guards']['BjyAuthorize\Guard\Controller'];
+
+        /** @var boolean */
         $success = true;
 
         foreach($guards as $guard)
@@ -74,6 +83,7 @@ class AdminGuardsTest extends AbstractHttpControllerTestCase
             }
         }
 
+        /** Dummy assertion, so PHPUnit won't mark this test as risky. */
         if ($success)
         {
             $this->assertTrue(true, 'Routes are secured.');

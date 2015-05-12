@@ -10,10 +10,18 @@
 use ComicCmsTestHelper\Controller\AbstractConsoleControllerTestCase;
 use Zend\Math\Rand;
 
+/**
+ * @coversDefaultClass \Admin\Controller\AuthController
+ * @uses \Application\Controller\ApplicationController
+ * @uses \User\Provider\Identity\UserIdentityProvider
+ * @uses \User\Provider\Identity\UserIdentityProviderMock
+ */
 class AuthControllerTestConsole extends AbstractConsoleControllerTestCase
 {
     /**
      * Admin can be created from command line.
+     *
+     * @coversNothing
      */
     public function testCreateAdminActionGeneratesAnErrorWithoutEnoughParams() {
         $this->dispatch('create-admin');
@@ -25,6 +33,8 @@ class AuthControllerTestConsole extends AbstractConsoleControllerTestCase
 
     /**
      * Admin can be created with two arguments.
+     *
+     * @covers ::createAdminAction
      */
     public function testCreateAdminActionCreatesAnAccount() {
         /** Setup. */
@@ -54,6 +64,11 @@ class AuthControllerTestConsole extends AbstractConsoleControllerTestCase
         $this->em->flush();
     }
 
+    /**
+     * Test if only one account can be created for a given e-mail address.
+     *
+     * @covers ::createAdminAction
+     */
     public function testCreateAdminActionCreatesAccountOnce() {
         /** Setup. */
         $email = 'admin+'.time().'@example.com';
@@ -61,7 +76,7 @@ class AuthControllerTestConsole extends AbstractConsoleControllerTestCase
         $this->dispatch('create-admin '.$email.' password');
         $this->assertResponseStatusCode(0, 'First user created.');
 
-        /** Silence second try output. */
+        /** Silence output on seconds try, otherwise a SQL error will be printed. */
         ob_start();
         $this->dispatch('create-admin '.$email.' password');
         ob_end_clean();
