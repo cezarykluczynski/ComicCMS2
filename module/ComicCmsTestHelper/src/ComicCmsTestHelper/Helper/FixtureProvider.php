@@ -17,6 +17,8 @@ trait FixtureProvider
     /** @var array */
     protected $fixtures = array();
 
+    public abstract function getEntityManager();
+
     /**
      * Loads fixtures from a provided class.
      *
@@ -31,12 +33,12 @@ trait FixtureProvider
         $fixtureClass = $this->fixtures[$fixtureClassName] = new $fixtureClassName($options);
         $loader->addFixture($fixtureClass);
 
-        $this->getEntityManager();
+        $em = $this->getEntityManager();
 
         $this->fixtures = $loader->getFixtures();
 
         /** @var \Doctrine\Common\DataFixtures\Executor\ORMExecutor */
-        $executor = new ORMExecutor($this->em);
+        $executor = new ORMExecutor($em);
         $executor->execute($this->fixtures, true);
     }
 
@@ -49,7 +51,7 @@ trait FixtureProvider
     {
         foreach($this->fixtures as $fixtureClassName => $fixture)
         {
-            if ($fixtureClassNameFilter && $fixtureClassName !== $fixtureClassNameFilter)
+            if ($fixtureClassNameFilter !== null && $fixtureClassName !== $fixtureClassNameFilter)
             {
                 continue;
             }

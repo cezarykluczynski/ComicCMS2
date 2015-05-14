@@ -19,16 +19,23 @@ use Zend\Math\Rand;
 class AuthControllerTestConsole extends AbstractConsoleControllerTestCase
 {
     /**
-     * Admin can be created from command line.
+     * Admin cannot be created from command line with no arguments.
      *
      * @coversNothing
      */
-    public function testCreateAdminActionGeneratesAnErrorWithoutEnoughParams() {
+    public function testCreateAdminActionGeneratesAnErrorWithoutNoArguments() {
         $this->dispatch('create-admin');
-        $this->assertResponseStatusCode(1, 'No params: no clean exit.');
+        $this->assertResponseStatusCode(1);
+    }
 
+    /**
+     * Admin cannot be created from command line with one argument.
+     *
+     * @coversNothing
+     */
+    public function testCreateAdminActionGeneratesAnErrorWithOneArgument() {
         $this->dispatch('create-admin test@example.com');
-        $this->assertResponseStatusCode(1, 'One param: no clean exit.');
+        $this->assertResponseStatusCode(1);
     }
 
     /**
@@ -45,7 +52,7 @@ class AuthControllerTestConsole extends AbstractConsoleControllerTestCase
         $this->assertControllerName('Admin\Controller\Auth');
         $this->assertControllerClass('AuthController');
         $this->assertMatchedRouteName('create-admin');
-        $this->assertResponseStatusCode(0, "Exited with 0.");
+        $this->assertResponseStatusCode(0);
         $this->assertConsoleOutputContains("Admin account for $email created.");
 
         $this->getEntityManager();
@@ -74,14 +81,14 @@ class AuthControllerTestConsole extends AbstractConsoleControllerTestCase
         $email = 'admin+'.time().'@example.com';
 
         $this->dispatch('create-admin '.$email.' password');
-        $this->assertResponseStatusCode(0, 'First user created.');
+        $this->assertResponseStatusCode(0);
 
         /** Silence output on seconds try, otherwise a SQL error will be printed. */
         ob_start();
         $this->dispatch('create-admin '.$email.' password');
         ob_end_clean();
 
-        $this->assertResponseStatusCode(1, 'Second user not created.');
+        $this->assertResponseStatusCode(1);
         $this->getEntityManager();
 
         /** Reopen entity manager after a DBAL exception. */

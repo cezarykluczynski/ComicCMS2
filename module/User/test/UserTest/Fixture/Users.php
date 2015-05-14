@@ -29,7 +29,6 @@ class Users extends FixtureRepository
         for($i = 0; $i < $this->options['count']; $i++)
         {
             $users[] = array(
-                'login' => 'John' . $i,
                 'email' => 'john' . $i . '@example.com',
                 'password' => '$2a$10$VHbVa7ygXJQ7DCNyVLsl5u3PQWEJ11Hs0qAgjVIjN0zMJAaoTob4a',
             );
@@ -54,7 +53,6 @@ class Users extends FixtureRepository
     {
         $userEntity = new User();
         $this->entities[] = $userEntity;
-        $userEntity->login = $user['login'];
         $userEntity->email = $user['email'];
         $userEntity->password = $user['password'];
         return $userEntity;

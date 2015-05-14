@@ -43,7 +43,7 @@ class WidgetControllerTest extends AbstractHttpControllerTestCase
          * {@link \UserTest\Controller\Admin\UserRepositoryTest::testUserReposityPaginator()}.
          */
         $this->assertResponseHeaderContains('Content-Type', 'application/json; charset=utf-8');
-        $response = Json::decode($this->getResponse()->getContent(), true);
+        $response = Json::decode($this->getResponse()->getContent(), Json::TYPE_ARRAY);
         $this->assertEquals(2, count($response['users']));
 
         $this->removeFixtures();
