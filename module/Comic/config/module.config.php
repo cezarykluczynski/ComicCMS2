@@ -12,18 +12,6 @@ namespace Comic;
 return array(
     'router' => array(
         'routes' => array(
-            'admin-comic-widget-index' => array(
-                'type' => 'Literal',
-                'options' => array(
-                    'route'    => '/admin/comic/widget/index',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'Comic\Controller\Admin',
-                        'controller'    => 'Widget',
-                        'action'        => 'index',
-                    ),
-                ),
-                'may_terminate' => true,
-            ),
         ),
     ),
     // Doctrine config

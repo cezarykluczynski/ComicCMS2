@@ -22,20 +22,6 @@ use Zend\Json\Json;
 class WidgetControllerTest extends AbstractHttpControllerTestCase
 {
     /**
-     * @covers ::indexAction
-     */
-    public function testUserAdminWidgetIndexCanBeAccessed()
-    {
-        $this->grantAllRolesToUser();
-
-        $this->dispatch('/admin/user/widget/index');
-        $this->assertResponseStatusCode(200);
-        $this->assertTemplateName('user/admin/widget/index');
-
-        $this->revokeGrantedRoles();
-    }
-
-    /**
      * @covers ::usersAction
      */
     public function testUsersCanBeRetrievedAsJSON()

@@ -1,17 +1,8 @@
+'use strict';
+
 admin
-    .controller('DashboardController', ['$scope', '$http', '$sce', function($scope, $http, $sce) {
-        $scope.loadWidgetContents = function(widget) {
-            if (!widget.loading) {
-                $http.get(widget.url)
-                    .success(function (response) {
-                        widget.contents = response;
-                    });
-            }
-            widget.loading = true;
-
-            return $sce.trustAsHtml(widget.contents || "Loading...");
-        };
-
+    .controller('DashboardController', ['$scope', '$http', '$sce', '$rootScope',
+    function($scope, $http, $sce, $rootScope) {
         $scope.users = {
             current: 1,
             perPage: 10,
@@ -33,4 +24,8 @@ admin
         };
 
         $scope.users.getResultsPage(1);
+
+        $scope.$emit = function (eventName) {
+            $rootScope.$emit(eventName);
+        };
     }]);

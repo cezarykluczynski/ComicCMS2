@@ -1,3 +1,5 @@
+'use strict';
+
 var adminSignIn = angular.module('admin-signin', [])
     .config(['$httpProvider', function($httpProvider) {
         $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';

@@ -58,6 +58,8 @@ class AdminControllerTest extends AbstractHttpControllerTestCase
      * Index action can be accessed after authentication.
      *
      * @covers ::indexAction
+     * @covers ::_getComics
+     * @covers ::_getWidgets
      * @uses \Admin\Controller\AuthController
      */
     public function testAdminIndexActionCanBeAccessedAfterAuthentication()

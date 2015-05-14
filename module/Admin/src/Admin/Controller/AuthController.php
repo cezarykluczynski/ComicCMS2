@@ -16,6 +16,7 @@ use User\Entity\User;
 use Zend\Session\Container;
 use Zend\Crypt\Password\Bcrypt;
 use Zend\Console\Response;
+use Application\Controller\ApplicationController;
 
 class AuthController extends AdminController implements \Zend\Mvc\InjectApplicationEventInterface
 {

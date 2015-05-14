@@ -12,18 +12,6 @@ namespace User;
 return array(
     'router' => array(
         'routes' => array(
-            'admin-user-widget-index' => array(
-                'type' => 'Literal',
-                'options' => array(
-                    'route'    => '/admin/user/widget/index',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'User\Controller\Admin',
-                        'controller'    => 'Widget',
-                        'action'        => 'index',
-                    ),
-                ),
-                'may_terminate' => true,
-            ),
             'admin-user-widget-users' => array(
                 'type' => 'Literal',
                 'options' => array(

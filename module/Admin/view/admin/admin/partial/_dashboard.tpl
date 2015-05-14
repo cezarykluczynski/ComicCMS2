@@ -1,14 +1,16 @@
 <div ng-app="admin-dashboard" ng-controller="DashboardController as dashboard">
     <div class="row">
-        <div ng-init='widgets = {$dashboardWidgets|@json_encode}'></div>
-        <div ng-repeat='widget in widgets track by $id(widget.id)'
-            class="widget" controller="{literal}{{widget.controller}}{/literal}">
-            <div class="col-md-4">
-                <div class="well">
-                    <h2>{literal}{{ widget.name }}{/literal}</h2>
-                    <div ng-bind-html="loadWidgetContents(widget)" class="widget-contents"></div>
+        {foreach from=$dashboardWidgets item=widget}
+            <div class="col-md-4 widget" controller="{$widget['controller']}">
+            <div class="well">
+                <h2>{$widget['name']}</h2>
+                <div class="widget-contents">
+                    {$this->partial($widget['template'], [
+                        'comics' => $comics
+                    ])}
                 </div>
             </div>
-        </div>
+            </div>
+        {/foreach}
     </div>
 </div>

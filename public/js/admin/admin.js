@@ -1,4 +1,6 @@
-var admin = angular.module('admin', ['angularUtils.directives.dirPagination'])
+'use strict';
+
+var admin = angular.module('admin', ['angularUtils.directives.dirPagination', 'ngDialog'])
     .controller('TabController', function () {
         this.tab = 'dashboard';
 
@@ -11,6 +13,16 @@ var admin = angular.module('admin', ['angularUtils.directives.dirPagination'])
         };
     });
 
-var adminComic = angular.module('admin-comic', []);
-var adminComments = angular.module('admin-comments', []);
-var adminUsers = angular.module('admin-users', []);
+admin.config(['ngDialogProvider', function (ngDialogProvider) {
+    ngDialogProvider.setDefaults({
+        className: 'ngdialog-theme-default',
+        plain: false,
+        showClose: true,
+        closeByDocument: true,
+        closeByEscape: true
+    });
+}]);
+
+var adminComic = angular.module('admin-comic', ['admin']);
+var adminComments = angular.module('admin-comments', ['admin']);
+var adminUsers = angular.module('admin-users', ['admin']);

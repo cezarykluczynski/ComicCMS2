@@ -73,6 +73,7 @@ class Version20150426151836 extends AbstractMigration
 
     /**
      * @param Schema $schema
+     * @return void
      */
     public function down(Schema $schema)
     {

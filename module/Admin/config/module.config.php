@@ -105,24 +105,24 @@ return array(
                         'defaults' => array(
                             'controller' => 'Admin\Controller\Auth',
                             'action'     => 'create-admin'
-                        )
-                    )
-                )
-            )
-        )
+                        ),
+                    ),
+                ),
+            ),
+        ),
     ),
     'admin' => array(
         'dashboard' => array(
             'widgets' => array(
                 array(
-                    'route' => 'admin-comic-widget-index',
                     'name' => 'Comics',
                     'controller' => 'comic',
+                    'template' => 'comic/admin/widget/index',
                 ),
                 array(
-                    'route' => 'admin-user-widget-index',
                     'name' => 'Users',
                     'controller' => 'user',
+                    'template' => 'user/admin/widget/index',
                 ),
             ),
         ),

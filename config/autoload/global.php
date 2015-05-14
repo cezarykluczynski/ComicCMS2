@@ -32,6 +32,5 @@ return array(
                 'generate_proxies' => false,
             ),
         ),
-
     ),
 );
