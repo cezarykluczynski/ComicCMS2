@@ -22,7 +22,3 @@ admin.config(['ngDialogProvider', function (ngDialogProvider) {
         closeByEscape: true
     });
 }]);
-
-var adminComic = angular.module('admin-comic', ['admin']);
-var adminComments = angular.module('admin-comments', ['admin']);
-var adminUsers = angular.module('admin-users', ['admin']);

@@ -117,12 +117,12 @@ return array(
                 array(
                     'name' => 'Comics',
                     'controller' => 'comic',
-                    'template' => 'comic/admin/widget/index',
+                    'template' => 'comicAdminWidgetIndex',
                 ),
                 array(
                     'name' => 'Users',
                     'controller' => 'user',
-                    'template' => 'user/admin/widget/index',
+                    'template' => 'userAdminWidgetIndex',
                 ),
             ),
         ),

@@ -1,21 +1,32 @@
-'use strict';
+"use strict";
 
 admin
-    .controller('ComicsController', ['$scope', '$rootScope', 'ngDialog', function($scope, $rootScope, ngDialog) {
+    .controller( "ComicsController", [ "$scope", "$rootScope", "ngDialog",
+        function( $scope, $rootScope, ngDialog ) {
         $rootScope.$on( "openComicCreateDialog", function () {
             $scope.openComicCreateDialog();
         });
 
         $scope.openComicCreateDialog = function () {
-            var dialog = ngDialog.open({
-                template: 'admin-comics-new',
-                controller: 'ComicsPopupController'
+            /** Don't create multiple dialogs. */
+            if ($rootScope.comicCreateDialog ) {
+                return;
+            }
+
+            $rootScope.comicCreateDialog = ngDialog.open({
+                template: "adminComicsCreate",
+                controller: "ComicsCreateDialogController"
             });
+
+            /** Remove reference to dialog once it's closed, so it can be opened again. */
+            $rootScope.comicCreateDialog.closePromise.then(function () {
+                $rootScope.comicCreateDialog = null;
+            });
+
+            /** Blur button that opened dialog. */
+            document.activeElement.blur();
         }
     }])
-    .controller('ComicsPopupController', ['$scope', '$http', function ($scope, $http) {
-        this.get = $http.get('/admin/comics/create')
-            .then(function () {
-                console.log('get');
-            });
+    .controller( "ComicsCreateDialogController", [ "$scope",
+        function ( $scope ) {
     }]);

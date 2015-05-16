@@ -28,3 +28,5 @@
         {$this->partial('partial/_users')}
     </div>
 </div>
+
+{$this->angularTemplates('admin')}

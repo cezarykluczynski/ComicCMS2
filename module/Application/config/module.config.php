@@ -74,6 +74,11 @@ return array(
             'Application\Controller\Index' => 'Application\Controller\IndexController'
         ),
     ),
+    'view_helpers' => array(
+        'invokables' => array(
+             'angularTemplates' => 'Application\View\Helper\AngularTemplates',
+        ),
+    ),
     'view_manager' => array(
         'default_suffix'           => 'tpl',
         'display_not_found_reason' => true,

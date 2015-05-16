@@ -33,10 +33,14 @@ return array(
         'display_not_found_reason' => true,
         'display_exceptions'       => true,
         'template_map' => array(
-            'comic/admin/widget/index' => __DIR__ . '/../view/comic/admin/widget/index.tpl',
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
+        ),
+        'angular_templates' => array(
+            'admin' => array(
+                __DIR__ . '/../view/comic/template',
+            ),
         ),
     ),
     'controllers' => array(

@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
 admin
-    .controller('DashboardController', ['$scope', '$http', '$sce', '$rootScope',
-    function($scope, $http, $sce, $rootScope) {
+    .controller( "DashboardController", [ "$scope", "$http", "$sce", "$rootScope", "$templateCache",
+    function( $scope, $http, $sce, $rootScope, $templateCache ) {
         $scope.users = {
             current: 1,
             perPage: 10,
@@ -14,7 +14,7 @@ admin
             },
             getResultsPage: function(pageNumber) {
                 this.state = "loading";
-                $http.get('/admin/user/widget/users?limit=' + $scope.users.perPage + '&page=' + pageNumber)
+                $http.get( "/admin/user/widget/users?limit=" + $scope.users.perPage + "&page=" + pageNumber)
                     .then(function(response) {
                         $scope.users.state = "";
                         $scope.users.users = response.data.users;
@@ -23,9 +23,19 @@ admin
             }
         };
 
+        $scope.comics = {
+            comics: []
+        };
+
         $scope.users.getResultsPage(1);
 
         $scope.$emit = function (eventName) {
             $rootScope.$emit(eventName);
         };
+
+        /** Compile templates. */
+        $( "script[type=\"text/ng-template\"]" ).each(function () {
+            var $this = $( this );
+            $templateCache.put($this.attr( "id" ), $this.text());
+        });
     }]);
