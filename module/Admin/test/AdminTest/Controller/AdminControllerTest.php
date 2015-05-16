@@ -61,6 +61,7 @@ class AdminControllerTest extends AbstractHttpControllerTestCase
      * @covers ::_getComics
      * @covers ::_getWidgets
      * @uses \Admin\Controller\AuthController
+     * @uses \Application\View\Helper\AngularTemplates
      */
     public function testAdminIndexActionCanBeAccessedAfterAuthentication()
     {

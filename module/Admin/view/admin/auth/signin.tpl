@@ -20,7 +20,7 @@
                     class="form-control"
                     type="email"
                     ng-model="user.email"
-                    ng-required=""
+                    ng-required="true"
                     ng-minlength="6"
                     value="{$this->email}"
                     placeholder="{$this->translate('Enter email')}">
@@ -33,6 +33,7 @@
                     class="form-control"
                     type="password"
                     ng-model="user.password"
+                    ng-required="true"
                     value="{$this->password}"
                     placeholder="{$this->translate('Enter password')}">
             </div>

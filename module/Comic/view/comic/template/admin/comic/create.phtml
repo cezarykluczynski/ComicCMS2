@@ -1,7 +1,47 @@
 <script type="text/ng-template" id="adminComicsCreate">
-<div ng-app="admin-comics" ng-controller="ComicsCreateDialogController">
-    <form>
-        form
+<div ng-controller="ComicsCreateDialogController">
+    <form name="adminComicsCreate">
+        <h2><?= $this->translate('Create comics'); ?></h2>
+        <div class="form-group">
+            <label for="new-comics-title"><?= $this->translate('Title (required):'); ?></label>
+            <input
+                class="form-control"
+                type="text"
+                name="new-comics-title"
+                id="new-comics-title"
+                ng-required="true"
+                ng-trim="true"
+                ng-minlength="1"
+                ng-model="comics.title"
+                ng-disabled="submitInProgress"
+            >
+        </div>
+        <div class="form-group">
+            <label for="new-comics-description"><?= $this->translate('Description (optional):'); ?></label>
+            <textarea
+                class="form-control"
+                type="text"
+                name="new-comics-description"
+                id="new-comics-description"
+                ng-model="comics.description"
+                ng-disabled="submitInProgress"
+            ></textarea>
+        </div>
+        <div class="form-group">
+            <label for="new-comics-tagline"><?= $this->translate('Tagline (optional):'); ?></label>
+            <input
+                class="form-control"
+                type="text"
+                name="new-comics-tagline"
+                id="new-comics-tagline"
+                ng-model="comics.tagline"
+                ng-disabled="submitInProgress"
+            >
+        </div>
+        <div class="form-group actions">
+            <button class="btn btn-success pull-right" ng-disabled="adminComicsCreate.$invalid || submitInProgress" ng-click="save()"><?= $this->translate('Save'); ?></button>
+            <button class="btn btn-danger pull-left" ng-click="cancel()"><?= $this->translate('Cancel'); ?></button>
+        </div>
     </form>
 </div>
 </script>

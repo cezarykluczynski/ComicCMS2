@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
-var adminSignIn = angular.module('admin-signin', [])
-    .config(['$httpProvider', function($httpProvider) {
+var adminSignIn = angular.module( "admin-signin", [] )
+    .config([ "$httpProvider", function( $httpProvider ) {
         /** Send typical XHR header with ajax requests, so they could be discovered by Zend. */
-        $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+        $httpProvider.defaults.headers.common[ "X-Requested-With" ] = "XMLHttpRequest";
     }])
-    .controller('SigninController', ['$scope', '$http', '$window', function($scope, $http, $window) {
+    .controller( "SigninController", [ "$scope", "$http", "$window", function( $scope, $http, $window ) {
         $scope.submit = function() {
             if (!$scope.signin.$valid || !$scope.user) {
                 return;
@@ -17,7 +17,7 @@ var adminSignIn = angular.module('admin-signin', [])
             $http({
                     url: "",
                     method: "POST",
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    headers: {"Content-Type": "application/x-www-form-urlencoded"},
                     data: $.param($scope.user)
                 })
                 .success(function(response) {

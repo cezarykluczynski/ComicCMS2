@@ -1,8 +1,8 @@
 "use strict";
 
 admin
-    .controller( "DashboardController", [ "$scope", "$http", "$sce", "$rootScope", "$templateCache",
-    function( $scope, $http, $sce, $rootScope, $templateCache ) {
+    .controller( "DashboardController", [ "$scope", "$http", "$sce", "$rootScope", "$templateCache", "Alertify",
+    function( $scope, $http, $sce, $rootScope, $templateCache, Alertify ) {
         $scope.users = {
             current: 1,
             perPage: 10,
@@ -26,8 +26,7 @@ admin
         $scope.comics = {
             comics: []
         };
-
-        $scope.users.getResultsPage(1);
+        $scope.users.getResultsPage( 1 );
 
         $scope.$emit = function (eventName) {
             $rootScope.$emit(eventName);
@@ -36,6 +35,11 @@ admin
         /** Compile templates. */
         $( "script[type=\"text/ng-template\"]" ).each(function () {
             var $this = $( this );
-            $templateCache.put($this.attr( "id" ), $this.text());
+            $templateCache.put( $this.attr( "id" ), $this.text() );
         });
+
+        /** Allow all controllers access to unified Alertify wrapper. */
+        $rootScope.showError = function ( msg ) {
+            Alertify.error( msg );
+        };
     }]);

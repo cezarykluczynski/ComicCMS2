@@ -1,6 +1,6 @@
 'use strict';
 
-var admin = angular.module('admin', ['angularUtils.directives.dirPagination', 'ngDialog'])
+var admin = angular.module('admin', ['angularUtils.directives.dirPagination', 'ngDialog', 'Alertify'])
     .controller('TabController', function () {
         this.tab = 'dashboard';
 
@@ -18,7 +18,7 @@ admin.config(['ngDialogProvider', function (ngDialogProvider) {
         className: 'ngdialog-theme-default',
         plain: false,
         showClose: true,
-        closeByDocument: true,
+        closeByDocument: false,
         closeByEscape: true
     });
 }]);

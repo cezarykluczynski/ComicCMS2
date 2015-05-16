@@ -1,4 +1,4 @@
-<div ng-app="admin" ng-controller="TabController as panel">
+<div ng-app="admin" ng-controller="TabController as panel" ng-cloak>
     {$this->partial('partial/_navbar')}
     <ul {literal}ng-init="tab = comics"{/literal} class="nav nav-tabs">
         <li {literal}ng-class="{active:panel.isSelected('dashboard') }"{/literal}>
