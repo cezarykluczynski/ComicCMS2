@@ -15,7 +15,8 @@ admin
 
             /** Create dialog from a given template. */
             $rootScope.comicCreateDialog = ngDialog.open({
-                template: "adminComicsCreate"
+                template: "adminComicsCreate",
+                className: "ngdialog-theme-default admin-comics-create",
             });
 
             /** Remove reference to dialog once it's closed, so it can be opened again. */
@@ -24,7 +25,7 @@ admin
             });
 
             /** Blur button that opened dialog. */
-            document.activeElement.blur();
+            $rootScope.blurActiveElement();
         };
 
     }])
@@ -35,6 +36,12 @@ admin
         $scope.comics.title = "";
         $scope.comics.description = "";
         $scope.comics.tagline = "";
+        $scope.comics.slug = "";
+
+        /** Authors select. */
+        $scope.noAuthor = { id: null, name: "(no author)" };
+        $scope.authors = [ $scope.noAuthor ];
+        $scope.authors[ "selected" ] = $scope.noAuthor;
 
         $scope.submitInProgress = false;
 
@@ -45,14 +52,12 @@ admin
 
         $scope.save = function() {
             $scope.submitInProgress = true;
-            var xhr = $http.put( "/comic/admin/create", $scope.comics )
-                .then( function () {
+            var xhr = $http.post( "/rest/comic", $scope.comics )
+                .then( function ( response ) {
                     $scope.cancel();
                 })
-                .catch( function ( error ) {
-                    $rootScope.showError( error.status + ": " + error.statusText );
-                })
-                .finally( function () {
+                .finally( function ( response ) {
+                    $rootScope.alertResponse( response );
                     $scope.submitInProgress = false;
                 });
         };

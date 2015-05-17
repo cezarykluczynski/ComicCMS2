@@ -12,6 +12,24 @@ namespace Comic;
 return array(
     'router' => array(
         'routes' => array(
+            'rest-comic' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/rest/comic[/:id]',
+                    'constraints' => array(
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Comic\Controller',
+                        'controller'    => 'ComicRest',
+                    ),
+                ),
+            ),
+        ),
+    ),
+    'controllers' => array(
+        'invokables' => array(
+            'Comic\Controller\ComicRest' => 'Comic\Controller\ComicRestController',
         ),
     ),
     // Doctrine config
@@ -35,17 +53,15 @@ return array(
         'template_map' => array(
         ),
         'template_path_stack' => array(
-            __DIR__ . '/../view',
+            'comic-rest' => __DIR__ . '/../view',
         ),
         'angular_templates' => array(
             'admin' => array(
                 __DIR__ . '/../view/comic/template',
             ),
         ),
-    ),
-    'controllers' => array(
-        'invokables' => array(
-            'Comic\Controller\Admin\Widget' => 'Comic\Controller\Admin\WidgetController',
+        'strategies' => array(
+            'ViewJsonStrategy',
         ),
     ),
 );

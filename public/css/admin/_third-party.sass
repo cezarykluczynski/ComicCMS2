@@ -1,8 +1,21 @@
 .ngdialog.ngdialog-theme-default
     padding-top: 62px
 
+.ngdialog.ngdialog-theme-default.admin-comics-create
+    .ngdialog-content
+        width: 800px
+
 body.admin
     #alertify-logs
         z-index: 10010
     .alertify-log
         cursor: pointer
+
+    // Some fixes so it will play nicely with Bootswatch Lumen theme
+    .ui-select-toggle
+        background-color: white
+        border-radius: 1px
+
+        &:hover
+            margin-top: 0
+            border-bottom-width: 4px

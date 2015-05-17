@@ -39,7 +39,20 @@ admin
         });
 
         /** Allow all controllers access to unified Alertify wrapper. */
-        $rootScope.showError = function ( msg ) {
-            Alertify.error( msg );
+        $rootScope.alertResponse = function ( response ) {
+            if ( response.status >= 200 && response.status < 300 ) {
+                Alertify.success( response.data && response.data.success ?
+                    response.data.success :
+                    "Action was successful." );
+            } else {
+                Alertify.error( response.data && response.data.error ?
+                    response.data.error :
+                    "Error " + response.status + ": " + response.statusText );
+            }
+        };
+
+        /** Common helper: various places in code need to blur active element. */
+        $rootScope.blurActiveElement = function () {
+            document.activeElement.blur();
         };
     }]);

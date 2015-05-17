@@ -59,6 +59,9 @@ return [
                 ['controller' => 'User\Controller\Admin\Widget', 'action' => 'index', 'roles' => ['admin']],
                 ['controller' => 'User\Controller\Admin\Widget', 'action' => 'users', 'roles' => ['admin']],
 
+                /** Comic RESTful controller. */
+                ['controller' => 'Comic\Controller\ComicRest', 'action' => null, 'roles' => ['admin']],
+
                 /** Techically, console routing does not require ACL.
                  *  Anyone with access to CLI is authenticated enough, or cannot be stopped anyway. */
                 ['controller' => 'Admin\Controller\Auth', 'action' => 'create-admin', 'roles' => ['guest']],

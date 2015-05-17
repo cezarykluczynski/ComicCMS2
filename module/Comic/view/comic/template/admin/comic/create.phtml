@@ -2,21 +2,60 @@
 <div ng-controller="ComicsCreateDialogController">
     <form name="adminComicsCreate">
         <h2><?= $this->translate('Create comics'); ?></h2>
-        <div class="form-group">
-            <label for="new-comics-title"><?= $this->translate('Title (required):'); ?></label>
-            <input
-                class="form-control"
-                type="text"
-                name="new-comics-title"
-                id="new-comics-title"
-                ng-required="true"
-                ng-trim="true"
-                ng-minlength="1"
-                ng-model="comics.title"
-                ng-disabled="submitInProgress"
-            >
+        <div class="row">
+            <div class="form-group col-lg-6">
+                <label for="new-comics-title"><?= $this->translate('Title (required):'); ?></label>
+                <input
+                    class="form-control"
+                    type="text"
+                    name="new-comics-title"
+                    id="new-comics-title"
+                    ng-required="true"
+                    ng-trim="true"
+                    ng-minlength="1"
+                    ng-model="comics.title"
+                    ng-disabled="submitInProgress"
+                >
+            </div>
+            <div class="form-group col-lg-6">
+                <label for="new-comics-slug"><?= $this->translate('Slug (required):'); ?></label>
+                <input
+                    class="form-control"
+                    type="text"
+                    name="new-comics-slug"
+                    id="new-comics-slug"
+                    ng-required="true"
+                    ng-trim="true"
+                    ng-minlength="1"
+                    ng-model="comics.slug"
+                    ng-disabled="submitInProgress"
+                >
+            </div>
         </div>
-        <div class="form-group">
+        <div class="row">
+            <div class="form-group col-lg-6">
+                <label for="new-comics-tagline"><?= $this->translate('Tagline (optional):'); ?></label>
+                <input
+                    class="form-control"
+                    type="text"
+                    name="new-comics-tagline"
+                    id="new-comics-tagline"
+                    ng-model="comics.tagline"
+                    ng-disabled="submitInProgress"
+                >
+            </div>
+            <div class="form-group col-lg-6">
+                <label for="new-comics-tagline"><?= $this->translate('Author (optional):'); ?></label>
+                <ui-select ng-model="authors.selected" theme="bootstrap">
+                    <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices repeat="author in authors | filter: $select.search">
+                        <div ng-bind="author.name | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="row">
+        <div class="form-group col-lg-12">
             <label for="new-comics-description"><?= $this->translate('Description (optional):'); ?></label>
             <textarea
                 class="form-control"
@@ -27,19 +66,9 @@
                 ng-disabled="submitInProgress"
             ></textarea>
         </div>
-        <div class="form-group">
-            <label for="new-comics-tagline"><?= $this->translate('Tagline (optional):'); ?></label>
-            <input
-                class="form-control"
-                type="text"
-                name="new-comics-tagline"
-                id="new-comics-tagline"
-                ng-model="comics.tagline"
-                ng-disabled="submitInProgress"
-            >
         </div>
         <div class="form-group actions">
-            <button class="btn btn-success pull-right" ng-disabled="adminComicsCreate.$invalid || submitInProgress" ng-click="save()"><?= $this->translate('Save'); ?></button>
+            <button class="btn btn-success pull-right" ng-disabled="adminComicsCreate.$invalid || submitInProgress" ng-click="save()"><?= $this->translate('Create'); ?></button>
             <button class="btn btn-danger pull-left" ng-click="cancel()"><?= $this->translate('Cancel'); ?></button>
         </div>
     </form>

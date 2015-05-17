@@ -15,7 +15,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Comic.
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\Comic\Entity\ComicRepository")
  * @ORM\Table(name="comics")
  * @property string $title
  * @property string $tagline
