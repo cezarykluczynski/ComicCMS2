@@ -14,6 +14,7 @@ namespace ComicCmsTestHelper\Controller;
 
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase as BaseTestCase;
 use ComicCmsTestHelper\Helper\ApplicationConfig;
+use ComicCmsTestHelper\Helper\Converter;
 use ComicCmsTestHelper\Helper\Doctrine;
 use ComicCmsTestHelper\Helper\FixtureProvider;
 use ComicCmsTestHelper\Helper\UserIdentityProviderMock;
@@ -21,6 +22,7 @@ use ComicCmsTestHelper\Helper\UserIdentityProviderMock;
 abstract class AbstractHttpControllerTestCase extends BaseTestCase
 {
     use ApplicationConfig;
+    use Converter;
     use Doctrine;
     use FixtureProvider;
     use UserIdentityProviderMock;

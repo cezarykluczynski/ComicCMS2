@@ -46,15 +46,10 @@ class ComicRestController extends AbstractRestfulController
         /** @var \Comic\Entity\Comic|null */
         $comic = $comicRepository->create($data);
 
-        if (!($comic instanceof Comic))
-        {
-            $response->setStatusCode(422);
-            return $view->setVariable('error', 'Comics was not created.');
-        }
-
+        $response->setStatusCode(201);
         return $view->setVariables([
             'success' => 'Comics was created.',
-
+            'id' => $comic->id,
         ]);
     }
 }

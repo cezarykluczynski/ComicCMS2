@@ -17,15 +17,15 @@ class ComicRepository extends EntityRepository
     {
         /** @var \Comic\Entity\Slug */
         $slug = new Slug;
-        $slug->slug = $data['slug'];
+        $slug->slug = isset($data['slug']) ? $data['slug'] : '';
         $this->_em->persist($slug);
 
         /** @var \Comic\Entity\Comic */
         $comic = new Comic;
         $comic->slug = $slug;
-        $comic->title = $data['title'];
-        $comic->description = $data['description'];
-        $comic->tagline = $data['tagline'];
+        $comic->title = isset($data['title']) ? $data['title'] : '';
+        $comic->description = isset($data['description']) ? $data['description'] : '';
+        $comic->tagline = isset($data['tagline']) ? $data['tagline'] : '';
         $this->_em->persist($comic);
 
         $this->_em->flush();
