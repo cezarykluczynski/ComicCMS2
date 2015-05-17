@@ -45,9 +45,9 @@ class AngularTemplates extends AbstractHelper
         $templates = array();
 
         /** Build list of templates. */
-        foreach($angularTemplates[$group] as $entity)
+        foreach($angularTemplates[$group] as $directory)
         {
-            $templates = ArrayUtils::merge($templates, $this->gatherTemplates($entity));
+            $templates = ArrayUtils::merge($templates, $this->gatherTemplates($directory));
         }
 
         /** @var array Rendered templates. */
@@ -60,16 +60,16 @@ class AngularTemplates extends AbstractHelper
     /**
      * Takes a directory and returns array with template realpaths.
      *
-     * @param string $entity Full local path to directory.
-     * @return array         Key-value array of templates realpaths.
+     * @param string $directory Full local path to directory.
+     * @return array            Key-value array of templates realpaths.
      */
-    protected function gatherTemplates($entity)
+    protected function gatherTemplates($directory)
     {
         /** @var array */
         $templates = array();
 
         /** @var \RecursiveDirectoryIterator */
-        $directory = new RecursiveDirectoryIterator($entity, RecursiveDirectoryIterator::SKIP_DOTS);
+        $directory = new RecursiveDirectoryIterator($directory, RecursiveDirectoryIterator::SKIP_DOTS);
         /** @var \RecursiveIteratorIterator */
         $iterator = new RecursiveIteratorIterator($directory);
         /** @var \RegexIterator */

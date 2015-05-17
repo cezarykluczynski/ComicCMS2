@@ -24,6 +24,7 @@
         <testsuite name="application">
             <directory suffix=".php">./module/Admin/test/AdminTest/Controller</directory>
             <directory suffix=".php">./module/Application/test/ApplicationTest/Controller</directory>
+            <directory suffix=".php">./module/Application/test/ApplicationTest/View</directory>
             <directory suffix=".php">./module/Comic/test/ComicTest/Controller</directory>
             <directory suffix=".php">./module/User/test/UserTest/Controller</directory>
             <directory suffix=".php">./module/User/test/UserTest/Entity</directory>
