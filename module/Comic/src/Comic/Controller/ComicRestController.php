@@ -15,13 +15,18 @@ use Comic\Entity\Comic;
 
 class ComicRestController extends AbstractRestfulController
 {
+    /**
+     * Creates a comic entity.
+     *
+     * @return \Zend\View\Model\JsonModel
+     */
     public function create($data)
     {
         /** @var \Zend\View\Model\JsonModel */
         $view = new JsonModel;
-        /** \Doctrine\ORM\EntityManager */
+        /** @var \Doctrine\ORM\EntityManager */
         $entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
-        /** \Zend\Http\PhpEnvironment\Response */
+        /** @var \Zend\Http\PhpEnvironment\Response */
         $response = $this->getResponse();
 
         /** Slug has to be unique. */
@@ -59,5 +64,26 @@ class ComicRestController extends AbstractRestfulController
             'success' => 'Comics was created.',
             'id' => $comic->id,
         ]);
+    }
+
+    /**
+     * Return all the comic entities.
+     *
+     * @return \Zend\View\Model\JsonModel
+     */
+    public function getList()
+    {
+        /** @var \Zend\View\Model\JsonModel */
+        $view = new JsonModel;
+        /** @var \Doctrine\ORM\EntityManager */
+        $entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+        /** @var array */
+        $comics = $entityManager->getRepository('Comic\Entity\Comic')->getList();
+
+        $view->setVariables([
+            'list' => $comics,
+        ]);
+
+        return $view;
     }
 }

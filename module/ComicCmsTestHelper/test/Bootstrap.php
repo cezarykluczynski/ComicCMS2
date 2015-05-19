@@ -17,6 +17,7 @@ use Zend\Stdlib\ArrayUtils;
 
 error_reporting(E_ALL | E_STRICT);
 chdir(__DIR__);
+ini_set('memory_limit', '512M');
 
 /**
  * Test bootstrap, for setting up autoloading

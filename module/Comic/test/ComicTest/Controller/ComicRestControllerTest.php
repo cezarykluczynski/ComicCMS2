@@ -32,8 +32,6 @@ class ComicRestControllerTest extends AbstractHttpControllerTestCase
         /** Setup. */
         $this->grantAllRolesToUser();
 
-        $title =
-
         $p = new Parameters();
         $p
             ->set('title', 'New comic')
@@ -130,6 +128,28 @@ class ComicRestControllerTest extends AbstractHttpControllerTestCase
         $em->merge($slug);
         $em->remove($slug);
         $em->flush();
+        $this->revokeGrantedRoles();
+    }
+
+    /**
+     * Test if list of comics can be obtained.
+     *
+     * @covers ::getList
+     */
+    public function testComicListCanBeObtained()
+    {
+        /** Setup. */
+        $this->grantAllRolesToUser();
+        $this->loadFixtures('ComicTest\Fixture\Comics');
+
+        $this->getRequest()->setMethod('GET');
+        $this->dispatch('/rest/comic');
+        $response = $this->getJSONResponseAsArray();
+        $this->assertResponseStatusCode(200);
+        $this->assertTrue(!empty($response['list']));
+
+        /** Teardown. */
+        $this->removeFixtures();
         $this->revokeGrantedRoles();
     }
 }

@@ -36,7 +36,11 @@ class Slug
     protected $slug;
 
     /**
-     * @var Role
+     * @ORM\OneToOne(targetEntity="\Comic\Entity\Comic", mappedBy="slug")
+     **/
+    protected $comic;
+
+    /**
      * @ORM\ManyToOne(targetEntity="\Comic\Entity\Slug")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true)
      */

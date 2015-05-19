@@ -2,7 +2,7 @@
 
 admin
     .controller( "DashboardController", [ "$scope", "$http", "$sce", "$rootScope", "$templateCache", "Alertify",
-    function( $scope, $http, $sce, $rootScope, $templateCache, Alertify ) {
+    "comics", function( $scope, $http, $sce, $rootScope, $templateCache, Alertify, comics ) {
         $scope.users = {
             current: 1,
             perPage: 10,
@@ -23,9 +23,8 @@ admin
             }
         };
 
-        $scope.comics = {
-            comics: []
-        };
+        $scope.comics = comics;
+
         $scope.users.getResultsPage( 1 );
 
         $scope.$emit = function (eventName) {

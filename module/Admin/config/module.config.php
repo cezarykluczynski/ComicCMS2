@@ -95,6 +95,11 @@ return array(
         'strategies' => array(
             'ViewJsonStrategy',
         ),
+        'angular_templates' => array(
+            'admin' => array(
+                __DIR__ . '/../view/admin/templates',
+            ),
+        ),
     ),
     'console' => array(
         'router' => array(

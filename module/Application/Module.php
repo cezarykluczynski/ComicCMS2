@@ -11,6 +11,7 @@ namespace Application;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use Zend\Json\Json;
 
 class Module
 {
@@ -19,8 +20,39 @@ class Module
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
-    }
 
+        /**
+         * Handler for pretty printing JSON responses. Taken from
+         * {@link https://juriansluiman.nl/article/140/pretty-print-json-in-your-rest-api this blog post}.
+         */
+        $eventManager->attach(MvcEvent::EVENT_FINISH, function($e) {
+            $response = $e->getResponse();
+
+            if (!method_exists($response, 'getHeaders'))
+            {
+                return;
+            }
+
+            $headers  = $response->getHeaders();
+            if (!$headers->has('Content-Type'))
+            {
+                return;
+            }
+
+            $contentType = $headers->get('Content-Type');
+            $value  = $contentType->getFieldValue();
+            if (false !== strpos('application/json', $value)) {
+                return;
+            }
+
+            $body = $response->getContent();
+            $body = Json::prettyPrint($body, array(
+                'indent' => '  '
+            ));
+            $body = $body . "\n";
+            $response->setContent($body);
+        });
+    }
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';

@@ -1,12 +1,28 @@
 <script type="text/ng-template" id="comicAdminWidgetIndex">
-    <div class="alert alert-info" role="alert">
-        <div ng-show="comics.comics.length === 0">
-            <p><?= $this->translate("You don't have any comics yet.") ?></p>
-            <p><button type="button" class="btn btn-success" ng-click="$emit('openComicCreateDialog')"><?= $this->translate("Create my first comic") ?></button></p>
+    <div class="alert alert-info" role="alert" ng-show="comics.loaded">
+        <div ng-show="comics.length === 0">
+            <?= $this->translate("You don't have any comics yet.") ?>
+            <p>
+                <button type="button" class="btn btn-success" ng-click="$emit('openComicCreateDialog')">
+                    <?= $this->translate("Create my first comic") ?>
+                </button>
+            </p>
         </div>
-        <div ng-show="comics.comics.length > 0">
-            <div ng-repeat="comic in comics.comics">
-            </div>
+        <div ng-show="comics.length > 0">
+            <span ng-show="comics.length === 1">
+                <?= sprintf(
+                    $this->translate('There\'s one comic, %s.'),
+                    '<span ng-bind-html="comics.getLatest().title | bold"></span>'
+                ); ?>
+            </span>
+            <span ng-show="comics.length > 1">
+                <?= sprintf(
+                    $this->translate('Theres are %s comics, %s being the latest.'),
+                    '{{comics.length}}',
+                    '<span ng-bind-html="comics.getLatest().title | bold"></span>'
+                ); ?>
+            </span>
         </div>
     </div>
+    <div ng-show="!comics.loaded" ng-include="'loading'"></div>
 </script>

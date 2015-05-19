@@ -1,5 +1,5 @@
 <script type="text/ng-template" id="adminComicsCreate">
-<div ng-controller="ComicsCreateDialogController">
+<div ng-controller="ComicsEditController">
     <form name="adminComicsCreate">
         <h2><?= $this->translate('Create comics'); ?></h2>
         <div class="row">
@@ -13,7 +13,7 @@
                     ng-required="true"
                     ng-trim="true"
                     ng-minlength="1"
-                    ng-model="comics.title"
+                    ng-model="comic.title"
                     ng-disabled="submitInProgress"
                 >
             </div>
@@ -27,7 +27,7 @@
                     ng-required="true"
                     ng-trim="true"
                     ng-minlength="1"
-                    ng-model="comics.slug"
+                    ng-model="comic.slug"
                     ng-disabled="submitInProgress"
                 >
             </div>
@@ -40,13 +40,13 @@
                     type="text"
                     name="new-comics-tagline"
                     id="new-comics-tagline"
-                    ng-model="comics.tagline"
+                    ng-model="comic.tagline"
                     ng-disabled="submitInProgress"
                 >
             </div>
             <div class="form-group col-lg-6">
                 <label for="new-comics-tagline"><?= $this->translate('Author (optional):'); ?></label>
-                <ui-select ng-model="authors.selected" theme="bootstrap">
+                <ui-select ng-model="authors.selected" theme="bootstrap" ng-disabled="submitInProgress">
                     <ui-select-match>{{$select.selected.name}}</ui-select-match>
                     <ui-select-choices repeat="author in authors | filter: $select.search">
                         <div ng-bind="author.name | highlight: $select.search"></div>
@@ -62,7 +62,7 @@
                 type="text"
                 name="new-comics-description"
                 id="new-comics-description"
-                ng-model="comics.description"
+                ng-model="comic.description"
                 ng-disabled="submitInProgress"
             ></textarea>
         </div>

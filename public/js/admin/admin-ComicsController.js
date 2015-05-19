@@ -1,8 +1,41 @@
 "use strict";
 
 admin
-    .controller( "ComicsController", [ "$scope", "$rootScope", "ngDialog",
-        function( $scope, $rootScope, ngDialog ) {
+    .factory( "comics", [ "$http", function( $http ) {
+        var comics = {};
+
+        comics.list = {};
+        comics.length = 0;
+
+        comics.merge = function ( data ) {
+            data.list.forEach(function ( comic ) {
+                comics.add( comic );
+            });
+        };
+
+        comics.add = function ( comic ) {
+            comics.list[ comic.id ] = comic;
+            comics.length = Object.keys( comics.list ).length;
+        }
+
+        comics.getLatest = function () {
+            return this.list[ Object.keys( this.list ).sort().pop() ];
+        }
+
+        comics.loadComics = function () {
+            this.loaded = false;
+            $http.get( "/rest/comic" ).then( function ( response ) {
+                comics.merge( response.data );
+                comics.loaded = true;
+            });
+        };
+
+        comics.loadComics();
+
+        return comics;
+    }])
+    .controller( "ComicsController", [ "comics", "$scope", "$rootScope", '$http', "ngDialog",
+        function( comics, $scope, $rootScope, $http, ngDialog ) {
         $rootScope.$on( "openComicCreateDialog", function () {
             $scope.openComicCreateDialog();
         });
@@ -28,20 +61,24 @@ admin
             $rootScope.blurActiveElement();
         };
 
+        $scope.comics = comics;
     }])
-    .controller( "ComicsCreateDialogController", [ "$scope", "$rootScope", "$http",
-        function ( $scope, $rootScope, $http ) {
+    .controller( "ComicsEditController", [ "comics", "$scope", "$rootScope", "$http",
+        function ( comics, $scope, $rootScope, $http ) {
         /** Pending comics entity. */
-        $scope.comics = {};
-        $scope.comics.title = "";
-        $scope.comics.description = "";
-        $scope.comics.tagline = "";
-        $scope.comics.slug = "";
+        $scope.comic = {};
+        $scope.comic.title = "";
+        $scope.comic.description = "";
+        $scope.comic.tagline = "";
+        $scope.comic.slug = "";
 
         /** Authors select. */
         $scope.noAuthor = { id: null, name: "(no author)" };
         $scope.authors = [ $scope.noAuthor ];
         $scope.authors[ "selected" ] = $scope.noAuthor;
+
+        /** Comics model. */
+        $scope.comics = comics;
 
         $scope.submitInProgress = false;
 
@@ -50,11 +87,13 @@ admin
             $rootScope.comicCreateDialog.close();
         };
 
+        /** Save dialog contents. */
         $scope.save = function() {
             $scope.submitInProgress = true;
-            var xhr = $http.post( "/rest/comic", $scope.comics )
+            var xhr = $http.post( "/rest/comic", $scope.comic )
                 .then( function ( response ) {
                     $scope.cancel();
+                    $scope.comics.loadComics();
                 })
                 .finally( function ( response ) {
                     $rootScope.alertResponse( response );

@@ -32,4 +32,19 @@ class ComicRepository extends EntityRepository
 
         return $comic;
     }
+
+    /**
+     * Return list of all comic entities.
+     *
+     * @return array
+     */
+    public function getList()
+    {
+        return $this->_em->createQueryBuilder()
+            ->select('Comic', 'Slug')
+            ->from('Comic\Entity\Comic', 'Comic')
+            ->leftJoin('Comic.slug', 'Slug')
+            ->getQuery()
+            ->getArrayResult();
+    }
 }

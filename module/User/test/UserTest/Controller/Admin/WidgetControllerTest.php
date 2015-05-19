@@ -38,12 +38,13 @@ class WidgetControllerTest extends AbstractHttpControllerTestCase
 
         $this->dispatch('/admin/user/widget/users?limit=2&page=' . $page);
 
+        $response = Json::decode($this->getResponse()->getContent(), Json::TYPE_ARRAY);
+
         /**
          * Test only if response is JSON and JSON has 2 items. UserRepository has it own tests in
          * {@link \UserTest\Controller\Admin\UserRepositoryTest::testUserReposityPaginator()}.
          */
         $this->assertResponseHeaderContains('Content-Type', 'application/json; charset=utf-8');
-        $response = Json::decode($this->getResponse()->getContent(), Json::TYPE_ARRAY);
         $this->assertEquals(2, count($response['users']));
 
         $this->removeFixtures();

@@ -17,15 +17,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @ORM\Entity(repositoryClass="\Comic\Entity\ComicRepository")
  * @ORM\Table(name="comics")
- * @property string $title
- * @property string $tagline
- * @property string $description
- * @property int $logo
- * @property int $slug
- * @property int $role
- * @property array $strips
- * @property array $slugs
- * @property int $id
  */
 class Comic
 {
@@ -58,7 +49,7 @@ class Comic
     protected $logo;
 
     /**
-     * @ORM\OneToOne(targetEntity="\Comic\Entity\Slug")
+     * @ORM\OneToOne(targetEntity="\Comic\Entity\Slug", inversedBy="comic")
      * @ORM\JoinColumn(name="slug_id", referencedColumnName="id")
      */
     protected $slug;
