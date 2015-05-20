@@ -36,7 +36,32 @@
         pointer-events: none
 
 
+[ng-controller="ComicsController"]
+    .navbar
+        margin-bottom: 0
+
+    .comics
+        .list-group-item
+            cursor: pointer
+
+            .title
+                font-size: 18px
+                margin: 0
+
+            hr
+                margin: 10px 0 10px 0
+
+        .list-group-item.active
+            cursor: default
+            background-color: $color-admin-background
+            border-color: darken($color-admin-background, 10%)
+
+        .label.title
+            font-size: 14px
+
+
 [ng-controller="ComicsEditController"]
+
     textarea
         resize: vertical
         max-height: 10em

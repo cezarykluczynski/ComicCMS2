@@ -8,6 +8,18 @@
                     </button>
                 </div>
             </form>
-      </div>
+        </div>
     </nav>
+
+
+    <div class="row">
+        <div class="col-md-4 comics">
+            <div class="panel panel-default">
+                <h2 class="panel-heading">{$this->translate('Comics')}</h2>
+                <div class="panel-body" ng-include="'adminComicsList'"></div>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+    </div>
 </div>

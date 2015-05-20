@@ -3,7 +3,7 @@
 admin
     .controller( "ComicsEditController", [ "comics", "$scope", "$rootScope", "$http",
         function ( comics, $scope, $rootScope, $http ) {
-        /** Pending comics entity. */
+        /** Comic entity. */
         $scope.comic = {};
         $scope.comic.title = "";
         $scope.comic.description = "";
@@ -22,7 +22,7 @@ admin
 
         /** Close the dialog. */
         $scope.cancel = function() {
-            $rootScope.comicCreateDialog.close();
+            $rootScope.comicEditDialog.close();
         };
 
         /** Save dialog contents. */
