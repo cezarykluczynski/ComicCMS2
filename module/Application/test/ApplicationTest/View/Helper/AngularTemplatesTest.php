@@ -57,6 +57,6 @@ class AngularTemplatesTest extends AbstractHttpControllerTestCase
             ->get('angularTemplates');
 
         /** This should throw an exception about missing templates group. */
-        $templatesBody = $angularTemplates('not-existing');
+        $angularTemplates('not-existing');
     }
 }

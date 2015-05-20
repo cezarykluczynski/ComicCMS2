@@ -33,9 +33,9 @@
         ->appendFile("`$basePath`/vendor/ng-alertify/ng-alertify.js")
         ->appendFile("`$basePath`/vendor/ngDialog/js/ngDialog.js")
         ->appendFile("`$basePath`/js/admin/admin.js")
-        ->appendFile("`$basePath`/js/admin/admin-DashboardController.js")
-        ->appendFile("`$basePath`/js/admin/admin-ComicsController.js")
-        ->appendFile("`$basePath`/js/admin/admin-SigninController.js")
+        ->appendFile("`$basePath`/js/admin/Controller/Dashboard.js")
+        ->appendFile("`$basePath`/js/admin/Controller/Comics.js")
+        ->appendFile("`$basePath`/js/admin/Controller/Signin.js")
     }
 </head>
 
