@@ -75,7 +75,7 @@ class AdminControllerTest extends AbstractHttpControllerTestCase
         $this->getRequest()->setPost($p);
 
         /** Sign in successfully. */
-        $this->dispatch('/admin/signin');
+        $this->dispatch('/admin/auth/signin');
 
         /** NExt, go to admin view. */
         $this->reset(true);

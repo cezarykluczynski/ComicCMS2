@@ -28,7 +28,7 @@ class AuthControllerTestHttp extends AbstractHttpControllerTestCase
      */
     public function testSigninActionCanBeAccessed()
     {
-        $this->dispatch('/admin/signin');
+        $this->dispatch('/admin/auth/signin');
         $this->assertResponseStatusCode(200);
         $this->assertModuleName('Admin');
         $this->assertControllerName('Admin\Controller\Auth');
@@ -50,7 +50,7 @@ class AuthControllerTestHttp extends AbstractHttpControllerTestCase
             ->set('password','justTooEasy');
         $this->getRequest()->setMethod('POST');
         $this->getRequest()->setPost($p);
-        $this->dispatch('/admin/signin');
+        $this->dispatch('/admin/auth/signin');
         $this->assertResponseStatusCode(401);
 
         $container = new Container('user');
@@ -75,7 +75,7 @@ class AuthControllerTestHttp extends AbstractHttpControllerTestCase
         $this->getRequest()->setMethod('POST');
         $this->getRequest()->setHeaders(\Zend\Http\Headers::fromString('X-Requested-With: XMLHttpRequest'));
         $this->getRequest()->setPost($p);
-        $this->dispatch('/admin/signin');
+        $this->dispatch('/admin/auth/signin');
         $this->assertResponseStatusCode(401);
 
         $container = new Container('user');
@@ -99,7 +99,7 @@ class AuthControllerTestHttp extends AbstractHttpControllerTestCase
             ->set('password','justTooEasy');
         $this->getRequest()->setMethod('POST');
         $this->getRequest()->setPost($p);
-        $this->dispatch('/admin/signin');
+        $this->dispatch('/admin/auth/signin');
         $this->assertResponseStatusCode(401);
 
         $container = new Container('user');
@@ -124,7 +124,7 @@ class AuthControllerTestHttp extends AbstractHttpControllerTestCase
         $this->getRequest()->setMethod('POST');
         $this->getRequest()->setHeaders(\Zend\Http\Headers::fromString('X-Requested-With: XMLHttpRequest'));
         $this->getRequest()->setPost($p);
-        $this->dispatch('/admin/signin');
+        $this->dispatch('/admin/auth/signin');
         $this->assertResponseStatusCode(401);
 
         $container = new Container('user');
@@ -152,7 +152,7 @@ class AuthControllerTestHttp extends AbstractHttpControllerTestCase
             ->set('password','password');
         $this->getRequest()->setMethod('POST');
         $this->getRequest()->setPost($p);
-        $this->dispatch('/admin/signin');
+        $this->dispatch('/admin/auth/signin');
         $this->assertResponseStatusCode(201);
         $this->assertRedirectTo('/admin');
 
@@ -161,7 +161,7 @@ class AuthControllerTestHttp extends AbstractHttpControllerTestCase
 
         /** Test if user session is preserved between.  */
         $this->reset(true);
-        $this->dispatch('/admin/signin');
+        $this->dispatch('/admin/auth/signin');
         $container = new Container('user');
         $this->assertNotNull($container->id, "User ID preserved in session.");
     }
@@ -180,7 +180,7 @@ class AuthControllerTestHttp extends AbstractHttpControllerTestCase
             ->set('password','password');
         $this->getRequest()->setMethod('POST');
         $this->getRequest()->setPost($p);
-        $this->dispatch('/admin/signin', null, array(), true);
+        $this->dispatch('/admin/auth/signin', null, array(), true);
         $this->assertResponseStatusCode(201);
 
         $container = new Container('user');
@@ -206,14 +206,14 @@ class AuthControllerTestHttp extends AbstractHttpControllerTestCase
             ->set('password','password');
         $this->getRequest()->setMethod('POST');
         $this->getRequest()->setPost($p);
-        $this->dispatch('/admin/signin');
+        $this->dispatch('/admin/auth/signin');
         $this->assertResponseStatusCode(201);
 
         /** Test if user ID was stored in session. */
         $container = new Container('user');
         $this->assertNotNull($container->id, "User ID stored in session before sign out.");
 
-        $this->dispatch('/admin/signout');
+        $this->dispatch('/admin/auth/signout');
 
         /** Test if user ID was removed from session. */
         $container = new Container('user');
@@ -227,7 +227,7 @@ class AuthControllerTestHttp extends AbstractHttpControllerTestCase
      */
     public function testSignoutActionedirectsToSignInForm()
     {
-        $this->dispatch('/admin/signout');
-        $this->assertRedirectTo('/admin/signin');
+        $this->dispatch('/admin/auth/signout');
+        $this->assertRedirectTo('/admin/auth/signin');
     }
 }

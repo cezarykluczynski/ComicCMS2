@@ -27,7 +27,7 @@ return array(
             'admin-signin' => array(
                'type' => 'Literal',
                 'options' => array(
-                    'route'    => '/admin/signin',
+                    'route'    => '/admin/auth/signin',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Admin\Controller',
                         'controller'    => 'Auth',
@@ -39,7 +39,7 @@ return array(
             'admin-signout' => array(
                'type' => 'Literal',
                 'options' => array(
-                    'route'    => '/admin/signout',
+                    'route'    => '/admin/auth/signout',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Admin\Controller',
                         'controller'    => 'Auth',
