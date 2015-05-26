@@ -8,7 +8,7 @@
 
     .nav
         padding: 1em 1em 0
-        background-color: #40B5E3
+        background-color: $color-admin-dark-background
 
         a
             background-color: $color-admin-background
@@ -58,6 +58,18 @@
 
         .label.title
             font-size: 14px
+
+    .admin-comics-list
+        position: relative
+
+        svg
+            position: absolute
+            right: -45px
+
+            path
+                stroke: $color-admin-dark-background
+                stroke-width: 1px
+                fill: transparent
 
 
 [ng-controller="ComicsEditController"]

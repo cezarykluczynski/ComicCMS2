@@ -24,12 +24,27 @@ return array(
                         'controller'    => 'ComicRest',
                     ),
                 ),
+                'may_terminate' => true,
+            ),
+            'rest-comic-strip' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/rest/comic/:comicId/strip',
+                    'constraints' => array(
+                        'comicId'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Comic\Controller',
+                        'controller'    => 'StripRest',
+                    ),
+                ),
             ),
         ),
     ),
     'controllers' => array(
         'invokables' => array(
             'Comic\Controller\ComicRest' => 'Comic\Controller\ComicRestController',
+            'Comic\Controller\StripRest' => 'Comic\Controller\StripRestController',
         ),
     ),
     // Doctrine config

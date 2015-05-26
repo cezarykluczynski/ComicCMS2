@@ -83,6 +83,11 @@ class Comic
         $this->slugs = new ArrayCollection();
     }
 
+    public function addStrip(Strip $strip)
+    {
+        $this->strips[] = $strip;
+    }
+
     /**
      * Magic getter to expose protected properties.
      *

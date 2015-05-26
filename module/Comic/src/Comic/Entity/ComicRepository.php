@@ -44,6 +44,7 @@ class ComicRepository extends EntityRepository
             ->select('Comic', 'Slug')
             ->from('Comic\Entity\Comic', 'Comic')
             ->leftJoin('Comic.slug', 'Slug')
+            ->orderBy('Comic.id', 'DESC')
             ->getQuery()
             ->getArrayResult();
     }

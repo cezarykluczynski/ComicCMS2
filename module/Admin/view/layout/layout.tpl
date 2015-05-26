@@ -36,10 +36,13 @@
         ->appendFile("`$basePath`/js/admin/module/admin-signin.js")
         ->appendFile("`$basePath`/js/admin/filter/admin.js")
         ->appendFile("`$basePath`/js/admin/Service/comics.js")
+        ->appendFile("`$basePath`/js/admin/Service/strips.js")
         ->appendFile("`$basePath`/js/admin/Controller/Dashboard.js")
         ->appendFile("`$basePath`/js/admin/Controller/Tab.js")
         ->appendFile("`$basePath`/js/admin/Controller/Comics.js")
         ->appendFile("`$basePath`/js/admin/Controller/ComicsEdit.js")
+        ->appendFile("`$basePath`/js/admin/Controller/Strip.js")
+        ->appendFile("`$basePath`/js/admin/Controller/StripEdit.js")
         ->appendFile("`$basePath`/js/admin/Controller/Signin.js")
     }
 </head>

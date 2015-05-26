@@ -15,7 +15,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Strip.
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\Comic\Entity\StripRepository")
  * @ORM\Table(name="strips")
  * @property int $id
  */

@@ -1,9 +1,9 @@
 <script type="text/ng-template" id="adminComicsList">
     <div ng-show="!comics.loaded" ng-include="'loading'"></div>
-    <ul class="list-group" ng-show="comics.loaded">
+    <ul class="list-group admin-comics-list" ng-show="comics.loaded">
         <li
             class="list-group-item"
-            ng-repeat="entity in comics.list"
+            ng-repeat="entity in comics.list | orderBy:'id':true"
             ng-class="{active: activated(entity)}"
             ng-click="activate(entity)"
             >

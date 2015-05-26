@@ -60,4 +60,22 @@ trait FixtureProvider
             unset($this->fixtures[$fixtureClassName]);
         }
     }
+
+    /**
+     * Returns all currently loaded fixtures.
+     *
+     * @return array
+     */
+    public function getLoadedFixtures()
+    {
+        $fixtures = array();
+
+        foreach($this->fixtures as $fixtureClassName => $fixture)
+        {
+            /** Merge fixtures from all currently loaded classes. */
+            $fixtures = array_merge($fixtures, $fixture->getLoadedFixtures());
+        }
+
+        return $fixtures;
+    }
 }

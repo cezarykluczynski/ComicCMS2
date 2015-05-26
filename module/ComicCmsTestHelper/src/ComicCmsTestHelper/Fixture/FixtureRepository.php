@@ -34,19 +34,25 @@ abstract class FixtureRepository implements FixtureInterface
     */
     public function unload()
     {
-        if ($this->entityClass === null)
-        {
-            throw new \Exception('self::$entityClass has to be set for FixtureInterface::unload to work.');
-        }
-
-        foreach($this->entities as $entity)
+        foreach($this->entities as $key => $entity)
         {
             $newEntity = $this->manager
-                ->find($this->entityClass, $entity->id);
+                ->find(get_class($entity), $entity->id);
+
+            if (is_null($newEntity))
+            {
+                continue;
+            }
 
             $this->manager->remove($newEntity);
+            unset($this->entities[$key]);
         }
 
         $this->manager->flush();
+    }
+
+    public function getLoadedFixtures()
+    {
+        return (array) $this->entities;
     }
 }
