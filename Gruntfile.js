@@ -25,7 +25,7 @@ module.exports = function(grunt) {
                 options: {
                     runType: "runner",
                     config: "tests/intern",
-                    reporters: [ "combined" ]
+                    reporters: [ "Combined" ]
                 }
             },
             /** CI functional tests config. */

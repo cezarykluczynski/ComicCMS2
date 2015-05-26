@@ -43,7 +43,7 @@
                 </label>
             </div>
             <div class="form-group submit">
-                <button type="submit" class="btn btn-default btn-lg btn-primary">
+                <button type="submit" class="btn btn-default btn-lg btn-primary" ng-disabled="signin.$invalid">
                     {$this->translate("Submit")}
                 </button>
             </div>

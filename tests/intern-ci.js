@@ -16,7 +16,8 @@ define({
     ],
     maxConcurrency: 3,
     functionalSuites: [
-        "tests/functional/helloworld",
+        "tests/functional/mainpage",
+        "tests/functional/admin/auth/signin",
     ],
     excludeInstrumentation: /tests|node_modules/
 });
