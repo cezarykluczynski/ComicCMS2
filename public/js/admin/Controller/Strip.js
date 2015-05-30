@@ -6,4 +6,6 @@ admin
 
         $scope.comics = comics;
         $scope.strips = strips;
+
+        //
     }]);

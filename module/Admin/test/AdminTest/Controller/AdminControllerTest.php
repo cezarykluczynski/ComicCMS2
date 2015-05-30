@@ -16,7 +16,9 @@ use BjyAuthorize\Guard\Controller;
 
 /**
  * @coversDefaultClass \Admin\Controller\AdminController
- * @uses \Application\Controller\ApplicationController
+ * @uses \Application\Controller\AbstractActionController
+ * @uses \Application\Service\Authentication
+ * @uses \Application\Service\Database
  * @uses \User\Provider\Identity\UserIdentityProvider
  * @uses \User\Provider\Identity\UserIdentityProviderMock
  */

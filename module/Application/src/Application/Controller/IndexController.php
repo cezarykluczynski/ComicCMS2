@@ -11,7 +11,7 @@ namespace Application\Controller;
 
 use Zend\View\Model\ViewModel;
 
-class IndexController extends ApplicationController
+class IndexController extends AbstractActionController
 {
     /**
      * @return \Zend\View\Model\ViewModel

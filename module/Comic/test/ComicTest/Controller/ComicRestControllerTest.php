@@ -16,7 +16,9 @@ use Comic\Entity\Slug;
 
 /**
  * @coversDefaultClass \Comic\Controller\ComicRestController
- * @uses \Application\Controller\ApplicationController
+ * @uses \Application\Controller\AbstractActionController
+ * @uses \Application\Service\Authentication
+ * @uses \Application\Service\Database
  * @uses \User\Provider\Identity\UserIdentityProvider
  * @uses \User\Provider\Identity\UserIdentityProviderMock
  */
@@ -136,7 +138,7 @@ class ComicRestControllerTest extends AbstractHttpControllerTestCase
      *
      * @covers ::getList
      */
-    public function testComicListCanBeObtained()
+    public function testComicsListCanBeObtained()
     {
         /** Setup. */
         $this->grantAllRolesToUser();

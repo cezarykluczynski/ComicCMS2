@@ -15,7 +15,9 @@ use Zend\Session\Container;
 
 /**
  * @coversDefaultClass \Admin\Controller\AuthController
- * @uses \Application\Controller\ApplicationController
+ * @uses \Application\Controller\AbstractActionController
+ * @uses \Application\Service\Authentication
+ * @uses \Application\Service\Database
  * @uses \User\Provider\Identity\UserIdentityProvider
  * @uses \User\Provider\Identity\UserIdentityProviderMock
  */
@@ -139,7 +141,7 @@ class AuthControllerTestHttp extends AbstractHttpControllerTestCase
      * This test also covers other routines related to user authentication.
      *
      * @covers ::signinAction
-     * @covers \Application\Controller\ApplicationController::onDispatch
+     * @covers \Application\Controller\AbstractActionController::onDispatch
      * @covers \User\Provider\Identity\UserIdentityProvider::getIdentityRoles
      * @covers \User\Provider\Identity\UserIdentityProvider::setAuthenticatedUser
      */

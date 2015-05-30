@@ -1,3 +1,32 @@
 <script type="text/ng-template" id="adminStripsList">
-    <div ng-show="!strips.loaded" ng-include="'loading'"></div>
+<div class="panel panel-default" ng-controller="StripController">
+    <h2 class="panel-heading">
+        <button type="button" class="btn btn-success pull-right">
+            <?= $this->translate("Create strip") ?>
+        </button>
+        <?= $this->translate('Strips'); ?>
+    </h2>
+    <div class="panel-body">
+        <ul class="list-group admin-strips-list" ng-show="strips.loaded">
+            <li
+                class="list-group-item"
+                ng-repeat="entity in strips.list | orderBy:'id':true"
+                ng-class="{active: activated(entity)}"
+                ng-click="activate(entity)"
+                >
+                <div class="clearfix">
+                    <h3 class="title" ng-bind="entity.title"></h3>
+                </div>
+            </li>
+        </ul>
+        <div ng-show="strips.list.length === 0 && strips.loaded">
+                <?= sprintf(
+                    $this->translate("%s does not have any strips yet."),
+                    '<span ng-bind-html="$parent.getActive().title | bold"></span>'
+                ); ?>
+        </div>
+
+        <div ng-show="!strips.loaded" ng-include="'loading'"></div>
+    </div>
+</div>
 </script>

@@ -10,9 +10,9 @@
 namespace Admin\Controller;
 
 use Zend\View\Model\ViewModel;
-use Application\Controller\ApplicationController;
+use Application\Controller\AbstractActionController;
 
-class AdminController extends ApplicationController
+class AdminController extends AbstractActionController
 {
     /**
      * @return \Zend\View\Model\ViewModel

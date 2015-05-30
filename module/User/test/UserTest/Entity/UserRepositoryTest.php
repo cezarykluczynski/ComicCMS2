@@ -13,7 +13,9 @@ use ComicCmsTestHelper\Controller\AbstractHttpControllerTestCase;
 
 /**
  * @coversDefaultClass \User\Entity\UserRepository
- * @uses \Application\Controller\ApplicationController
+ * @uses \Application\Controller\AbstractActionController
+ * @uses \Application\Service\Authentication
+ * @uses \Application\Service\Database
  * @uses \User\Provider\Identity\UserIdentityProvider
  * @uses \User\Provider\Identity\UserIdentityProviderMock
  */

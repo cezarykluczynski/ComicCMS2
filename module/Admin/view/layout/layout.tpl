@@ -37,6 +37,7 @@
         ->appendFile("`$basePath`/js/admin/filter/admin.js")
         ->appendFile("`$basePath`/js/admin/Service/comics.js")
         ->appendFile("`$basePath`/js/admin/Service/strips.js")
+        ->appendFile("`$basePath`/js/admin/Service/users.js")
         ->appendFile("`$basePath`/js/admin/Controller/Dashboard.js")
         ->appendFile("`$basePath`/js/admin/Controller/Tab.js")
         ->appendFile("`$basePath`/js/admin/Controller/Comics.js")
@@ -44,6 +45,7 @@
         ->appendFile("`$basePath`/js/admin/Controller/Strip.js")
         ->appendFile("`$basePath`/js/admin/Controller/StripEdit.js")
         ->appendFile("`$basePath`/js/admin/Controller/Signin.js")
+        ->appendFile("`$basePath`/js/admin/Controller/Users.js")
     }
 </head>
 

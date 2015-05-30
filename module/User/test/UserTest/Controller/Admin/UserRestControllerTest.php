@@ -13,18 +13,20 @@ use ComicCmsTestHelper\Controller\AbstractHttpControllerTestCase;
 use Zend\Json\Json;
 
 /**
- * @coversDefaultClass \User\Controller\Admin\WidgetController
- * @uses \Application\Controller\ApplicationController
+ * @coversDefaultClass \User\Controller\UserRestController
+ * @uses \Application\Controller\AbstractActionController
+ * @uses \Application\Service\Authentication
+ * @uses \Application\Service\Database
  * @uses \User\Entity\UserRepository
  * @uses \User\Provider\Identity\UserIdentityProvider
  * @uses \User\Provider\Identity\UserIdentityProviderMock
  */
-class WidgetControllerTest extends AbstractHttpControllerTestCase
+class UserRestControllerTest extends AbstractHttpControllerTestCase
 {
     /**
-     * @covers ::usersAction
+     * @covers ::getList
      */
-    public function testUsersCanBeRetrievedAsJSON()
+    public function testUsersListCanBeObtained()
     {
         $this->grantAllRolesToUser();
         $this->loadFixtures('UserTest\Fixture\Users', array(
@@ -33,10 +35,9 @@ class WidgetControllerTest extends AbstractHttpControllerTestCase
 
         $userRepository = $this->em->getRepository('User\Entity\User');
         $count = $userRepository->count();
+        $offset = $count - 2;
 
-        $page = (ceil($count / 10) - 1);
-
-        $this->dispatch('/admin/user/widget/users?limit=2&page=' . $page);
+        $this->dispatch('/rest/user?limit=2&offset=' . $offset);
 
         $response = Json::decode($this->getResponse()->getContent(), Json::TYPE_ARRAY);
 

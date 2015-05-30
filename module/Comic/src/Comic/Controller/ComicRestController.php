@@ -9,7 +9,7 @@
 
 namespace Comic\Controller;
 
-use Zend\Mvc\Controller\AbstractRestfulController;
+use Application\Controller\AbstractRestfulController;
 use Zend\View\Model\JsonModel;
 use Comic\Entity\Comic;
 

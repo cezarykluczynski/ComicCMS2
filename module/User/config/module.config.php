@@ -12,14 +12,16 @@ namespace User;
 return array(
     'router' => array(
         'routes' => array(
-            'admin-user-widget-users' => array(
-                'type' => 'Literal',
+            'rest-user' => array(
+                'type'    => 'Segment',
                 'options' => array(
-                    'route'    => '/admin/user/widget/users',
+                    'route'    => '/rest/user[/:id]',
+                    'constraints' => array(
+                        'id'     => '[0-9]+',
+                    ),
                     'defaults' => array(
-                        '__NAMESPACE__' => 'User\Controller\Admin',
-                        'controller'    => 'Widget',
-                        'action'        => 'users',
+                        '__NAMESPACE__' => 'User\Controller',
+                        'controller'    => 'UserRest',
                     ),
                 ),
                 'may_terminate' => true,
@@ -28,15 +30,17 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'User\Controller\Admin\Widget' => 'User\Controller\Admin\WidgetController',
+            'User\Controller\UserRest' => 'User\Controller\UserRestController',
         ),
     ),
     'view_manager' => array(
-        'template_map' => array(
-            'user/admin/widget/index' => __DIR__ . '/../view/user/admin/widget/index.tpl',
-        ),
         'strategies' => array(
             'ViewJsonStrategy',
+        ),
+        'angular_templates' => array(
+            'admin' => array(
+                __DIR__ . '/../view/user/template',
+            ),
         ),
     ),
     // Doctrine config

@@ -13,11 +13,11 @@
             <div class="clearfix" ng-show="activated(entity)">
                 <hr>
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-xs btn-success">
+                    <button type="button" class="btn btn-xs btn-success" ng-click="$event.stopPropagation();">
                         <?= $this->translate('Edit'); ?>
                         <i class="glyphicon glyphicon-pencil"></i>
                     </button>
-                    <button type="button" class="btn btn-xs btn-danger">
+                    <button type="button" class="btn btn-xs btn-danger" ng-click="$event.stopPropagation();">
                         <?= $this->translate('Delete'); ?>
                         <i class="glyphicon glyphicon-remove"></i>
                     </button>

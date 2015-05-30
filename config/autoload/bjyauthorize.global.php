@@ -52,14 +52,10 @@ return [
                 /** Admin panel. */
                 ['controller' => 'Admin\Controller\Admin', 'action' => 'index', 'roles' => ['admin']],
 
-                /** Admin panel: Comics. */
-                ['controller' => 'Comic\Controller\Admin\Widget', 'action' => 'index', 'roles' => ['admin']],
+                /** Users RESTful controller. */
+                ['controller' => 'User\Controller\UserRest', 'action' => null, 'roles' => ['admin']],
 
-                /** Admin panel: Users. */
-                ['controller' => 'User\Controller\Admin\Widget', 'action' => 'index', 'roles' => ['admin']],
-                ['controller' => 'User\Controller\Admin\Widget', 'action' => 'users', 'roles' => ['admin']],
-
-                /** Comic RESTful controllers. */
+                /** Comics RESTful controllers. */
                 ['controller' => 'Comic\Controller\ComicRest', 'action' => null, 'roles' => ['admin']],
                 ['controller' => 'Comic\Controller\StripRest', 'action' => null, 'roles' => ['admin']],
 

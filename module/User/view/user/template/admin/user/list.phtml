@@ -1,0 +1,22 @@
+<script type="text/ng-template" id="adminUsersList">
+<div class="panel panel-default">
+    <div class="panel-heading"><h2><?= $this->translate('Users'); ?></h2></div>
+    <div class="panel-body">
+        <div class="users" ng-show="users.loaded">
+            <dir-pagination-controls on-page-change="users.changePage(newPageNumber)" pagination-id="users">
+            </dir-pagination-controls>
+
+            <ui class="list-group">
+                <li class="list-group-item" dir-paginate="user in users.list | itemsPerPage: users.limit"
+                    total-items="users.total" current-page="users.current" pagination-id="users">
+                    <span ng-bind="user.email"></span>
+                </li>
+            </ul>
+
+            <dir-pagination-controls on-page-change="users.changePage(newPageNumber)" pagination-id="users">
+            </dir-pagination-controls>
+        </div>
+        <div ng-show="!users.loaded" ng-include="'loading'"></div>
+    </div>
+</div>
+</script>

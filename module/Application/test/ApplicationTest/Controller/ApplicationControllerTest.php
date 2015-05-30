@@ -10,17 +10,17 @@
 namespace ApplicationTest\Controller;
 
 use ComicCmsTestHelper\Controller\AbstractHttpControllerTestCase;
-use Application\Controller\ApplicationController;
+use Application\Controller\AbstractActionController;
 use ComicCmsTestHelper\Bootstrap;
 
-class ApplicationControllerTest extends AbstractHttpControllerTestCase
+class AbstractActionControllerTest extends AbstractHttpControllerTestCase
 {
     public function testGetEntityManagerReturnsInstanceOfDoctrineEntityManager() {
         $serviceManager = Bootstrap::getServiceManager();
-        $controller = new ApplicationController();
+        $controller = new AbstractActionController();
         $controller->setServiceLocator($serviceManager);
-        $applicationControllerEntityManager = $controller->getEntityManager();
+        $AbstractActionControllerEntityManager = $controller->getEntityManager();
 
-        $this->assertInstanceOf('Doctrine\ORM\EntityManager', $applicationControllerEntityManager);
+        $this->assertInstanceOf('Doctrine\ORM\EntityManager', $AbstractActionControllerEntityManager);
     }
 }

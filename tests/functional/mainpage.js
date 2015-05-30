@@ -16,7 +16,7 @@ define([
                 .findByCssSelector( "body.application" )
                 .isDisplayed()
                 .then( function ( visible ) {
-                    assert.ok( visible, "Sign in form loaded." );
+                    assert.ok( visible, "Main page is visible." );
                 });
         }
     });

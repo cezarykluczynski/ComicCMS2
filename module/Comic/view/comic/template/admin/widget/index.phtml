@@ -9,7 +9,7 @@
             </p>
         </div>
         <div ng-show="comics.list.length > 0">
-            <span ng-show="comics.length === 1">
+            <span ng-show="comics.list.length === 1">
                 <?= sprintf(
                     $this->translate('There\'s one comic, %s.'),
                     '<span ng-bind-html="comics.getLatest().title | bold"></span>'

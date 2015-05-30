@@ -16,7 +16,9 @@ use Comic\Entity\Slug;
 
 /**
  * @coversDefaultClass \Comic\Controller\StripRestController
- * @uses \Application\Controller\ApplicationController
+ * @uses \Application\Controller\AbstractActionController
+ * @uses \Application\Service\Authentication
+ * @uses \Application\Service\Database
  * @uses \User\Provider\Identity\UserIdentityProvider
  * @uses \User\Provider\Identity\UserIdentityProviderMock
  */

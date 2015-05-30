@@ -1,0 +1,11 @@
+<script type="text/ng-template" id="userAdminWidgetIndex">
+<div class="alert alert-info" role="alert" ng-show="users.loaded">
+        <span>
+            <?= sprintf(
+                $this->translate('There are %s users.'),
+                '<span ng-bind="users.total"></span>'
+            ); ?>
+        </span>
+    </div>
+    <div ng-show="!users.loaded" ng-include="'loading'"></div>
+</script>

@@ -1,7 +1,7 @@
 "use strict";
 
 admin
-    .controller( "ComicsController", [ "comics", "strips", "$scope", "$rootScope", '$http', "ngDialog", "$filter",
+    .controller( "ComicsController", [ "comics", "strips", "$scope", "$rootScope", "$http", "ngDialog", "$filter",
         function( comics, strips, $scope, $rootScope, $http, ngDialog, $filter ) {
         $rootScope.$on( "openComicCreateDialog", function () {
             $scope.openComicCreateDialog();
@@ -39,14 +39,23 @@ admin
         $scope.activated = function ( entity ) {
             var entityIsSet = !! $scope.comic.entity;
             return entityIsSet && ( typeof entity === "undefined" || entity.id === $scope.comic.entity.id );
-        }
+        };
+
+        $scope.getActive = function () {
+            return $scope.comic.entity;
+        };
 
         $scope.activate = function ( entity ) {
             /**
              * Put a comic to edit, but only if the currently edited comic isn't dirty,
-             * that is, it doesn't have unsaved changes.
+             * that is, it doesn't have unsaved changes, and strips are not loading, and current
+             * comics is not yet activated.
              */
-            if ( ! $scope.comic.dirty ) {
+            if (
+                ! $scope.comic.dirty &&
+                ! $scope.comics.loading &&
+                ! $scope.activated( entity )
+            ) {
                 $scope.comic.entity = entity;
                 strips.setComicId( entity.id );
             }
