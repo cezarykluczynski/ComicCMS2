@@ -112,16 +112,9 @@ define([
                     .findByCssSelector( "button[type=\"submit\"]" )
                         .click()
                         .end()
-                    .setFindTimeout( 5000 )
-                    /**
-                     * Find form's alert box. There could be only one success when signin in,
-                     * so no additional assertion are required.
-                     */
-                    .findByCssSelector( ".alert.alert-success" )
-                        .end()
                     .end()
                 .setFindTimeout( 10000 )
-                /** Assert that admin panel Angular app can be found. */
+                /** Assert that admin panel Angular app can be found, therefore authentication was successful. */
                 .findByCssSelector( "div[ng-app=\"admin\"]" )
                 .end();
         }
