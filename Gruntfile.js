@@ -55,16 +55,14 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
-    grunt.registerTask('default', ['sass']);
-
     /** Main task for local testing. */
-    grunt.registerTask( "test", function () {
+    grunt.registerTask( "test", "Funcional tests ran locally.", function () {
         grunt.task.run( "delete-coverage-reports" );
         grunt.task.run( "intern:runner" );
     });
 
     /** Main task for Travis. */
-    grunt.registerTask( "test-ci", function () {
+    grunt.registerTask( "test-ci", "Functional tests ran on Travis.", function () {
         /** Don't run this task outside of CI! */
         if ( ! process.env.TRAVIS ) {
             console.error( "This task should only be run by Travis." );
@@ -83,7 +81,8 @@ module.exports = function(grunt) {
     grunt.registerTask( "default", [ "test" ] );
 
     /** Deletes coverage-final.json, so combined coverage will be accurate. */
-    grunt.registerTask( "delete-coverage-reports", function () {
+    grunt.registerTask( "delete-coverage-reports", "Deletes coverage reports from root directory.",
+    function () {
         try {
             require( "fs" ).unlinkSync( "coverage-final.json" );
         } catch ( i ) {}

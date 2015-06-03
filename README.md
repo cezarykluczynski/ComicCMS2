@@ -1,5 +1,7 @@
 Work in progress. Not production ready.
 
+Wanna help? Check out [todo](docs/todo.md) and [roadmap](docs/roadmap.md);
+
 ## Build status
 [![Build Status](https://travis-ci.org/cezarykluczynski/ComicCMS2.svg?branch=master)](https://travis-ci.org/cezarykluczynski/ComicCMS2)
 [![Coverage Status](https://coveralls.io/repos/cezarykluczynski/ComicCMS2/badge.svg?branch=master)](https://coveralls.io/r/cezarykluczynski/ComicCMS2?branch=master)
@@ -10,7 +12,7 @@ Work in progress. Not production ready.
 
 This project is aimed at recreating some of the functionalities of
 [ComicCMS](http://comiccms.com/). It does not share any common code,
-nor does it offer any path of migration from the original.
+nor does it offer any path of migration from the original at this point.
 
 It started as a learning project for some new technologies I wanted to
 familiarize myself with, and it could be abandonded at any time.
@@ -23,14 +25,13 @@ for learning purposes. It can be used with Git and Mercurial alike.
 It has both .gitignore and .hgignore files.
 
 ## Requirements
-If you like to participate in the development process,
-here are the requirements:
+If you like to participate in the development process, here are the requirements:
 
 * PHP 5.4+, with Composer
-* PostgreSQL
-* Apache
-* Ruby
-* Node
+* PostgreSQL 9.1+
+* Apache 2+
+* Ruby 1.8.7+
+* Node.js 0.10+
 
 ## Installation
 Create PostgreSQL user and database:
@@ -70,27 +71,50 @@ Compile SASS:
 grunt sass
 ```
 
-## Development
+## Tests
 
-### Tests
+### Functional tests
+Functional test are written using Intern testing framework, and resides in <code>tests/</code> directory.
 
-Install selenium-standalone:
+#### Installation
+Functional tests require an admin account with a specific credentials. This account can be created by running:
+```sh
+vendor/bin/robo createadmin admin@example.com password
+``
+
+Selenium server is required for running functional tests locally.
+
+Selenium can be installed by running:
 ```sh
 npm install --global selenium-standalone@latest
 selenium-standalone install
 ```
 
-Start local Selenium server before running tests:
+#### Running tests
+To run functional tests, start local Selenium server before running tests:
 ```sh
 selenium-standalone start
 ```
 
 Run tests using:
 ```sh
+grunt test
+```
+
+### Unit tests
+
+Unit tests are written in PHPUnit.
+
+#### Installation
+PHPUnit is installed with other packages via Composer.
+
+#### Running tests
+Run tests using:
+```sh
 vendor/bin/phpunit
 ```
 
-### Grunt tasks
+## Grunt tasks
 
 * grunt sass - compile SASS files to CSS
 * grunt watch - watch SASS files, and compile them to CSS on change
