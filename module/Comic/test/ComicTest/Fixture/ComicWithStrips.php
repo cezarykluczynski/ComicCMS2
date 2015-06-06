@@ -18,6 +18,7 @@ use Comic\Entity\Strip;
 class ComicWithStrips extends FixtureRepository
 {
     protected $entityClass = 'Comic\Entity\Strip';
+    protected $comic;
 
     /**
      * Loads a single comic with a 10 strips.

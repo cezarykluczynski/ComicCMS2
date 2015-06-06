@@ -78,7 +78,7 @@ class Version20150502182949 extends AbstractMigration
      * @param Schema $schema
      * @return void
      */
-    function createTableComicsSlugs(Schema $schema) {
+    public function createTableComicsSlugs(Schema $schema) {
         /** Create "comics_slugs" table. */
         $comicsSlugs = $schema->createTable('comics_slugs');
         $comicsSlugs->addColumn('comic_id', 'integer');
@@ -93,7 +93,7 @@ class Version20150502182949 extends AbstractMigration
      * @param Schema $schema
      * @return void
      */
-    function createTableComicsStrips(Schema $schema) {
+    public function createTableComicsStrips(Schema $schema) {
         $comicsSlugs = $schema->createTable('comics_strips');
         $comicsSlugs->addColumn('comic_id', 'integer');
         $comicsSlugs->addColumn('strip_id', 'integer');
