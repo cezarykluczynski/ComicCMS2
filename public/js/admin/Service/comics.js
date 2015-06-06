@@ -23,6 +23,10 @@ admin
             });
         };
 
+        comics.editingNew = function () {
+            return !comics.entity.id;
+        };
+
         comics.loadComics();
 
         return comics;

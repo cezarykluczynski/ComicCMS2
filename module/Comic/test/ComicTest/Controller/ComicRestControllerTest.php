@@ -25,15 +25,32 @@ use Comic\Entity\Slug;
 class ComicRestControllerTest extends AbstractHttpControllerTestCase
 {
     /**
+     * Testing an admin controller, admin access is required.
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->grantAllRolesToUser();
+    }
+
+    /**
+     * Clean ip admin access.
+     */
+    public function tearDown()
+    {
+        $this->revokeGrantedRoles();
+    }
+
+    /**
      * Test if comic with all the right data is successfully created.
      *
      * @covers ::create
      */
     public function testComicEntityCanBeCreated()
     {
-        /** Setup. */
-        $this->grantAllRolesToUser();
 
+        /** Setup. */
         $p = new Parameters();
         $p
             ->set('title', 'New comic')
@@ -55,7 +72,6 @@ class ComicRestControllerTest extends AbstractHttpControllerTestCase
         $em->remove($comic->slug);
         $em->remove($comic);
         $em->flush();
-        $this->revokeGrantedRoles();
     }
 
     /**
@@ -72,8 +88,6 @@ class ComicRestControllerTest extends AbstractHttpControllerTestCase
         $em->persist($comic);
         $em->flush();
 
-        $this->grantAllRolesToUser();
-
         $p = new Parameters();
         $p
             ->set('title', 'Taken title')
@@ -86,32 +100,32 @@ class ComicRestControllerTest extends AbstractHttpControllerTestCase
 
         $this->assertResponseStatusCode(409);
         $this->assertEquals(
-            $response['error'],
-            'Comic with the given title already exists. Choose different title.'
+            'Comic with the title "Taken title" already exists. Choose different title.',
+            $response['error']
         );
 
         /** Teardown. */
         $em->merge($comic);
         $em->remove($comic);
         $em->flush();
-        $this->revokeGrantedRoles();
     }
 
     /**
-     * Test if comic is not created when slug isn't unique.
+     * Test if comic is not created when slug is used by other comic.
      *
      * @covers ::create
      */
-    public function testComicEntityCantBeCreatedIfSlugIsNotUnique()
+    public function testComicEntityCantBeCreatedIfSlugIsUsedByOtherComic()
     {
         /** Setup. */
         $em = $this->getEntityManager();
         $slug = new Slug;
         $slug->slug = "taken";
-        $em->persist($slug);
+        $comic = new Comic;
+        $comic->title = "Comic with taken slug";
+        $comic->slug = $slug;
+        $em->persist($comic);
         $em->flush();
-
-        $this->grantAllRolesToUser();
 
         $p = new Parameters();
         $p
@@ -124,13 +138,171 @@ class ComicRestControllerTest extends AbstractHttpControllerTestCase
         $response = $this->getJSONResponseAsArray();
 
         $this->assertResponseStatusCode(409);
-        $this->assertEquals($response['error'], 'The given slug is already in use. Choose another slug.');
+        $this->assertEquals(
+            'Comic "Comic with taken slug" already uses slug "taken". Pick another slug.',
+            $response['error']
+        );
 
         /** Teardown. */
-        $em->merge($slug);
-        $em->remove($slug);
+        $em->remove($comic);
         $em->flush();
+    }
+
+    /**
+     * Test if comic is created when slug is already cready, but detached from comic.
+     *
+     * @covers ::create
+     */
+    public function testComicEntityCanBeCreatedIfSlugExistsAndIsDetached()
+    {
+        /** Setup. */
+        $em = $this->getEntityManager();
+        $slug = new Slug;
+        $slug->slug = "taken";
+        $em->persist($slug);
+        $em->flush();
+
+        $p = new Parameters();
+        $p
+            ->set('title', 'New comic')
+            ->set('slug', 'taken');
+        $this->getRequest()->setMethod('POST');
+        $this->getRequest()->setPost($p);
+        $this->dispatch('/rest/comic');
+
+        $response = $this->getJSONResponseAsArray();
+
+        $this->assertResponseStatusCode(201);
+        $this->assertEquals('Comic was created.', $response['success']);
+
+        $comic = $em->find('Comic\Entity\Comic', $response['id']);
+
+        /** Assert that slug entity was merged into newly created comic. */
+        $this->assertEquals($slug->id, $comic->slug->id);
+
+        /** Teardown. */
+        $em->remove($comic);
+        $em->flush();
+    }
+
+    /**
+     * Test if comic entity can be updated.
+     *
+     * @covers ::update
+     */
+    public function testComicEntityCanBeUpdated()
+    {
+        /** Setup. */
+        $em = $this->getEntityManager();
+        $slug = new Slug;
+        $slug->slug = "test";
+        $comic = new Comic;
+        $comic->slug = $slug;
+        $comic->title = "test";
+        $comic->description = "test";
+        $comic->tagline = "test";
+        $em->persist($comic);
+        $em->flush();
+
+        /** Prepare and dispatch PUT request. */
+        $this->getRequest()->setMethod('PUT');
+        $this->setJSONRequestHeaders();
+        $this->setJSONRequestContent([
+            'title' => 'changed',
+            'description' => 'changed',
+            'tagline' => 'changed',
+            'slug' => [
+                'slug' => 'changed',
+            ],
+        ]);
+        $this->dispatch('/rest/comic/' . $comic->id);
+
+        $response = $this->getJSONResponseAsArray();
+
+        /** Assert controller response. */
+        $this->assertResponseStatusCode(200);
+        $this->assertTrue(is_int($response['id']), 'Entity created.');
+        $this->assertEquals('Comic was updated.', $response['success']);
+
+        $comic = $em->find('Comic\Entity\Comic', $comic->id);
+        $slug = $em->find('Comic\Entity\Slug', $comic->slug->id);
+
+        /** Assert entity changes. */
+        $this->assertEquals('changed', $comic->title);
+        $this->assertEquals('changed', $comic->description);
+        $this->assertEquals('changed', $comic->tagline);
+        $this->assertEquals('changed', $slug->slug);
+
+        /** Teardown. */
+        $em->remove($comic);
+        $em->flush();
+    }
+
+    /**
+     * Test if non-existing comic cannot be updated.
+     *
+     * @covers ::update
+     */
+    public function testNonexistingComicCannotBeUpdated()
+    {
+        /** Dispatch invalid request. */
+        $this->getRequest()->setMethod('PUT');
+        $this->setJSONRequestHeaders();
+        $this->dispatch('/rest/comic/' . $this->highestInteger());
+        $response = $this->getJSONResponseAsArray();
+
+        /** Assert controller response. */
+        $this->assertResponseStatusCode(404);
+        /** Assert erro message. */
+        $this->assertEquals('Comic cannot be updated, because it does not exists.', $response['error']);
+
+        /** Teardown. */
         $this->revokeGrantedRoles();
+    }
+
+    /**
+     * Test if comic cannot be updated is slug is used by another comic.
+     *
+     * @covers ::update
+     */
+    public function testComicEntityCantBeUpdatedIfSlugIdUsedByAnotherComic()
+    {
+        /** Setup. */
+        $em = $this->getEntityManager();
+        $slug = new Slug;
+        $slug->slug = "existing";
+        $comic = new Comic;
+        $comic->slug = $slug;
+        $comic->title = "Existing";
+        $comic2 = new Comic;
+        $comic2->title = "updating";
+        $em->persist($comic);
+        $em->persist($comic2);
+        $em->flush();
+
+        /** Prepare and dispatch PUT request. */
+        $this->getRequest()->setMethod('PUT');
+        $this->setJSONRequestHeaders();
+        $this->setJSONRequestContent([
+            'title' => 'changing',
+            'slug' => [
+                'slug' => 'existing',
+            ],
+        ]);
+        $this->dispatch('/rest/comic/' . $comic2->id);
+
+        $response = $this->getJSONResponseAsArray();
+
+        $this->assertResponseStatusCode(409);
+        $this->assertEquals(
+            'Comic "Existing" already uses slug "existing". Pick another slug.',
+            $response['error']
+        );
+
+        /** Teardown. */
+        $em->remove($comic);
+        $em->remove($comic2);
+        $em->flush();
     }
 
     /**
@@ -141,7 +313,6 @@ class ComicRestControllerTest extends AbstractHttpControllerTestCase
     public function testComicsListCanBeObtained()
     {
         /** Setup. */
-        $this->grantAllRolesToUser();
         $this->loadFixtures('ComicTest\Fixture\Comics');
 
         $this->getRequest()->setMethod('GET');
@@ -152,6 +323,5 @@ class ComicRestControllerTest extends AbstractHttpControllerTestCase
 
         /** Teardown. */
         $this->removeFixtures();
-        $this->revokeGrantedRoles();
     }
 }

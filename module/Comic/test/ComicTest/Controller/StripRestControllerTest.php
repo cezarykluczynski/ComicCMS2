@@ -71,7 +71,7 @@ class StripRestControllerTest extends AbstractHttpControllerTestCase
 
         /** Dispatch GET request to non-existing ID. */
         $this->getRequest()->setMethod('GET');
-        $this->dispatch('/rest/comic/2147483647/strip');
+        $this->dispatch('/rest/comic/'.$this->highestInteger().'/strip');
 
         /** Assert response. */
         $response = $this->getJSONResponseAsArray();

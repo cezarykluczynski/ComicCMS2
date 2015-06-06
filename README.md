@@ -1,6 +1,6 @@
 Work in progress. Not production ready.
 
-Wanna help? Check out [todo](docs/todo.md) and [roadmap](docs/roadmap.md);
+Wanna help? Check out [todo](docs/todo.md) and [roadmap](docs/roadmap.md).
 
 ## Build status
 [![Build Status](https://travis-ci.org/cezarykluczynski/ComicCMS2.svg?branch=master)](https://travis-ci.org/cezarykluczynski/ComicCMS2)

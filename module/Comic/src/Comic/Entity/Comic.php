@@ -49,7 +49,7 @@ class Comic
     protected $logo;
 
     /**
-     * @ORM\OneToOne(targetEntity="\Comic\Entity\Slug", inversedBy="comic")
+     * @ORM\OneToOne(targetEntity="\Comic\Entity\Slug", inversedBy="comic", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="slug_id", referencedColumnName="id")
      */
     protected $slug;

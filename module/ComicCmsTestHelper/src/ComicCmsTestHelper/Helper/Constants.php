@@ -11,14 +11,15 @@ namespace ComicCmsTestHelper\Helper;
 
 use Zend\Json\Json;
 
-trait Converter
+trait Constants
 {
     /**
-     * Returns JSON response as array.
+     * Returns highest possible integer.
      *
-     * @return array JSON response as array.
+     * @return array Highest possible integer.
      */
-    public function getJSONResponseAsArray() {
-        return Json::decode($this->getResponseContent(), Json::TYPE_ARRAY);
+    public function highestInteger()
+    {
+        return 2147483647;
     }
 }

@@ -3,7 +3,7 @@
         <div ng-show="comics.list.length === 0">
             <?= $this->translate("You don't have any comics yet.") ?>
             <p>
-                <button type="button" class="btn btn-success" ng-click="$emit('openComicCreateDialog')">
+                <button type="button" class="btn btn-success" ng-click="$emit('openComicEditDialog')">
                     <?= $this->translate("Create my first comic") ?>
                 </button>
             </p>

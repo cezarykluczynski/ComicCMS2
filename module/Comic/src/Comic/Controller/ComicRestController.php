@@ -12,6 +12,7 @@ namespace Comic\Controller;
 use Application\Controller\AbstractRestfulController;
 use Zend\View\Model\JsonModel;
 use Comic\Entity\Comic;
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 
 class ComicRestController extends AbstractRestfulController
 {
@@ -25,20 +26,27 @@ class ComicRestController extends AbstractRestfulController
         /** @var \Zend\View\Model\JsonModel */
         $view = new JsonModel;
         /** @var \Doctrine\ORM\EntityManager */
-        $entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+        $entityManager = $this->getEntityManager();
         /** @var \Zend\Http\PhpEnvironment\Response */
         $response = $this->getResponse();
 
-        /** Slug has to be unique. */
-        if ($entityManager
+        $slug = $entityManager
             ->getRepository('Comic\Entity\Slug')
-            ->findBy([
+            ->findOneBy([
                 'slug' => $data['slug'],
-            ]))
+            ]);
+
+        /** Slug has to be unique. */
+        if ($slug && $slug->comic)
         {
             $response->setStatusCode(409);
-            return $view
-                ->setVariable('error', 'The given slug is already in use. Choose another slug.');
+            return $view->setVariables([
+                'error' => sprintf(
+                    'Comic "%s" already uses slug "%s". Pick another slug.',
+                    $slug->comic->title,
+                    $slug->slug
+                ),
+            ]);
         }
 
         /** @var \Comic\Entity\ComicRepository */
@@ -53,7 +61,19 @@ class ComicRestController extends AbstractRestfulController
         {
             $response->setStatusCode(409);
             return $view
-                ->setVariable('error', 'Comic with the given title already exists. Choose different title.');
+                ->setVariable(
+                    'error',
+                    sprintf(
+                        'Comic with the title "%s" already exists. Choose different title.',
+                        $data['title']
+                    )
+                );
+        }
+
+        /** If free slug was found, it should be used when creating comic entity. */
+        if ($slug)
+        {
+            $data['slugEntity'] = $slug;
         }
 
         /** @var \Comic\Entity\Comic|null */
@@ -61,7 +81,69 @@ class ComicRestController extends AbstractRestfulController
 
         $response->setStatusCode(201);
         return $view->setVariables([
-            'success' => 'Comics was created.',
+            'success' => 'Comic was created.',
+            'id' => $comic->id,
+        ]);
+    }
+
+    /**
+     * Updates a comic entity.
+     *
+     * @return \Zend\View\Model\JsonModel
+     */
+    public function update($id, $data)
+    {
+        /** @var \Zend\View\Model\JsonModel */
+        $view = new JsonModel;
+        /** @var \Doctrine\ORM\EntityManager */
+        $entityManager = $this->getEntityManager();
+        /** @var \Zend\Http\PhpEnvironment\Response */
+        $response = $this->getResponse();
+
+        /** \Comic\Entity\Comic|null */
+        $comic = $entityManager->find('Comic\Entity\Comic', (int) $id);
+
+        /** Comic has to exist to be updated. */
+        if (is_null($comic))
+        {
+            $response->setStatusCode(404);
+            return $view
+                ->setVariable('error', 'Comic cannot be updated, because it does not exists.');
+        }
+
+        /** @var \Comic\Entity\Slug|null */
+        $slug = $entityManager->getRepository('Comic\Entity\Slug')->findOneBy([
+            'slug' => $data['slug']['slug'],
+        ]);
+
+        /** If slug was found on another comics, data cannot be saved. */
+        if ($slug && $slug->comic && $slug->comic->id != $id)
+        {
+            $response->setStatusCode(409);
+            return $view->setVariables([
+                'error' => sprintf(
+                    'Comic "%s" already uses slug "%s". Pick another slug.',
+                    $slug->comic->title,
+                    $slug->slug
+                ),
+            ]);
+        }
+
+        /** \DoctrineModule\Stdlib\Hydrator\DoctrineObject */
+        $hydrator = new DoctrineHydrator($entityManager, false);
+
+        /** Hydrate slug. */
+        $hydrator->hydrate($data['slug'], $comic->slug);
+        /** It's important to remove slug from data now, so comic hydrator won't create new slug entity. */
+        unset($data['slug']);
+
+        /** Update entity with post data, then save it. */
+        $hydrator->hydrate($data, $comic);
+        $entityManager->persist($comic);
+        $entityManager->flush();
+
+        return $view->setVariables([
+            'success' => 'Comic was updated.',
             'id' => $comic->id,
         ]);
     }

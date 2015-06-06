@@ -36,7 +36,7 @@ class Slug
     protected $slug;
 
     /**
-     * @ORM\OneToOne(targetEntity="\Comic\Entity\Comic", mappedBy="slug")
+     * @ORM\OneToOne(targetEntity="\Comic\Entity\Comic", mappedBy="slug", fetch="EAGER", cascade={"persist", "remove"})
      **/
     protected $comic;
 

@@ -10,4 +10,18 @@ var admin = angular.module( "admin",
             closeByDocument: false,
             closeByEscape: true
         });
+    }])
+    .factory("errorHttpInterceptor", [ "$q", "$rootScope", function ( $q, $rootScope ) {
+        return {
+            responseError: function responseError( response ) {
+                if ( response.status >= 400 ) {
+                    $rootScope.alertResponse( response );
+                }
+                return $q.reject( response );
+            }
+        };
+    }])
+    .config([ "$httpProvider", function( $httpProvider ) {
+        $httpProvider.interceptors.push( "errorHttpInterceptor" );
     }]);
+

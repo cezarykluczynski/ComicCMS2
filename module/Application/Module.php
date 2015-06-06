@@ -28,6 +28,12 @@ class Module
         $eventManager->attach(MvcEvent::EVENT_FINISH, function($e) {
             $response = $e->getResponse();
 
+            /**
+             * Don't pretty print JSON unti this is resolved:
+             * @link https://github.com/zendframework/zend-json/issues/2
+             */
+            return;
+
             if (!method_exists($response, 'getHeaders'))
             {
                 return;

@@ -3,11 +3,11 @@
 admin
     .controller( "ComicsController", [ "comics", "strips", "$scope", "$rootScope", "$http", "ngDialog", "$filter",
         function( comics, strips, $scope, $rootScope, $http, ngDialog, $filter ) {
-        $rootScope.$on( "openComicCreateDialog", function () {
-            $scope.openComicCreateDialog();
+        $rootScope.$on( "openComicEditDialog", function () {
+            $scope.openComicEditDialog();
         });
 
-        $scope.openComicCreateDialog = function () {
+        $scope.openComicEditDialog = function ( entity ) {
             /** Don't create multiple dialogs. */
             if ( $rootScope.comicEditDialog ) {
                 return;
@@ -15,8 +15,12 @@ admin
 
             /** Create dialog from a given template. */
             $rootScope.comicEditDialog = ngDialog.open({
-                template: "adminComicsCreate",
+                template: "adminComicsEdit",
                 className: "ngdialog-theme-default admin-comics-create",
+                controller: "ComicsEditController",
+                data: {
+                    entity: entity
+                }
             });
 
             /** Remove reference to dialog once it's closed, so it can be opened again. */

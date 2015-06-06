@@ -3,7 +3,7 @@
         <div class="container-fluid">
             <form class="navbar-form navbar-left">
                 <div class="form-group">
-                    <button class="btn btn-success" ng-click="openComicCreateDialog()">
+                    <button class="btn btn-success" ng-click="openComicEditDialog()">
                         {$this->translate('Create comics')}
                     </button>
                 </div>

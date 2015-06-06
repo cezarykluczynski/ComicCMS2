@@ -15,8 +15,8 @@ class ComicRepository extends EntityRepository
      */
     public function create($data = array())
     {
-        /** @var \Comic\Entity\Slug */
-        $slug = new Slug;
+        /** @var \Comic\Entity\Slug Newly created slug, or passed from controller. */
+        $slug = isset($data['slugEntity']) ? $data['slugEntity'] : new Slug;
         $slug->slug = isset($data['slug']) ? $data['slug'] : '';
         $this->_em->persist($slug);
 

@@ -1,6 +1,6 @@
-<script type="text/ng-template" id="adminComicsCreate">
+<script type="text/ng-template" id="adminComicsEdit">
 <div ng-controller="ComicsEditController">
-    <form name="adminComicsCreate">
+    <form name="adminComicsEdit">
         <h2><?= $this->translate('Create comics'); ?></h2>
         <div class="row">
             <div class="form-group col-lg-6">
@@ -13,7 +13,7 @@
                     ng-required="true"
                     ng-trim="true"
                     ng-minlength="1"
-                    ng-model="comic.title"
+                    ng-model="entity.title"
                     ng-disabled="submitInProgress"
                 >
             </div>
@@ -27,7 +27,7 @@
                     ng-required="true"
                     ng-trim="true"
                     ng-minlength="1"
-                    ng-model="comic.slug"
+                    ng-model="entity.slug.slug"
                     ng-disabled="submitInProgress"
                 >
             </div>
@@ -40,7 +40,7 @@
                     type="text"
                     name="new-comics-tagline"
                     id="new-comics-tagline"
-                    ng-model="comic.tagline"
+                    ng-model="entity.tagline"
                     ng-disabled="submitInProgress"
                 >
             </div>
@@ -62,13 +62,24 @@
                 type="text"
                 name="new-comics-description"
                 id="new-comics-description"
-                ng-model="comic.description"
+                ng-model="entity.description"
                 ng-disabled="submitInProgress"
             ></textarea>
         </div>
         </div>
         <div class="form-group actions">
-            <button class="btn btn-success pull-right" ng-disabled="adminComicsCreate.$invalid || submitInProgress" ng-click="save()"><?= $this->translate('Create'); ?></button>
+            <button
+                class="btn btn-success pull-right"
+                ng-disabled="adminComicsEdit.$invalid || submitInProgress"
+                ng-click="save()"
+                ng-show="comics.editingNew()"
+            ><?= $this->translate('Create'); ?></button>
+            <button
+                class="btn btn-success pull-right"
+                ng-disabled="adminComicsEdit.$invalid || submitInProgress"
+                ng-click="save()"
+                ng-show="!comics.editingNew()"
+            ><?= $this->translate('Save'); ?></button>
             <button class="btn btn-danger pull-left" ng-click="cancel()"><?= $this->translate('Cancel'); ?></button>
         </div>
     </form>

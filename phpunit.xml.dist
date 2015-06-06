@@ -19,6 +19,7 @@
     <php>
         <includePath>.</includePath>
         <env name="BJYAUTHORIZE_IDENTITY_PROVIDER" value="User\Provider\Identity\UserIdentityProviderMock"/>
+        <const name="PHPUNIT" value="PHPUNIT"/>
     </php>
     <testsuites>
         <testsuite name="application">
