@@ -17,7 +17,7 @@ class ComicRepository extends EntityRepository
     {
         /** @var \Comic\Entity\Slug Newly created slug, or passed from controller. */
         $slug = isset($data['slugEntity']) ? $data['slugEntity'] : new Slug;
-        $slug->slug = isset($data['slug']) ? $data['slug'] : '';
+        $slug->slug = isset($data['slug']['slug']) ? $data['slug']['slug'] : '';
         $this->_em->persist($slug);
 
         /** @var \Comic\Entity\Comic */
@@ -40,12 +40,22 @@ class ComicRepository extends EntityRepository
      */
     public function getList()
     {
-        return $this->_em->createQueryBuilder()
+        $results = $this->_em->createQueryBuilder()
             ->select('Comic', 'Slug')
             ->from('Comic\Entity\Comic', 'Comic')
             ->leftJoin('Comic.slug', 'Slug')
             ->orderBy('Comic.id', 'DESC')
             ->getQuery()
             ->getArrayResult();
+
+        foreach($results as $result)
+        {
+            $result['slug'] = [
+                'id' => isset($result['slug']['id']) ? $result['slug']['id'] : null,
+                'slug' => isset($result['slug']['slug']) ? $result['slug']['slug'] : '',
+            ];
+        }
+
+        return $results;
     }
 }

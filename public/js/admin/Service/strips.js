@@ -1,9 +1,8 @@
 admin
-    .factory( "strips", [ "$http", function( $http ) {
+    .factory( "strips", [ "$http", "$rootScope", function( $http, $rootScope ) {
         var strips = {};
 
         strips.list = [];
-        strips.length = 0;
 
         strips.refresh = function ( data ) {
             this.list = data.list;
@@ -21,6 +20,10 @@ admin
                 strips.loaded = true;
             });
         };
+
+        $rootScope.$on( "reloadStrips", function () {
+            strips.loadStrips();
+        });
 
         return strips;
     }]);

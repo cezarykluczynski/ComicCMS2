@@ -13,8 +13,8 @@
                     ng-required="true"
                     ng-trim="true"
                     ng-minlength="1"
-                    ng-model="entity.title"
-                    ng-disabled="submitInProgress"
+                    ng-model="comics.editedEntity.title"
+                    ng-disabled="comics.loading"
                 >
             </div>
             <div class="form-group col-lg-6">
@@ -27,8 +27,8 @@
                     ng-required="true"
                     ng-trim="true"
                     ng-minlength="1"
-                    ng-model="entity.slug.slug"
-                    ng-disabled="submitInProgress"
+                    ng-model="comics.editedEntity.slug.slug"
+                    ng-disabled="comics.loading"
                 >
             </div>
         </div>
@@ -40,13 +40,13 @@
                     type="text"
                     name="new-comics-tagline"
                     id="new-comics-tagline"
-                    ng-model="entity.tagline"
-                    ng-disabled="submitInProgress"
+                    ng-model="comics.editedEntity.tagline"
+                    ng-disabled="comics.loading"
                 >
             </div>
             <div class="form-group col-lg-6">
                 <label for="new-comics-tagline"><?= $this->translate('Author (optional):'); ?></label>
-                <ui-select ng-model="authors.selected" theme="bootstrap" ng-disabled="submitInProgress">
+                <ui-select ng-model="authors.selected" theme="bootstrap" ng-disabled="comics.loading">
                     <ui-select-match>{{$select.selected.name}}</ui-select-match>
                     <ui-select-choices repeat="author in authors | filter: $select.search">
                         <div ng-bind="author.name | highlight: $select.search"></div>
@@ -62,21 +62,21 @@
                 type="text"
                 name="new-comics-description"
                 id="new-comics-description"
-                ng-model="entity.description"
-                ng-disabled="submitInProgress"
+                ng-model="comics.editedEntity.description"
+                ng-disabled="comics.loading"
             ></textarea>
         </div>
         </div>
         <div class="form-group actions">
             <button
                 class="btn btn-success pull-right"
-                ng-disabled="adminComicsEdit.$invalid || submitInProgress"
+                ng-disabled="adminComicsEdit.$invalid || comics.loading"
                 ng-click="save()"
                 ng-show="comics.editingNew()"
             ><?= $this->translate('Create'); ?></button>
             <button
                 class="btn btn-success pull-right"
-                ng-disabled="adminComicsEdit.$invalid || submitInProgress"
+                ng-disabled="adminComicsEdit.$invalid || comics.loading"
                 ng-click="save()"
                 ng-show="!comics.editingNew()"
             ><?= $this->translate('Save'); ?></button>

@@ -129,13 +129,12 @@ class ComicRestController extends AbstractRestfulController
             ]);
         }
 
-        /** \DoctrineModule\Stdlib\Hydrator\DoctrineObject */
-        $hydrator = new DoctrineHydrator($entityManager, false);
-
-        /** Hydrate slug. */
-        $hydrator->hydrate($data['slug'], $comic->slug);
+        $comic->slug->slug = $data['slug']['slug'];
         /** It's important to remove slug from data now, so comic hydrator won't create new slug entity. */
         unset($data['slug']);
+
+        /** \DoctrineModule\Stdlib\Hydrator\DoctrineObject */
+        $hydrator = new DoctrineHydrator($entityManager, false);
 
         /** Update entity with post data, then save it. */
         $hydrator->hydrate($data, $comic);

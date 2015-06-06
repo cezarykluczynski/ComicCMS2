@@ -3,6 +3,8 @@
 admin
     .controller( "ComicsController", [ "comics", "strips", "$scope", "$rootScope", "$http", "ngDialog", "$filter",
         function( comics, strips, $scope, $rootScope, $http, ngDialog, $filter ) {
+        $scope.comics = comics;
+
         $rootScope.$on( "openComicEditDialog", function () {
             $scope.openComicEditDialog();
         });
@@ -32,38 +34,40 @@ admin
             $rootScope.blurActiveElement();
         };
 
-        $scope.comic = {};
-        $scope.comic.entity = null;
-        $scope.comic.dirty = false;
+        $scope.dirty = false;
 
         /**
          * If entity is passed, returns true if this comic is currently being edited.
          * If no entity is passed, returns true is any comic is currently beinb edited.
          */
         $scope.activated = function ( entity ) {
-            var entityIsSet = !! $scope.comic.entity;
-            return entityIsSet && ( typeof entity === "undefined" || entity.id === $scope.comic.entity.id );
+            var entityIsSet = !! $scope.comics.activeEntity;
+            return entityIsSet && ( typeof entity === "undefined" || entity.id === $scope.comics.activeEntity.id );
         };
 
         $scope.getActive = function () {
-            return $scope.comic.entity;
+            return $scope.comics.activeEntity;
         };
 
-        $scope.activate = function ( entity ) {
+        $scope.activate = function ( entity, force ) {
             /**
              * Put a comic to edit, but only if the currently edited comic isn't dirty,
              * that is, it doesn't have unsaved changes, and strips are not loading, and current
              * comics is not yet activated.
              */
             if (
-                ! $scope.comic.dirty &&
+                ! $scope.dirty &&
                 ! $scope.comics.loading &&
-                ! $scope.activated( entity )
+                ! ( force || $scope.activated( entity ) )
             ) {
-                $scope.comic.entity = entity;
+                $scope.comics.activeEntity = entity;
+                $scope.comics.refreshActiveEntityFromList();
                 strips.setComicId( entity.id );
             }
         };
 
-        $scope.comics = comics;
+        $rootScope.$on( "reloadActiveComic", function () {
+            $scope.activate( $scope.comics.activeEntity, true );
+        })
+
     }]);

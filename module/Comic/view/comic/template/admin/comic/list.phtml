@@ -1,5 +1,8 @@
 <script type="text/ng-template" id="adminComicsList">
     <div ng-show="!comics.loaded" ng-include="'loading'"></div>
+    <div ng-show="comics.loaded && comics.list.length === 0" class="alert alert-info text-center">
+        <?= $this->translate('There are no comics yet.'); ?>
+    </div>
     <ul class="list-group admin-comics-list" ng-show="comics.loaded">
         <li
             class="list-group-item"
