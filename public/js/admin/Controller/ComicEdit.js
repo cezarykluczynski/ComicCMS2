@@ -1,7 +1,7 @@
 "use strict";
 
 admin
-    .controller( "ComicsEditController", [ "comics", "$scope", "$rootScope", "$http",
+    .controller( "ComicEditController", [ "comics", "$scope", "$rootScope", "$http",
         function ( comics, $scope, $rootScope, $http ) {
         var entity;
         $scope.comics = comics;
@@ -28,8 +28,6 @@ admin
         $scope.authors = [ $scope.noAuthor ];
         $scope.authors[ "selected" ] = $scope.noAuthor;
 
-        $scope.submitInProgress = false;
-
         /** Close the dialog. */
         $scope.cancel = function() {
             $rootScope.comicEditDialog.close();
@@ -37,7 +35,7 @@ admin
 
         /** Creates or updates comic entity. */
         $scope.save = function() {
-            var promise = comics.save().then( function () {
+            comics.save().then( function () {
                 $scope.cancel();
             });
         };

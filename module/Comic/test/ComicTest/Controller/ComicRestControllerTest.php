@@ -248,16 +248,14 @@ class ComicRestControllerTest extends AbstractHttpControllerTestCase
         /** Dispatch invalid request. */
         $this->getRequest()->setMethod('PUT');
         $this->setJSONRequestHeaders();
-        $this->dispatch('/rest/comic/' . $this->highestInteger());
+        $this->dispatch('/rest/comic/' . $this->getHighestInteger());
+
+        /** Assert response. */
         $response = $this->getJSONResponseAsArray();
-
-        /** Assert controller response. */
+        /** Assert status code. */
         $this->assertResponseStatusCode(404);
-        /** Assert erro message. */
+        /** Assert erroe message. */
         $this->assertEquals('Comic cannot be updated, because it does not exists.', $response['error']);
-
-        /** Teardown. */
-        $this->revokeGrantedRoles();
     }
 
     /**
@@ -323,5 +321,61 @@ class ComicRestControllerTest extends AbstractHttpControllerTestCase
 
         /** Teardown. */
         $this->removeFixtures();
+    }
+
+    /**
+     * Test if existing comic can be deleted.
+     *
+     * @cover ::delete
+     */
+    public function testExistingComicCanBeDeleted()
+    {
+        /** Setup. */
+        $em = $this->getEntityManager();
+        $slug = new Slug;
+        $slug->slug = "deleteme";
+        $comic = new Comic;
+        $comic->slug = $slug;
+        $comic->title = "deleteme";
+        $em->persist($comic);
+        $em->flush();
+
+        $this->getRequest()->setMethod('DELETE');
+        $this->dispatch('/rest/comic/'.$comic->id);
+
+        /** Assert response. */
+        $response = $this->getJSONResponseAsArray();
+        $this->assertResponseStatusCode(200);
+        $this->assertEquals('Comic "deleteme" was deleted.', $response['success']);
+
+        /** Try to find entities that should have been deleted. */
+        $comic = $this->em->getRepository('Comic\Entity\Comic')->findOneBy([
+            'title' => 'deleteme',
+        ]);
+        $slug = $this->em->getRepository('Comic\Entity\Slug')->findOneBy([
+            'slug' => 'deleteme',
+        ]);
+
+        /** Assert that the comic and slug were deleted. */
+        $this->assertNull($comic);
+        $this->assertNull($slug);
+    }
+
+    /**
+     * Test if non-existing comic can't be deleted.
+     *
+     * @cover ::delete
+     */
+    public function testNonexistingComicCantBeDeleted()
+    {
+        $this->getRequest()->setMethod('DELETE');
+        $this->dispatch('/rest/comic/'.$this->getHighestInteger());
+
+        /** Assert response. */
+        $response = $this->getJSONResponseAsArray();
+        /** Assert status code. */
+        $this->assertResponseStatusCode(404);
+        /** Assert erroe message. */
+        $this->assertEquals('Comic cannot be deleted, because it does not exists.', $response['error']);
     }
 }

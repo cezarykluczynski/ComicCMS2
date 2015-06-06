@@ -17,6 +17,9 @@ admin
         };
 
         comics.refreshActiveEntityFromList = function () {
+            if ( ! this.activeEntity ) {
+                return;
+            }
             for( var i = 0; i < this.list.length; i++ ) {
                 if ( this.list[ i ].id == this.activeEntity.id ) {
                     this.activeEntity = this.list[ i ];
@@ -57,12 +60,29 @@ admin
                     $rootScope.alertResponse( response );
                     return self.loadComics();
                 })
-                .then( function ( response ) {
+                .then( function () {
                     self.refreshActiveEntityFromList();
                     self.loadingStatus( false );
-                    $rootScope.$emit( "reloadActiveComic" );
+                    $rootScope.$emit( "comicUpdate" );
                 });
-        }
+        };
+
+        comics.delete = function () {
+            var self = this;
+
+            this.loadingStatus( true );
+
+            return $http.delete( "/rest/comic/" + this.deleteEntity.id )
+                .then( function ( response ) {
+                    $rootScope.alertResponse( response );
+                    return self.loadComics();
+                })
+                .then( function () {
+                    self.refreshActiveEntityFromList();
+                    self.loadingStatus( false );
+                    $rootScope.$emit( "comicDelete" );
+                });
+        };
 
         comics.loadComics();
 

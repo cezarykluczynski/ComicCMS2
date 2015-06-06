@@ -29,7 +29,7 @@
                     <button
                         type="button"
                         class="btn btn-xs btn-danger"
-                        ng-click="$event.stopPropagation();confirmDelete(entity);"
+                        ng-click="$event.stopPropagation();openComicDeleteDialog(entity);"
                     >
                         <?= $this->translate('Delete'); ?>
                         <i class="glyphicon glyphicon-remove"></i>

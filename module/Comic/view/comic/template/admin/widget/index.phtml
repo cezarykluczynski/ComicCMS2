@@ -1,7 +1,9 @@
 <script type="text/ng-template" id="comicAdminWidgetIndex">
     <div class="alert alert-info" role="alert" ng-show="comics.loaded">
         <div ng-show="comics.list.length === 0">
-            <?= $this->translate("You don't have any comics yet.") ?>
+            <p>
+                <?= $this->translate("You don't have any comics yet.") ?>
+            </p>
             <p>
                 <button type="button" class="btn btn-success" ng-click="$emit('openComicEditDialog')">
                     <?= $this->translate("Create my first comic") ?>

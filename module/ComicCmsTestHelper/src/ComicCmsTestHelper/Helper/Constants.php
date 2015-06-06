@@ -18,7 +18,7 @@ trait Constants
      *
      * @return array Highest possible integer.
      */
-    public function highestInteger()
+    public function getHighestInteger()
     {
         return 2147483647;
     }

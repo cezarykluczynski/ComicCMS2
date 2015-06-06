@@ -4,11 +4,14 @@ admin
     .controller( "ComicsController", [ "comics", "strips", "$scope", "$rootScope", "$http", "ngDialog", "$filter",
         function( comics, strips, $scope, $rootScope, $http, ngDialog, $filter ) {
         $scope.comics = comics;
+        $scope.dirty = false;
 
+        /** Listener for clicks coming from "Dashboard" tab, when there's is no comics. */
         $rootScope.$on( "openComicEditDialog", function () {
             $scope.openComicEditDialog();
         });
 
+        /** Open comic edit dialog. */
         $scope.openComicEditDialog = function ( entity ) {
             /** Don't create multiple dialogs. */
             if ( $rootScope.comicEditDialog ) {
@@ -18,8 +21,8 @@ admin
             /** Create dialog from a given template. */
             $rootScope.comicEditDialog = ngDialog.open({
                 template: "adminComicsEdit",
-                className: "ngdialog-theme-default admin-comics-create",
-                controller: "ComicsEditController",
+                className: "ngdialog-theme-default admin-comics-edit",
+                controller: "ComicEditController",
                 data: {
                     entity: entity
                 }
@@ -29,12 +32,36 @@ admin
             $rootScope.comicEditDialog.closePromise.then(function () {
                 $rootScope.comicEditDialog = null;
             });
-
-            /** Blur button that opened dialog. */
-            $rootScope.blurActiveElement();
         };
 
-        $scope.dirty = false;
+        /** Open confirmation dialog for comic deletion. */
+        $scope.openComicDeleteDialog = function ( entity ) {
+            /** Don't create multiple dialogs. */
+            if ( $rootScope.comicDeleteDialog ) {
+                return;
+            }
+
+            /** Create dialog from a given template. */
+            $rootScope.comicDeleteDialog = ngDialog.open({
+                template: "adminComicsDelete",
+                className: "ngdialog-theme-default admin-comics-delete",
+                controller: "ComicDeleteController",
+                data: {
+                    entity: entity
+                }
+            });
+
+            /** Remove reference to dialog once it's closed, so it can be opened again. */
+            $rootScope.comicDeleteDialog.closePromise.then(function () {
+                $rootScope.comicDeleteDialog = null;
+            });
+
+        };
+
+        $rootScope.$on( "ngDialog.opened", function () {
+            /** Blur button that opened dialog. */
+            $rootScope.blurActiveElement();
+        });
 
         /**
          * If entity is passed, returns true if this comic is currently being edited.
@@ -66,8 +93,11 @@ admin
             }
         };
 
-        $rootScope.$on( "reloadActiveComic", function () {
+        $rootScope.$on( "comicUpdate", function () {
             $scope.activate( $scope.comics.activeEntity, true );
-        })
+        });
 
+        $rootScope.$on( "comicDelete", function () {
+            $scope.comics.activeEntity = null;
+        });
     }]);

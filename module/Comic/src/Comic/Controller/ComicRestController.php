@@ -157,7 +157,7 @@ class ComicRestController extends AbstractRestfulController
         /** @var \Zend\View\Model\JsonModel */
         $view = new JsonModel;
         /** @var \Doctrine\ORM\EntityManager */
-        $entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+        $entityManager = $this->getEntityManager();
         /** @var array */
         $comics = $entityManager->getRepository('Comic\Entity\Comic')->getList();
 
@@ -166,5 +166,36 @@ class ComicRestController extends AbstractRestfulController
         ]);
 
         return $view;
+    }
+
+    /**
+     * Delete entity.
+     */
+    public function delete($id)
+    {
+        /** @var \Zend\View\Model\JsonModel */
+        $view = new JsonModel;
+        /** @var \Doctrine\ORM\EntityManager */
+        $entityManager = $this->getEntityManager();
+                /** @var \Zend\Http\PhpEnvironment\Response */
+        $response = $this->getResponse();
+
+        /** \Comic\Entity\Comic|null */
+        $comic = $entityManager->find('Comic\Entity\Comic', (int) $id);
+
+        /** Comic has to exist to be updated. */
+        if (is_null($comic))
+        {
+            $response->setStatusCode(404);
+            return $view
+                ->setVariable('error', 'Comic cannot be deleted, because it does not exists.');
+        }
+
+        /** Remove comic. */
+        $entityManager->remove($comic);
+        $entityManager->flush();
+
+        $response->setStatusCode(200);
+        return $view->setVariable('success', sprintf('Comic "%s" was deleted.', $comic->title));
     }
 }
