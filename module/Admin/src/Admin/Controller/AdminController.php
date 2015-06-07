@@ -30,29 +30,14 @@ class AdminController extends AbstractActionController
         $this->em = $this->getEntityManager();
 
         /** @var array */
-        $comics = $this->_getComics();
-        /** @var array */
-        $widgets = $this->_getWidgets();
+        $widgets = $this->getWidgets();
 
         $view->setVariables([
             'dashboardWidgets' => $widgets,
             'authenticatedUser' => $this->authenticatedUser,
-            'comics' => $comics,
         ]);
 
         return $view;
-    }
-
-    /**
-     * Gets first five comics.
-     *
-     * @return array Array of comic entities.
-     */
-    protected function _getComics()
-    {
-        return $this->em
-            ->getRepository('Comic\Entity\Comic')
-            ->findBy(array(), null, 5);
     }
 
     /**
@@ -60,7 +45,7 @@ class AdminController extends AbstractActionController
      *
      * @return array All dashboard widgets, ready for view.
      */
-    protected function _getWidgets()
+    protected function getWidgets()
     {
         /** @var array */
         $widgets = $this->config['admin']['dashboard']['widgets'];

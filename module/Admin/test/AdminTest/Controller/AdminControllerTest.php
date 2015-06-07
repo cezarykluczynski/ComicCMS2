@@ -60,8 +60,7 @@ class AdminControllerTest extends AbstractHttpControllerTestCase
      * Index action can be accessed after authentication.
      *
      * @covers ::indexAction
-     * @covers ::_getComics
-     * @covers ::_getWidgets
+     * @covers ::getWidgets
      * @uses \Admin\Controller\AuthController
      * @uses \Application\View\Helper\AngularTemplates
      */
