@@ -45,13 +45,15 @@
                 >
             </div>
             <div class="form-group col-lg-6">
-                <label for="new-comics-tagline"><?= $this->translate('Author (optional):'); ?></label>
-                <ui-select ng-model="authors.selected" theme="bootstrap" ng-disabled="comics.loading">
-                    <ui-select-match>{{$select.selected.name}}</ui-select-match>
-                    <ui-select-choices repeat="author in authors | filter: $select.search">
-                        <div ng-bind="author.name | highlight: $select.search"></div>
-                    </ui-select-choices>
-                </ui-select>
+                <label for="new-comics-author"><?= $this->translate('Author (optional):'); ?></label>
+                <input
+                    class="form-control"
+                    type="text"
+                    name="new-comics-author"
+                    id="new-comics-author"
+                    ng-model="comics.editedEntity.author"
+                    ng-disabled="comics.loading"
+                >
             </div>
         </div>
         <div class="row">

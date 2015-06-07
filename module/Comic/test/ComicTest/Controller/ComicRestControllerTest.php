@@ -49,14 +49,17 @@ class ComicRestControllerTest extends AbstractHttpControllerTestCase
      */
     public function testComicEntityCanBeCreated()
     {
-
         /** Setup. */
+        $em = $this->getEntityManager();
         $p = new Parameters();
         $p
-            ->set('title', 'New comic')
-            ->set('tagline', 'New comic tagline')
-            ->set('description', 'New comic description.')
-            ->set('slug', 'new-comic');
+            ->set('title', 'new')
+            ->set('tagline', 'new')
+            ->set('description', 'new')
+            ->set('author', 'new')
+            ->set('slug', [
+                'slug' => 'new',
+            ]);
         $this->getRequest()->setMethod('POST');
         $this->getRequest()->setPost($p);
         $this->dispatch('/rest/comic');
@@ -65,6 +68,14 @@ class ComicRestControllerTest extends AbstractHttpControllerTestCase
 
         $this->assertResponseStatusCode(201);
         $this->assertTrue(is_int($response['id']), 'Entity created.');
+
+        $comic = $em->find('Comic\Entity\Comic', $response['id']);
+
+        $this->assertEquals('new', $comic->title);
+        $this->assertEquals('new', $comic->tagline);
+        $this->assertEquals('new', $comic->description);
+        $this->assertEquals('new', $comic->author);
+        $this->assertEquals('new', $comic->slug->slug);
 
         /** Teardown. */
         $em = $this->getEntityManager();
@@ -201,6 +212,7 @@ class ComicRestControllerTest extends AbstractHttpControllerTestCase
         $comic->title = "test";
         $comic->description = "test";
         $comic->tagline = "test";
+        $comic->author = "test";
         $em->persist($comic);
         $em->flush();
 
@@ -211,6 +223,7 @@ class ComicRestControllerTest extends AbstractHttpControllerTestCase
             'title' => 'changed',
             'description' => 'changed',
             'tagline' => 'changed',
+            'author' => 'changed',
             'slug' => [
                 'slug' => 'changed',
             ],
@@ -231,6 +244,7 @@ class ComicRestControllerTest extends AbstractHttpControllerTestCase
         $this->assertEquals('changed', $comic->title);
         $this->assertEquals('changed', $comic->description);
         $this->assertEquals('changed', $comic->tagline);
+        $this->assertEquals('changed', $comic->author);
         $this->assertEquals('changed', $slug->slug);
 
         /** Teardown. */

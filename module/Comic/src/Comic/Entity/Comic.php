@@ -28,14 +28,19 @@ class Comic
     protected $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=255)
      */
     protected $title;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=255)
      */
     protected $tagline;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $author;
 
     /**
      * @ORM\Column(type="string")

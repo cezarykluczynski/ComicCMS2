@@ -14,6 +14,7 @@ admin
             entity.id = null;
             entity.title = "";
             entity.description = "";
+            entity.author = "";
             entity.tagline = "";
             entity.slug = {
                 id: null,
@@ -22,11 +23,6 @@ admin
         }
 
         comics.editedEntity = entity;
-
-        /** Authors select. */
-        $scope.noAuthor = { id: null, name: "(no author)" };
-        $scope.authors = [ $scope.noAuthor ];
-        $scope.authors[ "selected" ] = $scope.noAuthor;
 
         /** Close the dialog. */
         $scope.cancel = function() {

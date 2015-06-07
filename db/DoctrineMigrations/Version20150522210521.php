@@ -16,6 +16,7 @@ class Version20150522210521 extends AbstractMigration
 {
     /**
      * @param Schema $schema
+     * @return void
      */
     public function up(Schema $schema)
     {
@@ -27,6 +28,7 @@ class Version20150522210521 extends AbstractMigration
      * Extend "strips" table.
      *
      * @param Schema $schema
+     * @return void
      */
     public function extendTableStrips(Schema $schema)
     {
@@ -52,6 +54,7 @@ class Version20150522210521 extends AbstractMigration
 
     /**
      * @param Schema $schema
+     * @return void
      */
     public function down(Schema $schema)
     {
@@ -63,6 +66,7 @@ class Version20150522210521 extends AbstractMigration
      * Prune "strips" table.
      *
      * @param Schema $schema
+     * @return void
      */
     public function pruneTableStrips(Schema $schema)
     {

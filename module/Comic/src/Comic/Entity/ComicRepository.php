@@ -12,6 +12,7 @@ class ComicRepository extends EntityRepository
      *
      * @param $data New comic data, at least title and slug.
      * @return \Comic\Entity\Comic|null Comic entity on success, null otherwise.
+     * @todo Implement hydrator.
      */
     public function create($data = array())
     {
@@ -26,6 +27,7 @@ class ComicRepository extends EntityRepository
         $comic->title = isset($data['title']) ? $data['title'] : '';
         $comic->description = isset($data['description']) ? $data['description'] : '';
         $comic->tagline = isset($data['tagline']) ? $data['tagline'] : '';
+        $comic->author = isset($data['author']) ? $data['author'] : '';
         $this->_em->persist($comic);
 
         $this->_em->flush();
