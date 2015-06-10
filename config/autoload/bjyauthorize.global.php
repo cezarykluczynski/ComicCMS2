@@ -62,6 +62,7 @@ return [
                 /** Techically, console routing does not require ACL.
                  *  Anyone with access to CLI is authenticated enough, or cannot be stopped anyway. */
                 ['controller' => 'Admin\Controller\Auth', 'action' => 'create-admin', 'roles' => ['guest']],
+                ['controller' => 'Admin\Controller\Auth', 'action' => 'get-admin-session-id', 'roles' => ['guest']],
             ],
         ],
     ],

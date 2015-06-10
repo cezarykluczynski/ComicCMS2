@@ -24,6 +24,7 @@
     <testsuites>
         <testsuite name="application">
             <directory suffix=".php">./module/Admin/test/AdminTest/Controller</directory>
+            <directory suffix=".php">./module/Admin/test/AdminTest/Service</directory>
             <directory suffix=".php">./module/Application/test/ApplicationTest/Controller</directory>
             <directory suffix=".php">./module/Application/test/ApplicationTest/View</directory>
             <directory suffix=".php">./module/Comic/test/ComicTest/Controller</directory>
@@ -53,6 +54,8 @@
                 <!-- Entities as for now just copies of Doctrine docs, so no need for tests. -->
                 <directory suffix=".php">./module/Assets/src/Assets/Entity/</directory>
                 <directory suffix=".php">./module/Comic/src/Comic/Entity/</directory>
+                <!-- AuthService is tested by controllers tests. -->
+                <directory suffix=".php">./module/Admin/src/Admin/Service/</directory>
             </exclude>
         </whitelist>
     </filter>

@@ -155,7 +155,7 @@ class AuthControllerTestHttp extends AbstractHttpControllerTestCase
         $this->getRequest()->setMethod('POST');
         $this->getRequest()->setPost($p);
         $this->dispatch('/admin/auth/signin');
-        $this->assertResponseStatusCode(201);
+        $this->assertResponseStatusCode(302);
         $this->assertRedirectTo('/admin');
 
         $container = new Container('user');
@@ -209,7 +209,7 @@ class AuthControllerTestHttp extends AbstractHttpControllerTestCase
         $this->getRequest()->setMethod('POST');
         $this->getRequest()->setPost($p);
         $this->dispatch('/admin/auth/signin');
-        $this->assertResponseStatusCode(201);
+        $this->assertResponseStatusCode(302);
 
         /** Test if user ID was stored in session. */
         $container = new Container('user');
@@ -227,9 +227,10 @@ class AuthControllerTestHttp extends AbstractHttpControllerTestCase
      *
      * @covers ::signoutAction
      */
-    public function testSignoutActionedirectsToSignInForm()
+    public function testSignoutActionRedirectsToSignInForm()
     {
         $this->dispatch('/admin/auth/signout');
+        $this->assertResponseStatusCode(302);
         $this->assertRedirectTo('/admin/auth/signin');
     }
 }

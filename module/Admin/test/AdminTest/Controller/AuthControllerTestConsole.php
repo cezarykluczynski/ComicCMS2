@@ -8,7 +8,6 @@
  */
 
 use ComicCmsTestHelper\Controller\AbstractConsoleControllerTestCase;
-use Zend\Math\Rand;
 
 /**
  * @coversDefaultClass \Admin\Controller\AuthController
@@ -109,5 +108,33 @@ class AuthControllerTestConsole extends AbstractConsoleControllerTestCase
         /** Teardown. */
         $this->em->remove($admin);
         $this->em->flush();
+    }
+
+    /**
+     * Test if user session can be obtained.
+     *
+     * @covers ::getAdminSessionIdAction
+     * @covers ::signinAction
+     */
+    public function testAdminSessionIdCanBeObtainedFromValidCredentials()
+    {
+        $this->dispatch('get-admin-session-id admin@example.com password');
+
+        $this->assertResponseStatusCode(0);
+        $this->assertRegExp('/[a-z0-9]{26,128}/', $this->getResponse()->getContent());
+    }
+
+    /**
+     * Test if no user session is obtained from invalid credentials.
+     *
+     * @covers ::getAdminSessionIdAction
+     * @covers ::signinAction
+     */
+    public function testAdminSessionIdCantBeObtainedFromInvalidCredentials()
+    {
+        $this->dispatch('get-admin-session-id admin@example.com invalid-password');
+
+        $this->assertResponseStatusCode(1);
+        $this->assertEquals('', $this->getResponse()->getContent());
     }
 }

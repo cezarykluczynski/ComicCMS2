@@ -18,9 +18,11 @@ use Zend\Stdlib\ArrayUtils;
 error_reporting(E_ALL | E_STRICT);
 chdir(__DIR__);
 ini_set('memory_limit', '512M');
+ini_set('xdebug.max_nesting_level', 255);
+session_start();
 
 /**
- * Test bootstrap, for setting up autoloading
+ * @todo Description.
  */
 class Bootstrap
 {

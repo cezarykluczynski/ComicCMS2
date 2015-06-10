@@ -10,15 +10,17 @@
 
 namespace Admin\Controller;
 
+use Zend\Mvc\InjectApplicationEventInterface;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
 use User\Entity\User;
 use Zend\Session\Container;
-use Zend\Crypt\Password\Bcrypt;
 use Zend\Console\Response;
 use Application\Controller\AbstractActionController;
+use Zend\Console\Request as ConsoleRequest;
+use Zend\Crypt\Password\Bcrypt;
 
-class AuthController extends AdminController implements \Zend\Mvc\InjectApplicationEventInterface
+class AuthController extends AdminController implements InjectApplicationEventInterface
 {
     /**
      * @return \Zend\View\Model\ViewModel|\Zend\View\Model\JsonModel
@@ -26,79 +28,106 @@ class AuthController extends AdminController implements \Zend\Mvc\InjectApplicat
     public function signinAction()
     {
         $request = $this->getRequest();
+        $isConsoleRequest = $request instanceof ConsoleRequest;
+        $isXmlHttpRequest = !$isConsoleRequest && $request->isXmlHttpRequest();
 
-        if (!$request->isPost()) {
+        if (!$isConsoleRequest && !$request->isPost()) {
             return new ViewModel();
         }
 
         $response = $this->getResponse();
 
-        $email = $request->getPost('email');
-        $password = $request->getPost('password');
+        $email    = $isConsoleRequest ? $this->params()->fromRoute('email')    : $request->getPost('email');
+        $password = $isConsoleRequest ? $this->params()->fromRoute('password') : $request->getPost('password');
 
-        $user = $this
-            ->getEntityManager()
-            ->getRepository('User\Entity\User')
-            ->findOneBy(array(
-                'email' => $email,
-            ));
+        /** @var \Admin\Service\AuthService */
+        $authService = $this->serviceLocator->get('Admin\Service\Auth');
 
-        if (!$user) {
-            $response->setStatusCode(401);
-            if ($request->isXmlHttpRequest()) {
-                return new JsonModel(array(
+        /** Set credentials, validate them, and return validation result. */
+        $valid = $authService
+            ->setCredentials($email, $password)
+            ->validate()
+            ->isValid();
+
+        if ($valid)
+        {
+            $authService->authenticate();
+
+            if ($isConsoleRequest)
+            {
+                $response = new Response();
+                return $response->setErrorLevel(0);
+            }
+
+            $adminIndexUrl = $this->url()->fromRoute('admin-index');
+
+            switch (true) {
+                case $isXmlHttpRequest:
+                    $response->setStatusCode(201);
+                    return new JsonModel([
+                        'url' => $adminIndexUrl,
+                        'success' => true,
+                    ]);
+                default:
+                    $response->setStatusCode(302);
+                    return $this->redirect()->toUrl($adminIndexUrl);
+            }
+        }
+        else
+        {
+            switch (true) {
+                case $isXmlHttpRequest:
+                    $response->setStatusCode(401);
+                    return new JsonModel([
                         'success' => false,
-                ));
-            } else {
-                return new ViewModel(array(
+                    ]);
+                case $isConsoleRequest:
+                    $response = new Response();
+                    return $response->setErrorLevel(1);
+                default:
+                    $response->setStatusCode(401);
+                    return new ViewModel([
                         'email' => $email,
                         'password' => $password,
-                ));
+                    ]);
             }
         }
-
-        $bcrypt = new Bcrypt();
-        $validUser = $bcrypt->verify($password, $user->password);
-
-        if ($validUser) {
-            $userContainer = new Container('user');
-            $userContainer->id = $user->id;
-        }
-
-        $url = $this->url()->fromRoute('admin-index');
-
-        $response->setStatusCode($validUser ? 201 : 401);
-
-        if ($request->isXmlHttpRequest()) {
-            if ($validUser) {
-                return new JsonModel(array(
-                        'url' => $url,
-                        'success' => true,
-                ));
-            } else {
-                return new JsonModel(array(
-                    'success' => false,
-                ));
-            }
-        } elseif ($validUser) {
-            $this->redirect()
-                ->toUrl($url)
-                ->setStatusCode(201);
-        }
-
-        return new ViewModel(array(
-            'email' => $email,
-            'password' => $password,
-        ));
     }
 
+    /**
+     * Sign out user.
+     */
     public function signoutAction()
     {
-        $userContainer = new Container('user');
-        $userContainer->id = null;
-        $userContainer->authenticatedUser = null;
+        $authService = $this->serviceLocator->get('Admin\Service\Auth');
+        $authService->removeUserFromSession();
 
         return $this->redirect()->toRoute('admin-signin');
+    }
+
+    /**
+     * Console action. Returns session hash for user. Used by frontend tests.
+     */
+    public function getAdminSessionIdAction()
+    {
+        $request = $this->getRequest();
+
+        $email = $request->getParam('email');
+        $password = $request->getParam('password');
+
+        $response = $this->forward()->dispatch('Admin\Controller\Auth', [
+            'action' => 'signin',
+            'email' => $email,
+            'password' => $password,
+        ]);
+
+        if ($response->getErrorLevel() == 0)
+        {
+            $sessionStorage = $this->serviceLocator->get('Zend\Session\SessionManager');
+            return $sessionStorage->getId();
+        }
+
+        return $response;
     }
 
     public function createAdminAction() {
@@ -135,12 +164,8 @@ class AuthController extends AdminController implements \Zend\Mvc\InjectApplicat
             $entityManager->getConnection()->rollback();
             $entityManager->close();
 
-            print_r($e->getMessage());
-
             $response = new Response();
-            $response->setErrorLevel(1);
-
-            return $response;
+            return $response->setErrorLevel(1);
         }
     }
 }

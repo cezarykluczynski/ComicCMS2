@@ -58,6 +58,9 @@ return array(
         'aliases' => array(
             'translator' => 'MvcTranslator',
         ),
+        'invokables' => array(
+            'Admin\Service\Auth' => 'Admin\Service\AuthService',
+        ),
     ),
     'translator' => array(
         'locale' => 'en-US',
@@ -110,6 +113,15 @@ return array(
                         'defaults' => array(
                             'controller' => 'Admin\Controller\Auth',
                             'action'     => 'create-admin'
+                        ),
+                    ),
+                ),
+                'get-admin-session-id' => array(
+                    'options' => array(
+                        'route'    => 'get-admin-session-id <email> <password>',
+                        'defaults' => array(
+                            'controller' => 'Admin\Controller\Auth',
+                            'action'     => 'get-admin-session-id'
                         ),
                     ),
                 ),

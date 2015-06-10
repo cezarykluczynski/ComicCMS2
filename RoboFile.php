@@ -11,4 +11,10 @@ class RoboFile extends \Robo\Tasks
             ->taskExec("php public/index.php create-admin $email $password")
             ->run();
     }
+
+    public function getadminsessionid($email, $password) {
+        $this
+            ->taskExec("php public/index.php get-admin-session-id $email $password")
+            ->run();
+    }
 }

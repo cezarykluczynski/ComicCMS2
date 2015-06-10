@@ -13,6 +13,7 @@ define({
     functionalSuites: [
         "tests/functional/mainpage",
         "tests/functional/admin/auth/signin",
+        "tests/functional/admin/dashboard/dashboard",
     ],
     excludeInstrumentation: /tests|node_modules/
 });

@@ -1,9 +1,8 @@
 define([
     "intern!object",
     "intern/chai!assert",
-    "require",
     "tests/support/helper"
-], function ( registerSuite, assert, require, testHelper ) {
+], function ( registerSuite, assert, testHelper ) {
     var mainPage = testHelper.getAppUrl( "" );
 
     registerSuite({
