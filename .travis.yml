@@ -1,7 +1,9 @@
 sudo: true
 language: php
 php:
-  - 5.4
+  - 5.5
+node_js:
+  - 0.12
 addons:
   postgresql: '9.3'
   sauce_connect: true

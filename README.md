@@ -34,7 +34,7 @@ It has both .gitignore and .hgignore files.
 ## Requirements
 If you like to participate in the development process, here are the requirements:
 
-* PHP 5.4+, with Composer
+* PHP 5.5+, with Composer
 * PostgreSQL 9.1+
 * Apache 2.2+
 * Ruby 1.8.7+
