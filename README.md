@@ -8,7 +8,7 @@ Wanna help? Check out [todo](docs/todo.md) and [roadmap](docs/roadmap.md).
 [![Sauce Test Status](https://saucelabs.com/buildstatus/comiccms2)](https://saucelabs.com/u/comiccms2)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/cezarykluczynski/ComicCMS2/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/cezarykluczynski/ComicCMS2/?branch=master)
 
-# Dependency status
+## Dependency status
 Composer: [![Dependency Status](https://www.versioneye.com/user/projects/553563157f43bcd889000020/badge.svg?style=flat)](https://www.versioneye.com/user/projects/553563157f43bcd889000020)
 
 Bower: [![Dependency Status](https://www.versioneye.com/user/projects/553563157f43bc60fe00002f/badge.svg?style=flat)](https://www.versioneye.com/user/projects/553563157f43bc60fe00002f)
