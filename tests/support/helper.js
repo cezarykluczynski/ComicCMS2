@@ -1,5 +1,8 @@
 define( [ "intern/dojo/node!child_process" ], function( child_process ) {
     return {
+        /** Additional randomness. */
+        randomStringCount: 0,
+
         /**
          * Return a full URL for an tested application.
          *
@@ -76,6 +79,7 @@ define( [ "intern/dojo/node!child_process" ], function( child_process ) {
                 .get( mainPage )
                 .clearCookies()
                 .setCookie( this.getValidAdminCookie() )
+                .maximizeWindow()
                 .get( dashboard );
         },
 
@@ -87,6 +91,27 @@ define( [ "intern/dojo/node!child_process" ], function( child_process ) {
         cleanupDashboardTest: function ( context ) {
             return context
                 .clearCookies();
+        },
+
+        /**
+         * Generates and returns unique string, one that is highly unlikely to repeat in a single test,
+         * based on microtime and internal
+         *
+         * @return {string} Unique string.
+         */
+        getUniqueString: function () {
+            this.randomStringCount++;
+
+            return "uniqueString" + (new Date()).getTime() + this.randomStringCount;
+        },
+
+        /**
+         * Returns shared timeout for those action that triggers AJAX requests.
+         *
+         * @return {int}
+         */
+        getTimeoutForAjaxRequests: function() {
+            return 15000;
         }
     };
 });

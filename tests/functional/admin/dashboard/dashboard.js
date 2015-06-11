@@ -10,7 +10,7 @@ define([
         "Dashboard is visible.": function () {
             return testHelper.cleanupDashboardTest(
                 testHelper.getDashboardAuthorizedAsAdmin( this )
-                .setFindTimeout( 10000 )
+                .setFindTimeout( testHelper.getTimeoutForAjaxRequests() )
                 .findByCssSelector( "div[ng-app=\"admin\"]" )
                 .end()
             );

@@ -1,6 +1,6 @@
 <?php
 /**
- * ComicCmsTestHelper module main class.
+ * ComicCmsTestHelper module config.
  *
  * @package ComicCMS2
  * @author Cezary Kluczyński
@@ -9,4 +9,10 @@
 
 namespace ComicCmsTestHelper;
 
-return array();
+return array(
+    'controllers' => array(
+        'invokables' => array(
+            'ComicCmsTestHelper\Controller\CleanupConsole' => 'ComicCmsTestHelper\Controller\CleanupConsoleController',
+        ),
+    ),
+);

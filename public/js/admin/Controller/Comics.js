@@ -21,7 +21,7 @@ admin
             /** Create dialog from a given template. */
             $rootScope.comicEditDialog = ngDialog.open({
                 template: "adminComicsEdit",
-                className: "ngdialog-theme-default admin-comics-edit",
+                className: "ngdialog-theme-default comics-dialog",
                 controller: "ComicEditController",
                 data: {
                     entity: entity
