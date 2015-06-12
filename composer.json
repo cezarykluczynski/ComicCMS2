@@ -2,12 +2,6 @@
   "name" : "comiccms",
   "description" : "ComicCMS2",
   "version" : "0.0.1",
-  "repositories": {
-    "packagist": {
-      "url": "https://packagist.org",
-      "type": "composer"
-    }
-  },
   "require" : {
     "php" : "^5.5.0",
     "zendframework/zendframework" : "2.5.*",
