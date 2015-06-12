@@ -13,9 +13,8 @@ before_script:
   - vendor/bin/doctrine migrations:migrate -n
   - vendor/bin/robo createadmin admin@example.com password
   - gem install sass
-  - sudo npm cache clean -f
-  - sudo npm install -g n
-  - sudo n 0.12.4
+  - nvm install 0.12
+  - nvm use 0.12
   - npm install -g bower grunt-cli
   - npm install
   - bower install
