@@ -81,7 +81,7 @@ define( [ "intern/dojo/node!child_process" ], function( child_process ) {
                 name: "PHPSESSID",
                 value: this.getAdminSessionId(),
                 path: "/",
-                domain: this.getDomain()
+                domain: null
             };
         },
 
