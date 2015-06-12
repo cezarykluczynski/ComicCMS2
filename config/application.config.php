@@ -19,6 +19,7 @@ return array(
         'DoctrineORMModule',
         'BjyAuthorize',
         'EdpModuleLayouts',
+        'ComicCmsTestHelper',
     ),
 
     'module_listener_options' => array(

@@ -111,6 +111,10 @@ define([
                         assert.equal( visibleText, "Comic was created." );
                     })
                     .end()
+                /** Teardown. */
+                .then( function () {
+                    testHelper.removeEntity( "Comic\\Entity\\Comic", { title: title } );
+                })
             );
         }
     });

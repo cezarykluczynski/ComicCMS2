@@ -4,7 +4,7 @@ define( [ "intern/dojo/node!child_process" ], function( child_process ) {
         randomStringCount: 0,
 
         /**
-         * Return a full URL for an tested application.
+         * Return a full URL for tested application.
          *
          * @param {string} [path] Relative path.
          */
@@ -40,11 +40,31 @@ define( [ "intern/dojo/node!child_process" ], function( child_process ) {
          */
         getAdminSessionId: function () {
             var credentials = this.getAdminCredentials();
-            return child_process.execSync( "php public/index.php get-admin-session-id " + credentials.email + " " +
-                credentials.password, {
-                    encoding: "utf-8"
-                }
-            );
+
+            return this.exec( "php public/index.php get-admin-session-id " + credentials.email + " " +
+                credentials.password );
+        },
+
+        /**
+         * Executes command.
+         *
+         * @return {string} Execution result.
+         */
+        exec: function ( command ) {
+            return child_process.execSync( command, {
+                encoding: "utf-8"
+            });
+        },
+
+        /**
+         * Removes entity, based on criteria.
+         *
+         * @param {string} entity    FQN of entity class.
+         * @param {Object} criteria  Criteria to use when searching for entity.
+         */
+        removeEntity: function ( entity, criteria ) {
+            criteria = JSON.stringify( criteria ).replace( /\"/gi, "\\\"" );
+            return this.exec( "php public/index.php remove-entity " + entity + " " + criteria + "" );
         },
 
         /**
