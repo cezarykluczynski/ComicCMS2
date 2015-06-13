@@ -64,13 +64,7 @@ define( [ "intern/dojo/node!child_process" ], function( child_process ) {
          */
         removeEntity: function ( entity, criteria ) {
             criteria = JSON.stringify( criteria ).replace( /\"/gi, "\\\"" );
-            var result;
-            try {
-                result = this.exec( "php public/index.php remove-entity " + entity + " " + criteria + "" );
-            } catch ( e ) {
-                console.log( result );
-                console.log( e );
-            }
+            return this.exec( "php public/index.php remove-entity " + entity + " " + criteria + "" );
         },
 
         /**

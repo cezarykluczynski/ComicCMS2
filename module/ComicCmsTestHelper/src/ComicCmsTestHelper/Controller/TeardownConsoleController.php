@@ -25,8 +25,10 @@ class TeardownConsoleController extends AbstractActionController
 
         $response->setErrorLevel(0);
 
+        /** Entity class name, with dots in place of backslashes. */
+        $entityName = $request->getParam('entityName');
         /** Entity class name. */
-        $entity = $request->getParam('entity');
+        $className = str_replace(".", "\\", $entityName);
         /** @var string JSON-encoded criteria. */
         $criteriaEncoded = $request->getParam('criteria');
         /** @var array Critieria for finding entities to remove. */
@@ -35,7 +37,7 @@ class TeardownConsoleController extends AbstractActionController
         $em = $this->getEntityManager();
 
         /** @var array Collection of entities matching criteria. */
-        $entities = $em->getRepository($entity)->findBy($criteria);
+        $entities = $em->getRepository($className)->findBy($criteria);
 
         /** Nothing to remove, return. */
         if (empty($entities))

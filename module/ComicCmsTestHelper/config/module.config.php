@@ -21,7 +21,7 @@ return array(
             'routes' => array(
                 'remove-entity' => array(
                     'options' => array(
-                        'route'    => 'remove-entity <entity> <criteria>',
+                        'route'    => 'remove-entity <entityName> <criteria>',
                         'defaults' => array(
                             'controller' => 'ComicCmsTestHelper\Controller\TeardownConsole',
                             'action'     => 'remove-entity'

@@ -113,7 +113,7 @@ define([
                     .end()
                 /** Teardown. */
                 .then( function () {
-                    testHelper.removeEntity( "Comic\\Entity\\Comic", { title: title } );
+                    testHelper.removeEntity( "Comic.Entity.Comic", { title: title } );
                 })
             );
         }
