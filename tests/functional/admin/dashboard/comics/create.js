@@ -8,7 +8,7 @@ define([
         return context.setFindTimeout( testHelper.getTimeoutForAjaxRequests() )
             .findByCssSelector( "ul.root-tabs" )
                 .setFindTimeout( testHelper.getTimeoutForPageAction() )
-                .findByCssSelector( "li.tab.comics" )
+                .findByCssSelector( "li.tab.comics a" )
                     .click()
                     .end()
                 .end()
