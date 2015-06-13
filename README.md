@@ -11,9 +11,9 @@ Wanna help? Check out [todo](docs/todo.md) and [roadmap](docs/roadmap.md).
 ## Dependency status
 Composer: [![Dependency Status](https://www.versioneye.com/user/projects/553563157f43bcd889000020/badge.svg?style=flat)](https://www.versioneye.com/user/projects/553563157f43bcd889000020)
 
-Bower: [![Dependency Status](https://www.versioneye.com/user/projects/553563157f43bc60fe00002f/badge.svg?style=flat)](https://www.versioneye.com/user/projects/553563157f43bc60fe00002f)
+npm: [![Dependency Status](https://www.versioneye.com/user/projects/553563157f43bc60fe00002f/badge.svg?style=flat)](https://www.versioneye.com/user/projects/553563157f43bc60fe00002f)
 
-npm: [![Dependency Status](https://www.versioneye.com/user/projects/553563107f43bc60fe000028/badge.svg?style=flat)](https://www.versioneye.com/user/projects/553563107f43bc60fe000028)
+Bower: [![Dependency Status](https://www.versioneye.com/user/projects/553563107f43bc60fe000028/badge.svg?style=flat)](https://www.versioneye.com/user/projects/553563107f43bc60fe000028)
 
 ## About
 
