@@ -1,7 +1,7 @@
 "use strict";
 
 var admin = angular.module( "admin",
-    [ "angularUtils.directives.dirPagination", "ngDialog", "Alertify", "ui.select", "restangular" ] )
+    [ "angularUtils.directives.dirPagination", "ngDialog", "Alertify" ] )
     .config([ "ngDialogProvider", function ( ngDialogProvider ) {
         ngDialogProvider.setDefaults({
             className: "ngdialog-theme-default",
