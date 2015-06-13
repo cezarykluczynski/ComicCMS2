@@ -19,7 +19,7 @@ define({
         "tests/functional/mainpage",
         "tests/functional/admin/auth/signin",
         "tests/functional/admin/dashboard/dashboard",
-        "tests/functional/admin/dashboard/comics/create",
+        // "tests/functional/admin/dashboard/comics/create",
     ],
     excludeInstrumentation: /tests|node_modules/
 });

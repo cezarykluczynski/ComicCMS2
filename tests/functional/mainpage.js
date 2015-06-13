@@ -11,7 +11,7 @@ define([
         "Main page is loading.": function () {
             return this.remote
                 .get( mainPage )
-                .setFindTimeout( 3000 )
+                .setFindTimeout( testHelper.getTimeoutForAjaxRequests() )
                 .findByCssSelector( "body.application" )
                 .isDisplayed()
                 .then( function ( visible ) {

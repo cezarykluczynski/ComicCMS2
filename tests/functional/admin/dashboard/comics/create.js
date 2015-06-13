@@ -16,7 +16,7 @@ define([
             .setFindTimeout( testHelper.getTimeoutForAjaxRequests() )
             .findByCssSelector( ".comics-list-loading.ng-hide" )
                 .end()
-            .setFindTimeout( 1000 )
+            .setFindTimeout( testHelper.getTimeoutForAjaxRequests() )
             .findByCssSelector( "div[ng-controller=\"ComicsController\"] button.comics-create-open-dialog" )
                 .click()
                 .end();
@@ -33,7 +33,7 @@ define([
                 openComicEditDialog(
                     testHelper.getDashboardAuthorizedAsAdmin( this )
                 )
-                .setFindTimeout( 3000 )
+                .setFindTimeout( testHelper.getTimeoutForPageAction() )
                 .findByCssSelector( "div.comics-dialog" )
                     /** Assert that the "Create" button is still disabled if there's no title and no slug. */
                     .findByCssSelector( "button.comics-create" )
@@ -83,7 +83,7 @@ define([
                 openComicEditDialog(
                     testHelper.getDashboardAuthorizedAsAdmin( this )
                 )
-                .setFindTimeout( 3000 )
+                .setFindTimeout( testHelper.getTimeoutForPageAction() )
                 .findByCssSelector( "div.comics-dialog" )
                     /** Type title. */
                     .findById( "comics-title" )

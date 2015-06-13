@@ -12,6 +12,9 @@ define([
                 testHelper.getDashboardAuthorizedAsAdmin( this )
                 .setFindTimeout( testHelper.getTimeoutForAjaxRequests() )
                 .findByCssSelector( "div[ng-app=\"admin\"]" )
+                .then( function () {
+                    assert.ok( true );
+                })
                 .end()
             );
         },

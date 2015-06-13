@@ -74,7 +74,7 @@ define( [ "intern/dojo/node!child_process" ], function( child_process ) {
          */
         getValidAdminCookie: function () {
             /** @type {string} Cookie validity string, a week from now. */
-            var nextWeek = new Date((new Date).getTime() + 7 * 24 * 60 * 60 * 1000).toUTCString();
+            var nextWeek = new Date( (new Date).getTime() + 7 * 24 * 60 * 60 * 1000 ).toUTCString();
 
             return {
                 expiry: nextWeek,
@@ -132,6 +132,15 @@ define( [ "intern/dojo/node!child_process" ], function( child_process ) {
          */
         getTimeoutForAjaxRequests: function() {
             return 15000;
+        },
+
+        /**
+         * Returns shared timeout for those action that triggers AJAX requests.
+         *
+         * @return {int}
+         */
+        getTimeoutForPageAction: function() {
+            return 5000;
         }
     };
 });

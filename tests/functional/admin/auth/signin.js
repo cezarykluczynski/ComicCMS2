@@ -12,7 +12,7 @@ define([
         "Sign in form is visible.": function () {
             return this.remote
                 .get( signIn )
-                .setFindTimeout( 3000 )
+                .setFindTimeout( testHelper.getTimeoutForPageAction() )
                 /** Only check if sign in form is vibisle. */
                 .findByCssSelector( "div.admin-auth" )
                 .isDisplayed()
@@ -25,7 +25,7 @@ define([
         "Sign in form cannot be submitted with invalid email.": function () {
             return this.remote
                 .get( signIn )
-                .setFindTimeout( 3000 )
+                .setFindTimeout( testHelper.getTimeoutForPageAction() )
                 .findByCssSelector( "div.admin-auth" )
                     /** Type invalid email. */
                     .findByCssSelector( "input[name=\"email\"]" )
@@ -44,7 +44,7 @@ define([
         "Sign in form cannot be submitted with no password.": function () {
             return this.remote
                 .get( signIn )
-                .setFindTimeout( 3000 )
+                .setFindTimeout( testHelper.getTimeoutForPageAction() )
                 .findByCssSelector( "div.admin-auth" )
                     /** Type valid, non-empty email. */
                     .findByCssSelector( "input[name=\"email\"]" )
@@ -63,7 +63,7 @@ define([
         "Sign in form with invalid credentials show error when submitted.": function () {
             return this.remote
                 .get( signIn )
-                .setFindTimeout( 3000 )
+                .setFindTimeout( testHelper.getTimeoutForPageAction() )
                 .findByCssSelector( "div.admin-auth" )
                     /** Type valid, non-empty email. */
                     .findByCssSelector( "input[name=\"email\"]" )
@@ -77,7 +77,7 @@ define([
                     .findByCssSelector( "button[type=\"submit\"]" )
                         .click()
                         .end()
-                    .setFindTimeout( 5000 )
+                    .setFindTimeout( testHelper.getTimeoutForAjaxRequests() )
                     /** Find form's alert box. */
                     .findByCssSelector( ".alert.alert-danger" )
                     .isDisplayed()
@@ -97,7 +97,7 @@ define([
         "Sign in form with valid credentials signs user in.": function () {
             return this.remote
                 .get( signIn )
-                .setFindTimeout( 3000 )
+                .setFindTimeout( testHelper.getTimeoutForPageAction() )
                 .findByCssSelector( "div.admin-auth" )
                     /** Type valid, non-empty email. */
                     .findByCssSelector( "input[name=\"email\"]" )
@@ -112,7 +112,7 @@ define([
                         .click()
                         .end()
                     .end()
-                .setFindTimeout( 10000 )
+                .setFindTimeout( testHelper.getTimeoutForAjaxRequests() )
                 /** Assert that admin panel Angular app can be found, therefore authentication was successful. */
                 .findByCssSelector( "div[ng-app=\"admin\"]" )
                 .end();
