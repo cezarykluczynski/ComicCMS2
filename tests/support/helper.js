@@ -140,7 +140,7 @@ define( [ "intern/dojo/node!child_process" ], function( child_process ) {
          * @return {int}
          */
         getTimeoutForPageAction: function() {
-            return 5000;
+            return 10000;
         }
     };
 });

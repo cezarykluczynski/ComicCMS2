@@ -7,7 +7,7 @@ define([
     function openComicEditDialog( context ) {
         return context.setFindTimeout( testHelper.getTimeoutForAjaxRequests() )
             .findByCssSelector( "ul.root-tabs" )
-                .setFindTimeout( 1000 )
+                .setFindTimeout( testHelper.getTimeoutForPageAction() )
                 .findByCssSelector( "li.tab.comics" )
                     .click()
                     .end()
