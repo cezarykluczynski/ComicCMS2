@@ -7,6 +7,10 @@ define([
     function openComicEditDialog( context ) {
         return context.setFindTimeout( testHelper.getTimeoutForAjaxRequests() )
             .findByCssSelector( "ul.root-tabs" )
+            .getLogsFor( "browser" )
+            .then( function ( logs ) {
+                console.log( logs )
+            })
                 .setFindTimeout( testHelper.getTimeoutForPageAction() )
                 .findByCssSelector( "li.tab.comics" )
                     .click()
