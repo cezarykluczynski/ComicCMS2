@@ -13,16 +13,16 @@
 
 
     <div class="row">
-        <div class="col-md-3 comics">
+        <div class="col-sm-3 comics">
             <div class="panel panel-default">
                 <h2 class="panel-heading">{$this->translate('Comics')}</h2>
                 <div class="panel-body" ng-include="'adminComicsList'"></div>
             </div>
         </div>
-        <div class="col-md-3" ng-show="activated()" ng-include="'adminStripsList'">
+        <div class="col-sm-3" ng-show="activated()" ng-include="'adminStripsList'">
 
         </div>
-        <div class="col-md-6" ng-show="activated()">
+        <div class="col-sm-6" ng-show="activated()">
 
         </div>
     </div>
