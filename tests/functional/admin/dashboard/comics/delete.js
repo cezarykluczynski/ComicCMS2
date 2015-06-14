@@ -57,12 +57,6 @@ define([
                             assert.notOk( enabled );
                         })
                         .end()
-                    .findByCssSelector( ".comics-delete-cancel" )
-                        .isEnabled( function ( enabled ) {
-                            /** Assert that "Cancel" button is disabled after clicking on "Confirm" button. */
-                            assert.notOk( enabled );
-                        })
-                        .end()
                     .end()
                 .setFindTimeout( testHelper.getTimeoutForAjaxRequests() )
                 /** Check if the comics was created. */
