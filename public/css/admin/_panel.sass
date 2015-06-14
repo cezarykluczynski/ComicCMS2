@@ -35,6 +35,10 @@
         opacity: 0.5
         pointer-events: none
 
+    button[disabled]
+        opacity: 0.5
+        pointer-event: auto
+
 
 [ng-controller="ComicsController"]
     .navbar
@@ -73,7 +77,6 @@
 
 
 [ng-controller="ComicEditController"]
-
     textarea
         resize: vertical
         max-height: 10em

@@ -62,9 +62,11 @@ admin
                 })
                 .then( function () {
                     self.refreshActiveEntityFromList();
-                    self.loadingStatus( false );
                     $rootScope.$emit( "comicUpdate" );
-                });
+                })
+                .finally( function () {
+                    self.loadingStatus( false );
+                })
         };
 
         comics.delete = function () {

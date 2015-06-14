@@ -31,6 +31,7 @@ admin
 
         /** Creates or updates comic entity. */
         $scope.save = function() {
+            $rootScope.blurActiveElement();
             comics.save().then( function () {
                 $scope.cancel();
             });

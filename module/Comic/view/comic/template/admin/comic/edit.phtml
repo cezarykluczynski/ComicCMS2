@@ -72,17 +72,21 @@
         <div class="form-group actions">
             <button
                 class="btn btn-success pull-right comics-create"
-                ng-disabled="adminComicsEdit.$invalid || comics.loading"
                 ng-click="save()"
+                ng-disabled="adminComicsEdit.$invalid || comics.loading"
                 ng-show="comics.editingNew()"
             ><?= $this->translate('Create'); ?></button>
             <button
                 class="btn btn-success pull-right comics-save"
-                ng-disabled="adminComicsEdit.$invalid || comics.loading"
                 ng-click="save()"
+                ng-disabled="adminComicsEdit.$invalid || comics.loading"
                 ng-show="!comics.editingNew()"
             ><?= $this->translate('Save'); ?></button>
-            <button class="btn btn-danger pull-left comics-dialog-close" ng-click="cancel()"><?= $this->translate('Cancel'); ?></button>
+            <button
+                class="btn btn-danger pull-left comics-dialog-close"
+                ng-click="cancel()"
+                ng-disabled="comics.loading"
+            ><?= $this->translate('Cancel'); ?></button>
         </div>
     </form>
 </div>
