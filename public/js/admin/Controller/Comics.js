@@ -44,7 +44,7 @@ admin
             /** Create dialog from a given template. */
             $rootScope.comicDeleteDialog = ngDialog.open({
                 template: "adminComicsDelete",
-                className: "ngdialog-theme-default admin-comics-delete",
+                className: "ngdialog-theme-default comics-delete-dialog",
                 controller: "ComicDeleteController",
                 data: {
                     entity: entity

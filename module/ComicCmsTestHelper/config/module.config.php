@@ -12,6 +12,7 @@ namespace ComicCmsTestHelper;
 return array(
     'controllers' => array(
         'invokables' => array(
+            'ComicCmsTestHelper\Controller\SetupConsole' => 'ComicCmsTestHelper\Controller\SetupConsoleController',
             'ComicCmsTestHelper\Controller\TeardownConsole' => 'ComicCmsTestHelper\Controller\TeardownConsoleController',
         ),
     ),
@@ -19,6 +20,15 @@ return array(
      'console' => array(
         'router' => array(
             'routes' => array(
+                'create-entity' => array(
+                    'options' => array(
+                        'route'    => 'create-entity <entityName> <data>',
+                        'defaults' => array(
+                            'controller' => 'ComicCmsTestHelper\Controller\SetupConsole',
+                            'action'     => 'create-entity'
+                        ),
+                    ),
+                ),
                 'remove-entity' => array(
                     'options' => array(
                         'route'    => 'remove-entity <entityName> <criteria>',

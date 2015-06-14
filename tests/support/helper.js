@@ -59,12 +59,23 @@ define( [ "intern/dojo/node!child_process" ], function( child_process ) {
         /**
          * Removes entity, based on criteria.
          *
-         * @param {string} entity    FQN of entity class.
-         * @param {Object} criteria  Criteria to use when searching for entity.
+         * @param {string} entity   FQN of entity class.
+         * @param {Object} criteria Criteria to use when searching for entity.
          */
         removeEntity: function ( entity, criteria ) {
             criteria = JSON.stringify( criteria ).replace( /\"/gi, "\\\"" );
             return this.exec( "php public/index.php remove-entity " + entity + " " + criteria + "" );
+        },
+
+        /**
+         * Creates entity with a given data.
+         *
+         * @param {string} entity FQN of entity class.
+         * @param {Object} data   Data to hydrate entity with.
+         */
+        createEntity: function ( entity, data ) {
+            data = JSON.stringify( data ).replace( /\"/gi, "\\\"" );
+            return this.exec( "php public/index.php create-entity " + entity + " " + data + "" );
         },
 
         /**

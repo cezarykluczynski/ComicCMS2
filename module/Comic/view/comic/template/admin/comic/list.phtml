@@ -20,7 +20,7 @@
                 <div class="btn-group" role="group">
                     <button
                         type="button"
-                        class="btn btn-xs btn-success"
+                        class="btn btn-xs btn-success comics-edit-open-dialog"
                         ng-click="$event.stopPropagation();openComicEditDialog(entity)"
                     >
                         <?= $this->translate('Edit'); ?>
@@ -28,7 +28,7 @@
                     </button>
                     <button
                         type="button"
-                        class="btn btn-xs btn-danger"
+                        class="btn btn-xs btn-danger comics-delete"
                         ng-click="$event.stopPropagation();openComicDeleteDialog(entity);"
                     >
                         <?= $this->translate('Delete'); ?>

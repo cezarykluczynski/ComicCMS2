@@ -20,6 +20,7 @@ define({
         "tests/functional/admin/auth/signin",
         "tests/functional/admin/dashboard/dashboard",
         "tests/functional/admin/dashboard/comics/create",
+        "tests/functional/admin/dashboard/comics/delete",
     ],
     excludeInstrumentation: /tests|node_modules/
 });

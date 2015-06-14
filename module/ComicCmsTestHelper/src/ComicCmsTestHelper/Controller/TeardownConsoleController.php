@@ -28,7 +28,7 @@ class TeardownConsoleController extends AbstractActionController
         /** Entity class name, with dots in place of backslashes. */
         $entityName = $request->getParam('entityName');
         /** Entity class name. */
-        $className = str_replace(".", "\\", $entityName);
+        $className = str_replace('.', '\\', $entityName);
         /** @var string JSON-encoded criteria. */
         $criteriaEncoded = $request->getParam('criteria');
         /** @var array Critieria for finding entities to remove. */
