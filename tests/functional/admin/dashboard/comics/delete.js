@@ -51,12 +51,6 @@ define([
                     .findByCssSelector( ".comics-delete-confirm" )
                         .click()
                         .end()
-                    .findByCssSelector( ".comics-delete-confirm" )
-                        .isEnabled( function ( enabled ) {
-                            /** Assert that "Confirm" button is disabled after clicking. */
-                            assert.notOk( enabled );
-                        })
-                        .end()
                     .end()
                 .setFindTimeout( testHelper.getTimeoutForAjaxRequests() )
                 /** Check if the comics was created. */
