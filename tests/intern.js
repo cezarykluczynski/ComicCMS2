@@ -16,6 +16,7 @@ define({
         "tests/functional/admin/dashboard/dashboard",
         "tests/functional/admin/dashboard/comics/create",
         "tests/functional/admin/dashboard/comics/delete",
+        "tests/functional/admin/dashboard/strips/create",
     ],
     excludeInstrumentation: /tests|node_modules/
 });

@@ -5,7 +5,7 @@ admin
         function ( comics, $scope, $rootScope ) {
         $scope.comics = comics;
         $scope.closing = false;
-        console.log($rootScope);
+
         comics.deleteEntity = $scope.ngDialogData.entity;
 
         /** Close the dialog. */

@@ -6,6 +6,7 @@ define([
     /** Opens comics edit dialog for new entity. */
     function openComicEditDialog( context ) {
         return context.setFindTimeout( testHelper.getTimeoutForAjaxRequests() )
+            /** Go to "Comics" tab. */
             .findByCssSelector( "ul.root-tabs" )
                 .setFindTimeout( testHelper.getTimeoutForPageAction() )
                 .findByCssSelector( "li.tab.comics a" )
