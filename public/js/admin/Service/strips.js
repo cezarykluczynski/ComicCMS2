@@ -3,6 +3,8 @@ admin
         var strips = {};
 
         strips.list = [];
+        strips.editing = false;
+        strips.entity = {};
 
         strips.refresh = function ( data ) {
             this.list = data.list;
@@ -24,6 +26,18 @@ admin
         $rootScope.$on( "reloadStrips", function () {
             strips.loadStrips();
         });
+
+        strips.edit = function( entity ) {
+            this.editing = true;
+        };
+
+        strips.cancelEdit = function () {
+            this.editing = false;
+        };
+
+        strips.editingNew = function () {
+            return !this.entity.id;
+        };
 
         return strips;
     }]);

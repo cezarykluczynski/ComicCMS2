@@ -28,6 +28,7 @@
         ->appendFile("`$basePath`/vendor/angular-utils-pagination/dirPagination.js")
         ->appendFile("`$basePath`/vendor/ng-alertify/ng-alertify.js")
         ->appendFile("`$basePath`/vendor/ngDialog/js/ngDialog.js")
+        ->appendFile("`$basePath`/vendor/ng-file-upload/ng-file-upload.js")
         ->appendFile("`$basePath`/js/admin/module/admin.js")
         ->appendFile("`$basePath`/js/admin/module/admin-signin.js")
         ->appendFile("`$basePath`/js/admin/filter/admin.js")

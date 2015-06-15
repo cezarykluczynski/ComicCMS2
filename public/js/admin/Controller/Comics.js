@@ -4,6 +4,7 @@ admin
     .controller( "ComicsController", [ "comics", "strips", "$scope", "$rootScope", "$http", "ngDialog", "$filter",
         function( comics, strips, $scope, $rootScope, $http, ngDialog, $filter ) {
         $scope.comics = comics;
+        $scope.strips = strips;
         $scope.dirty = false;
 
         /** Listener for clicks coming from "Dashboard" tab, when there's is no comics. */
@@ -78,12 +79,11 @@ admin
 
         $scope.activate = function ( entity, force ) {
             /**
-             * Put a comic to edit, but only if the currently edited comic isn't dirty,
-             * that is, it doesn't have unsaved changes, and strips are not loading, and current
-             * comics is not yet activated.
+             * Put a comic to edit, but only if the currently edited comic isn't edited,
+             * and strips are not loading, and current comics is not yet activated.
              */
             if (
-                ! $scope.dirty &&
+                ! strips.edited &&
                 ! $scope.comics.loading &&
                 ! ( force || $scope.activated( entity ) )
             ) {

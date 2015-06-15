@@ -19,10 +19,10 @@
                 <div class="panel-body" ng-include="'adminComicsList'"></div>
             </div>
         </div>
-        <div class="col-sm-3" ng-show="activated()" ng-include="'adminStripsList'">
+        <div class="col-sm-3" ng-show="activated() && !comics.loading" ng-include="'adminStripsList'">
 
         </div>
-        <div class="col-sm-6" ng-show="activated()">
+        <div class="col-sm-6" ng-show="activated() && !comics.loading && strips.editing" ng-include="'adminStripEdit'">
 
         </div>
     </div>

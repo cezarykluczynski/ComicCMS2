@@ -1,0 +1,32 @@
+<script type="text/ng-template" id="adminStripEdit">
+<div class="panel panel-default" ng-controller="StripEditController">
+    <h2 class="panel-heading">
+        <span ng-show="strips.editingNew()"><?= $this->translate('Creating'); ?></span>
+        <span ng-show="!strips.editingNew()"><?= $this->translate('Editing'); ?></span>
+        <span ng-bind="strips.entity.title"></span>
+    </h2>
+
+    <div class="panel-body">
+        <div class="form-group actions">
+                <button
+                    class="btn btn-success pull-right strip-create"
+                    ng-click="save()"
+                    ng-disabled="strips.loading"
+                    ng-show="strips.editingNew()"
+                ><?= $this->translate('Create'); ?></button>
+                <button
+                    class="btn btn-success pull-right strip-save"
+                    ng-click="save()"
+                    ng-disabled="strips.loading"
+                    ng-show="!strips.editingNew()"
+                ><?= $this->translate('Save'); ?></button>
+                <button
+                    class="btn btn-danger pull-left strip-cancel"
+                    ng-click="cancel()"
+                    ng-disabled="strips.loading"
+                ><?= $this->translate('Cancel'); ?></button>
+            </div>
+        </div>
+    </div>
+</div>
+</script>

@@ -1,7 +1,7 @@
 <script type="text/ng-template" id="adminStripsList">
 <div class="panel panel-default" ng-controller="StripController">
     <h2 class="panel-heading">
-        <button type="button" class="btn btn-success pull-right">
+        <button type="button" class="btn btn-success pull-right" ng-click="new()" ng-disabled="strips.editing">
             <?= $this->translate("Create strip") ?>
         </button>
         <?= $this->translate('Strips'); ?>
