@@ -1,0 +1,63 @@
+<script type="text/ng-template" id="adminStripUpload">
+<div ng-controller="StripUploadController">
+    <div
+        ngf-drop
+        ng-model="files"
+        class="dropzone"
+        ngf-multiple="true"
+        ngf-allow-dir="true"
+        ngf-select
+        ngf-keep="true"
+        ngf-keep-distinct="true"
+        ngf-accept="'image/*'"
+        ngf-drag-over-class="{accept:'accept', reject:'reject', delay:30}"
+    ><?= $this->translate('Drop files here, or click to upload'); ?>
+        <div ngf-no-file-drop>
+            <?= $this->translate('Note: drag & drop upload is not supported by your browser.'); ?>
+        </div>
+    </div>
+
+    <ul class="list-group">
+        <div class="media list-group-item" ng-repeat="file in files">
+            <div class="progress" ng-show="!file.loaded">
+                <div class="progress-bar" role="progressbar" aria-valuenow="{{ file.progressPercentage }}" aria-valuemin="0" aria-valuemax="100" ng-style="{'width': file.progressPercentage + '%'}">
+                </div>
+            </div>
+            <div class="manipulation" ng-show="file.loaded">
+                <div class="pull-right" ng-class="{'btn-group': loadedFilesLength() > 1}">
+                    <button
+                        class="btn btn-primary"
+                        ng-show="loadedFilesLength() > 1"
+                        ng-disabled="files.indexOf( file ) === 0"
+                        ng-click="move('up', file)"
+                    ><?= $this->translate('Move up'); ?></button>
+                    <button
+                        class="btn btn-primary"
+                        ng-show="loadedFilesLength() > 1"
+                        ng-disabled="files.indexOf( file ) === files.length - 1"
+                        ng-click="move('down', file)"
+                    ><?= $this->translate('Move down'); ?></button>
+                    <button
+                        class="btn btn-danger"
+                        ng-click="delete( file )"
+                    ><?= $this->translate('Delete'); ?></button>
+                </div>
+            </div>
+            <div class="media-left" ng-show="file.loaded">
+                <a href="javascript:void(0)" class="thumbnail">
+                    <img ngf-src="file" class="media-object">
+                </a>
+            </div>
+            <div class="media-body" ng-show="file.loaded">
+                <div class="caption">
+                    <textarea
+                        class="form-control"
+                        ng-model="file.caption"
+                        placeholder="<?= $this->translate('Caption, transcript, description, or leave empty'); ?>"
+                    ></textarea>
+                </div>
+            </div>
+        </div>
+    </ul>
+</div>
+</script>

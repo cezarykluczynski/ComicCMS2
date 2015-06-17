@@ -3,12 +3,23 @@ admin
         var strips = {};
 
         strips.list = [];
-        strips.editing = false;
+        strips._editing = false;
         strips.entity = {};
 
+        /**
+         * Reload entity list.
+         */
         strips.refresh = function ( data ) {
             this.list = data.list;
         };
+
+        strips.editing = function ( editing ) {
+            if ( undefined === editing ) {
+                return this._editing;
+            }
+
+            this._editing = editing;
+        }
 
         strips.setComicId = function ( comicId ) {
             this.comicId = comicId;
@@ -28,15 +39,21 @@ admin
         });
 
         strips.edit = function( entity ) {
-            this.editing = true;
+            this.editing( true );
         };
 
+        /**
+         * Cancel edit.
+         */
         strips.cancelEdit = function () {
-            this.editing = false;
+            this.editing( false );
         };
 
+        /**
+         * Whether the new entity is edited.
+         */
         strips.editingNew = function () {
-            return !this.entity.id;
+            return this.editing() && !this.entity.id;
         };
 
         return strips;

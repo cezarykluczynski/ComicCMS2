@@ -45,7 +45,7 @@ define([
                 )
                 /** Assert that the controller is visible. */
                 .setFindTimeout( testHelper.getTimeoutForPageAction() )
-                .findByCssSelector( "div[ng-controller=\"StripEditController\"]" )
+                .findByCssSelector( "form[ng-controller=\"StripEditController\"]" )
                     .isDisplayed()
                     .then( function ( displayed ) {
                         assert.ok( displayed );
@@ -56,7 +56,7 @@ define([
                     .end()
                 /** Assert that the controller is no longer visible. */
                 .setFindTimeout( testHelper.getTimeoutForPageAction() )
-                .findByCssSelector( "div[ng-controller=\"StripEditController\"]" )
+                .findByCssSelector( "form[ng-controller=\"StripEditController\"]" )
                     .isDisplayed()
                     .then( function ( displayed ) {
                         assert.notOk( displayed );

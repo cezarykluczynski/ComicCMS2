@@ -1,5 +1,5 @@
 <script type="text/ng-template" id="adminStripEdit">
-<div class="panel panel-default" ng-controller="StripEditController">
+<form class="panel panel-default" ng-controller="StripEditController">
     <h2 class="panel-heading">
         <span ng-show="strips.editingNew()"><?= $this->translate('Creating'); ?></span>
         <span ng-show="!strips.editingNew()"><?= $this->translate('Editing'); ?></span>
@@ -7,17 +7,28 @@
     </h2>
 
     <div class="panel-body">
+        <div class="form-group">
+            <label for="comics-name"><?= $this->translate('Comic title'); ?></label>
+            <input
+                class="form-control"
+                id="comics-name"
+                ng-model="strips.entity.title"
+                focus-once="strips.editing()"
+                placeholder="<?= $this->translate('Comic title'); ?>"
+            >
+        </div>
+        <div class="form-group" ng-include="'adminStripUpload'"></div>
         <div class="form-group actions">
                 <button
                     class="btn btn-success pull-right strip-create"
                     ng-click="save()"
-                    ng-disabled="strips.loading"
+                    ng-disabled="strips.loading || !files.length"
                     ng-show="strips.editingNew()"
                 ><?= $this->translate('Create'); ?></button>
                 <button
                     class="btn btn-success pull-right strip-save"
                     ng-click="save()"
-                    ng-disabled="strips.loading"
+                    ng-disabled="strips.loading || !files.length"
                     ng-show="!strips.editingNew()"
                 ><?= $this->translate('Save'); ?></button>
                 <button
@@ -28,5 +39,5 @@
             </div>
         </div>
     </div>
-</div>
+</form>
 </script>

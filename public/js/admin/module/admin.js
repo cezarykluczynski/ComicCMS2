@@ -1,7 +1,7 @@
 "use strict";
 
 var admin = angular.module( "admin",
-    [ "angularUtils.directives.dirPagination", "ngDialog", "Alertify" ] )
+    [ "angularUtils.directives.dirPagination", "ngDialog", "Alertify", "ngFileUpload" ] )
     .config([ "ngDialogProvider", function ( ngDialogProvider ) {
         ngDialogProvider.setDefaults({
             className: "ngdialog-theme-default",
@@ -24,4 +24,3 @@ var admin = angular.module( "admin",
     .config([ "$httpProvider", function( $httpProvider ) {
         $httpProvider.interceptors.push( "errorHttpInterceptor" );
     }]);
-

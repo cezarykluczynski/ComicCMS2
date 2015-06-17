@@ -21,6 +21,7 @@
                     <button
                         type="button"
                         class="btn btn-xs btn-success comics-edit-open-dialog"
+                        ng-disabled="strips.editing()"
                         ng-click="$event.stopPropagation();openComicEditDialog(entity)"
                     >
                         <?= $this->translate('Edit'); ?>
@@ -29,6 +30,7 @@
                     <button
                         type="button"
                         class="btn btn-xs btn-danger comics-delete"
+                        ng-disabled="strips.editing()"
                         ng-click="$event.stopPropagation();openComicDeleteDialog(entity);"
                     >
                         <?= $this->translate('Delete'); ?>

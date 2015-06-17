@@ -32,6 +32,7 @@
         ->appendFile("`$basePath`/js/admin/module/admin.js")
         ->appendFile("`$basePath`/js/admin/module/admin-signin.js")
         ->appendFile("`$basePath`/js/admin/filter/admin.js")
+        ->appendFile("`$basePath`/js/admin/directive/focusOnce.js")
         ->appendFile("`$basePath`/js/admin/Service/comics.js")
         ->appendFile("`$basePath`/js/admin/Service/strips.js")
         ->appendFile("`$basePath`/js/admin/Service/users.js")
@@ -42,6 +43,7 @@
         ->appendFile("`$basePath`/js/admin/Controller/ComicEdit.js")
         ->appendFile("`$basePath`/js/admin/Controller/Strip.js")
         ->appendFile("`$basePath`/js/admin/Controller/StripEdit.js")
+        ->appendFile("`$basePath`/js/admin/Controller/StripUpload.js")
         ->appendFile("`$basePath`/js/admin/Controller/Signin.js")
         ->appendFile("`$basePath`/js/admin/Controller/Users.js")
     }
