@@ -38,7 +38,17 @@ admin
             strips.loadStrips();
         });
 
+        strips.new = function () {
+            var entity = {
+                id: null,
+                title: ""
+            };
+
+            this.edit( entity );
+        }
+
         strips.edit = function( entity ) {
+            this.entity = entity;
             this.editing( true );
         };
 

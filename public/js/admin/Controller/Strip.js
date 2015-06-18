@@ -7,6 +7,6 @@ admin
         $scope.strips = strips;
 
         $scope.new = function () {
-            strips.edit({});
+            strips.new();
         };
     }]);

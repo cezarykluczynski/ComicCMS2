@@ -10,7 +10,7 @@ admin
 
         /** Auto upload: start upload on change. */
         $scope.$watch("files", function () {
-            $scope.upload( $scope.files) ;
+            $scope.upload( $scope.files );
         });
 
         /**
@@ -28,9 +28,13 @@ admin
             return loaded;
         };
 
+        $scope.emitState = function () {
+            $scope.$emit( "stripUploadChange", $scope.loadedFilesLength() );
+        };
+
         $scope.upload = function ( files ) {
             /** Nothing to upload, return. */
-            if ( !files || !files.length ) {
+            if ( ! files || ! files.length ) {
                 return;
             }
 
@@ -57,16 +61,17 @@ admin
                 .success(function ( data, status, headers, config ) {
                     file.loaded = true;
                     $scope.upload( files );
+                    $scope.emitState();
                 })
                 .error( function () {
                     file.loaded = true;
                     $scope.upload( files );
+                    $scope.emitState();
                 });
 
                 /** One at the time: break after first file upload is started. */
                 break;
             }
-
         };
 
         /**
@@ -85,6 +90,7 @@ admin
         $scope.delete = function ( file ) {
             var index = $scope.files.indexOf( file );
             $scope.files.splice( index, 1 );
+            $scope.emitState();
         };
 
         /**
@@ -92,6 +98,7 @@ admin
          */
         $scope.clear = function () {
             $scope.files.splice( 0, $scope.files.length );
+            $scope.emitState();
         };
 
         /**
