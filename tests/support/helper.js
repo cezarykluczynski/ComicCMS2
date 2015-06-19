@@ -1,4 +1,7 @@
-define( [ "intern/dojo/node!child_process" ], function( child_process ) {
+define( [
+    "intern/dojo/node!child_process",
+    "intern/dojo/node!path"
+], function( child_process, path ) {
     return {
         /** Additional randomness. */
         randomStringCount: 0,
@@ -152,6 +155,18 @@ define( [ "intern/dojo/node!child_process" ], function( child_process ) {
          */
         getTimeoutForPageAction: function() {
             return 10000;
+        },
+
+        /**
+         * Returns absolute path, given a relative fixture path.
+         *
+         * @param  {string} relativePath Relative path.
+         * @return {string}              Absolute path.
+         */
+        getFixturePath: function ( relativePath ) {
+            return process.cwd() + path.sep + [ "tests", "support", "fixtures" ]
+                .concat( relativePath.split( "/" ) )
+                .join( path.sep );
         }
     };
 });

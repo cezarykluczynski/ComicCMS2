@@ -7,16 +7,6 @@ define([
 
     function openStripEdit( context ) {
         return context
-            .then( function () {
-                /** Create entity. */
-                title = testHelper.getUniqueString();
-                testHelper.createEntity( "Comic.Entity.Comic", { title: title } );
-            })
-            .execute( function () {
-                /** Reload page. */
-                location.reload();
-                return true;
-            })
             /** Go to "Comics" tab. */
             .findByCssSelector( "ul.root-tabs" )
                 .setFindTimeout( testHelper.getTimeoutForPageAction() )
@@ -37,6 +27,17 @@ define([
 
     registerSuite({
         name: "Strip: create",
+
+        setup: function () {
+            /** Create comic to which strips will be added. */
+            title = testHelper.getUniqueString();
+            testHelper.createEntity( "Comic.Entity.Comic", { title: title } );
+        },
+
+        teardown: function () {
+            /** Remove comic create in setup test. */
+            testHelper.removeEntity( "Comic.Entity.Comic", { title: title } );
+        },
 
         "Comic can be created.": function () {
             return testHelper.cleanupDashboardTest(
@@ -62,9 +63,61 @@ define([
                         assert.notOk( displayed );
                     })
                     .end()
-                .then( function () {
-                    testHelper.removeEntity( "Comic.Entity.Comic", { title: title } );
-                })
+            );
+        },
+         "Strip can be uploaded.": function () {
+            return testHelper.cleanupDashboardTest(
+                openStripEdit(
+                    testHelper.getDashboardAuthorizedAsAdmin( this )
+                )
+                /** Type some title. */
+                .setFindTimeout( testHelper.getTimeoutForPageAction() )
+                .findByCssSelector( "input.strip-title" )
+                    .type( "test" )
+                    .end()
+                /** Assert that strip cannot be saved at this point. */
+                .findByCssSelector( ".strip-create" )
+                    .isEnabled()
+                    .then( function ( enabled ) {
+                        assert.notOk( enabled, "\"Create\" button is disabled." )
+                    })
+                    .end()
+                /** Assert that text is displayed in header. */
+                .setFindTimeout( testHelper.getTimeoutForPageAction() )
+                .findByCssSelector( "span.strip-title" )
+                    .getVisibleText()
+                    .then( function ( text ) {
+                        assert.equal( text, "test" );
+                    })
+                    .end()
+                /** Upload file. */
+                .setFindTimeout( testHelper.getTimeoutForPageAction() )
+                .findByCssSelector( "input[type=\"file\"][ngf-drop]" )
+                    .type( testHelper.getFixturePath( "red.png" ) )
+                    .end()
+                /** Assert that file has been uploaded. */
+                .setFindTimeout( testHelper.getTimeoutForAjaxRequests() )
+                .findByCssSelector( ".progress.ng-hide .progress-bar" )
+                    .getAttribute( "style" )
+                    .then( function ( value ) {
+                        assert.include( value, "100%" );
+                    })
+                    .end()
+                /** Assert that the thumbnail has size. */
+                .findByCssSelector( ".thumbnail" )
+                    .getSize()
+                    .then( function ( size ) {
+                        assert.isAbove( size.width, 99, "Thumbnail width is 100 or greater." );
+                        assert.isAbove( size.height, 99, "Thumbnail height is 100 or greater." );
+                    })
+                    .end()
+                /** Assert that strip cannot be saved at this point. */
+                .findByCssSelector( ".strip-create" )
+                    .isEnabled()
+                    .then( function ( enabled ) {
+                        assert.ok( enabled, "\"Create\" button is enabled, with title, and image uploaded." )
+                    })
+                    .end()
             );
         }
     });

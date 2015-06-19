@@ -3,17 +3,17 @@
     <h2 class="panel-heading">
         <span ng-show="strips.editingNew()"><?= $this->translate('Creating'); ?></span>
         <span ng-show="!strips.editingNew()"><?= $this->translate('Editing'); ?></span>
-        <span ng-show="strips.entity.title" class="title">
-            <?= sprintf($this->translate('‘%s’'), '<span ng-bind="strips.entity.title"></span>'); ?>
+        <span ng-show="strips.entity.title" class="title-wrapper">
+            <?= sprintf($this->translate('‘%s’'), '<span class="strip-title" ng-bind="strips.entity.title"></span>'); ?>
         </span>
     </h2>
 
     <div class="panel-body">
         <div class="form-group">
-            <label for="comics-name"><?= $this->translate('Comic title'); ?></label>
+            <label for="strip-title"><?= $this->translate('Comic title'); ?></label>
             <input
-                class="form-control"
-                id="comics-name"
+                class="form-control strip-title"
+                id="strip-title"
                 ng-model="strips.entity.title"
                 focus-once="strips.editing()"
                 placeholder="<?= $this->translate('Comic title'); ?>"

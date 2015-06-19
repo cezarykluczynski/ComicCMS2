@@ -3,24 +3,21 @@ define([
     "intern/chai!assert",
     "tests/support/helper"
 ], function ( registerSuite, assert, testHelper ) {
+    var title, slug;
+
     registerSuite({
         name: "Comic: delete",
 
-        "Comic can be deleted.": function () {
-            var title = testHelper.getUniqueString();
-            var slug = testHelper.getUniqueString();
+        setup: function () {
+            /** Create comic entity to be deleted. */
+            title = testHelper.getUniqueString();
+            slug = testHelper.getUniqueString();
+            testHelper.createEntity( "Comic.Entity.Comic", { title: title } );
+        },
 
+        "Comic can be deleted.": function () {
             return testHelper.cleanupDashboardTest(
                 testHelper.getDashboardAuthorizedAsAdmin( this )
-                .then( function () {
-                    /** Create entity. */
-                    testHelper.createEntity( "Comic.Entity.Comic", { title: title } );
-                })
-                .execute( function () {
-                    /** Reload page. */
-                    location.reload();
-                    return true;
-                })
                 /** Open "Comics" tab. */
                 .findByCssSelector( "ul.root-tabs" )
                     .setFindTimeout( testHelper.getTimeoutForPageAction() )
