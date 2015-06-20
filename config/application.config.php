@@ -9,16 +9,16 @@
 
 return array(
     'modules' => array(
+        'EdpModuleLayouts',
+        'BjyAuthorize',
+        'DoctrineModule',
+        'DoctrineORMModule',
         'Application',
         'Admin',
-        'Assets',
+        'Asset',
         'User',
         'Comic',
         'SmartyModule',
-        'DoctrineModule',
-        'DoctrineORMModule',
-        'BjyAuthorize',
-        'EdpModuleLayouts',
         'ComicCmsTestHelper',
     ),
 

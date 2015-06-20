@@ -48,7 +48,7 @@ class Comic
     protected $description;
 
     /**
-     * @ORM\OneToOne(targetEntity="\Assets\Entity\Image")
+     * @ORM\OneToOne(targetEntity="\Asset\Entity\Image")
      * @ORM\JoinColumn(name="logo_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     protected $logo;

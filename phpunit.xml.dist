@@ -25,6 +25,7 @@
         <testsuite name="application">
             <directory suffix=".php">./module/Admin/test/AdminTest/Controller</directory>
             <directory suffix=".php">./module/Admin/test/AdminTest/Service</directory>
+            <directory suffix=".php">./module/Asset/test/Asset/Controller</directory>
             <directory suffix=".php">./module/Application/test/ApplicationTest/Controller</directory>
             <directory suffix=".php">./module/Application/test/ApplicationTest/View</directory>
             <directory suffix=".php">./module/Comic/test/ComicTest/Controller</directory>
@@ -45,12 +46,16 @@
         </blacklist>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./module/Admin/src/</directory>
+            <directory suffix=".php">./module/Asset/src/</directory>
             <directory suffix=".php">./module/Application/src/</directory>
             <directory suffix=".php">./module/Assets/src/</directory>
             <directory suffix=".php">./module/Comic/src/</directory>
             <directory suffix=".php">./module/User/src/</directory>
             <exclude>
                 <directory suffix=".php">./vendor</directory>
+                <!-- Helper used whenever a entity repository is retrieved,
+                     otherwise has to be excluded in every test class. -->
+                <directory suffix=".php">./module/Application/src/Application/Factory/</directory>
                 <!-- Entities as for now just copies of Doctrine docs, so no need for tests. -->
                 <directory suffix=".php">./module/Assets/src/Assets/Entity/</directory>
                 <directory suffix=".php">./module/Comic/src/Comic/Entity/</directory>

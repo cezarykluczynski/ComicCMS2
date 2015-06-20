@@ -79,7 +79,6 @@ return array(
              'angularTemplates' => 'Application\View\Helper\AngularTemplates',
         ),
     ),
-
     'view_manager' => array(
         'default_suffix'           => 'tpl',
         'display_not_found_reason' => true,
@@ -100,6 +99,9 @@ return array(
             'caching' => false,
             'error_reporting' => false,
         ),
+    ),
+    'doctrine_factories' => array(
+        'entitymanager' => 'Application\Factory\EntityManagerFactory',
     ),
     // Placeholder for console routes
     'console' => array(

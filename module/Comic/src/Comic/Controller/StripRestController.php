@@ -24,7 +24,6 @@ class StripRestController extends AbstractRestfulController
     {
         /** @var string Comic ID. */
         $comicId = $this->params()->fromRoute('comicId');
-
         /** @var \Zend\View\Model\JsonModel */
         $view = new JsonModel;
         /** @var \Doctrine\ORM\EntityManager */

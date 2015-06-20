@@ -1,0 +1,56 @@
+<?php
+
+/**
+ * Asset module configuration.
+ *
+ * @package ComicCMS2
+ * @author Cezary Kluczyński
+ * @license https://github.com/cezarykluczynski/ComicCMS2/blob/master/LICENSE.txt MIT
+ */
+
+namespace Asset;
+
+return array(
+    'router' => array(
+        'routes' => array(
+            'rest-upload' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/rest/upload[/:id]',
+                    'constraints' => array(
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Asset\Controller',
+                        'controller'    => 'UploadRest',
+                    ),
+                ),
+                'may_terminate' => true,
+            ),
+        ),
+    ),
+    'controllers' => array(
+        'invokables' => array(
+            'Asset\Controller\UploadRest' => 'Asset\Controller\UploadRestController',
+        ),
+    ),
+    'doctrine' => array(
+        'driver' => array(
+            __NAMESPACE__ . '_driver' => array(
+                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+                'cache' => 'array',
+                'paths' => array(__DIR__ . '/../src/' . __NAMESPACE__ . '/Entity')
+            ),
+            'orm_default' => array(
+                'drivers' => array(
+                    __NAMESPACE__ . '\Entity' => __NAMESPACE__ . '_driver'
+                ),
+            ),
+        )
+    ),
+     'view_manager' => array(
+        'strategies' => array(
+            'ViewJsonStrategy',
+        ),
+    ),
+);

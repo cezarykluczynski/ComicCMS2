@@ -7,7 +7,7 @@
  * @license https://github.com/cezarykluczynski/ComicCMS2/blob/master/LICENSE.txt MIT
  */
 
-namespace Assets\Entity;
+namespace Asset\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -15,7 +15,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Image.
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="\Asset\Entity\ImageRepository")
  * @ORM\Table(name="images")
  * @property int $id
  */

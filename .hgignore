@@ -8,6 +8,7 @@ tmp/
 build/
 html-report/
 public/vendor/
+public/upload/
 public/css/admin.css
 public/css/application.css
 .buildpath

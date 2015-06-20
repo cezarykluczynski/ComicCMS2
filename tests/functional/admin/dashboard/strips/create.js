@@ -99,19 +99,18 @@ define([
                 .setFindTimeout( testHelper.getTimeoutForPageAction() )
                 .execute( function () {
                     /** To fix visibility issues on Selenium, file input has to have dimensions and be visible. */
-                    var fixes = "input[type=\"file\"][ngf-drop] { \
-                        width: 10px !important; \
-                        height: 10px !important; \
-                        bottom: 0px !important; \
-                        left: 0px !important; \
-                        position: fixed !important; \
-                        z-index: 1 !important; \
-                        visibility: visible !important; \
-                    }";
                     $( "<style></style>" )
                         .attr( "type", "text/css" )
                         .attr( "rel", "stylesheet" )
-                        .text( fixes )
+                        .text( "input[type=\"file\"][ngf-drop] { \
+                            width: 10px !important; \
+                            height: 10px !important; \
+                            bottom: 0px !important; \
+                            left: 0px !important; \
+                            position: fixed !important; \
+                            z-index: 1 !important; \
+                            visibility: visible !important; \
+                        }" )
                         .appendTo( "body" );
                 })
                 .then()
