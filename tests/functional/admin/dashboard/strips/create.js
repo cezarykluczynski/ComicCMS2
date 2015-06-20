@@ -65,7 +65,7 @@ define([
                     .end()
             );
         },
-         "Strip can be uploaded.": function () {
+        "Strip can be uploaded.": function () {
             return testHelper.cleanupDashboardTest(
                 openStripEdit(
                     testHelper.getDashboardAuthorizedAsAdmin( this )
@@ -92,6 +92,25 @@ define([
                     .end()
                 /** Upload file. */
                 .setFindTimeout( testHelper.getTimeoutForPageAction() )
+                .execute( function () {
+                    /** To fix visibility issues on Selenium, file input has to have dimensions and be visible. */
+                    var fixes = "input[type=\"file\"][ngf-drop] { \
+                        width: 10px !important; \
+                        height: 10px !important; \
+                        bottom: 0px !important; \
+                        left: 0px !important; \
+                        position: fixed !important; \
+                        z-index: 1 !important; \
+                        visibility: visible !important; \
+                    }";
+
+                    $( "<style></style>" )
+                        .attr( "type", "text/css" )
+                        .attr( "rel", "stylesheet" )
+                        .text( fixes )
+                        .appendTo( "body" );
+                })
+                .then()
                 .findByCssSelector( "input[type=\"file\"][ngf-drop]" )
                     .type( testHelper.getFixturePath( "red.png" ) )
                     .end()
