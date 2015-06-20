@@ -7,12 +7,10 @@ define( [
         randomStringCount: 0,
 
         /**
-         * Return a full URL for tested application.
-         *
-         * @param {string} [path] Relative path.
+         * Whether tests run locally or on Travis.
          */
-        getAppUrl: function ( path ) {
-            return "http://" + this.getDomain() + "/" + ( path || "" );
+        isLocal: function () {
+            return ! process.env.TRAVIS;
         },
 
         /**
@@ -21,7 +19,16 @@ define( [
          * @return {string}
          */
         getDomain: function () {
-            return process.env.TRAVIS ? "localhost" : "comiccms.dev";
+            return this.isLocal() ? "comiccms.dev" : "localhost";
+        },
+
+        /**
+         * Return a full URL for tested application.
+         *
+         * @param {string} [path] Relative path.
+         */
+        getAppUrl: function ( path ) {
+            return "http://" + this.getDomain() + "/" + ( path || "" );
         },
 
         /**

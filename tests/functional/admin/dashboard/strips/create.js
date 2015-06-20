@@ -66,6 +66,11 @@ define([
             );
         },
         "Strip can be uploaded.": function () {
+            if ( ! testHelper.isLocal() ) {
+                this.skip( "Skip until Intern fixes remote uploads." );
+                return;
+            }
+
             return testHelper.cleanupDashboardTest(
                 openStripEdit(
                     testHelper.getDashboardAuthorizedAsAdmin( this )
@@ -103,7 +108,6 @@ define([
                         z-index: 1 !important; \
                         visibility: visible !important; \
                     }";
-
                     $( "<style></style>" )
                         .attr( "type", "text/css" )
                         .attr( "rel", "stylesheet" )
