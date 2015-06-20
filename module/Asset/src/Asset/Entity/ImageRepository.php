@@ -33,7 +33,10 @@ class ImageRepository extends EntityRepository implements ServiceLocatorAwareInt
     }
 
     /**
-     * @todo Write it.
+     * Creates entity and saves file.
+     *
+     * @param  array                   $file File from $_FILES global variable.
+     * @return null\Asset\Entity\Image
      */
     public function createEntityFromUpload($file)
     {

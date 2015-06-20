@@ -29,6 +29,11 @@ return array(
             ),
         ),
     ),
+    'service_manager' => array(
+        'invokables' => array(
+            'Asset\UploadValidator' => 'Asset\Validator\UploadValidator',
+        ),
+    ),
     'controllers' => array(
         'invokables' => array(
             'Asset\Controller\UploadRest' => 'Asset\Controller\UploadRestController',
@@ -51,6 +56,26 @@ return array(
      'view_manager' => array(
         'strategies' => array(
             'ViewJsonStrategy',
+        ),
+    ),
+    'validators' => array(
+        'Asset\Validator\UploadValidator' => array(
+            'maximumSize' => 1024 * 1024 * 10,
+            /**
+             * To avoid type juggling back and forth in validator itfels,
+             * it seems like the best way to validate against array is to pass it first as an array,
+             *  and then as a string, so hello, PHP Alternative Hungarian Notation.
+             */
+            'asAllowedTypes' => [
+                'image/jpeg',
+                'image/png',
+                'image/gif',
+            ],
+            'sAllowedTypes' => 'image/jpeg, image/png, image/gif',
+            'messageVariables' => [
+                'maximumSize' => 'maximumSize',
+                'allowedTypes' => 'sAllowedTypes',
+            ],
         ),
     ),
 );
