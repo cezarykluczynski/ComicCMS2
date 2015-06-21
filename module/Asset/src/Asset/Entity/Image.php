@@ -24,12 +24,26 @@ class Image
     protected $inputFilter;
 
     /**
-    * @var int
      * @ORM\Id
      * @ORM\Column(type="integer");
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @ORM\Column(type="string", name="canonical_relative_path", length=80);
+     */
+    protected $canonicalRelativePath;
+
+    /**
+     * @ORM\Column(type="integer");
+     */
+    protected $width;
+
+    /**
+     * @ORM\Column(type="integer");
+     */
+    protected $height;
 
     /**
      * Magic getter to expose protected properties.

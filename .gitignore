@@ -9,7 +9,7 @@ build/
 !build/travis-ci-apache
 html-report/
 public/vendor/
-public/upload/
+public/assets/
 public/css/admin.css
 public/css/application.css
 .buildpath

@@ -33,13 +33,40 @@ class ImageRepository extends EntityRepository implements ServiceLocatorAwareInt
     }
 
     /**
-     * Creates entity and saves file.
+     * Save file and create entity.
      *
      * @param  array                   $file File from $_FILES global variable.
      * @return null\Asset\Entity\Image
      */
     public function createEntityFromUpload($file)
     {
-        //
+        $cdn = $this->getServiceLocator()->get('Asset\UploadCdn');
+        $paths = $cdn->createFileFromUpload($file);
+
+        if (!$paths['success'])
+        {
+            return [
+                'success' => false,
+                'message' => $paths['message'],
+            ];
+        }
+
+        $image = $this->createEntityFromPaths($paths);
+
+        return array_merge([
+            'image' => $image,
+            'success' => true,
+        ], $paths);
+    }
+
+    protected function createEntityFromPaths($paths)
+    {
+        $image = new Image;
+        $image->canonicalRelativePath = $paths['canonicalRelativePath'];
+        list($image->width, $image->height) = getimagesize($paths['absolutePath']);
+        $this->_em->persist($image);
+        $this->_em->flush();
+
+        return $image;
     }
 }

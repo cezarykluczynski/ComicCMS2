@@ -31,6 +31,7 @@ return array(
     ),
     'service_manager' => array(
         'invokables' => array(
+            'Asset\UploadCdn' => 'Asset\Service\UploadCdn',
             'Asset\UploadValidator' => 'Asset\Validator\UploadValidator',
         ),
     ),
