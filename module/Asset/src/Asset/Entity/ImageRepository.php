@@ -69,4 +69,20 @@ class ImageRepository extends EntityRepository implements ServiceLocatorAwareInt
 
         return $image;
     }
+
+    public function removeEntityImage($entity)
+    {
+        $cdn = $this->getServiceLocator()->get('Asset\UploadCdn');
+        $absolutePath = $cdn->canonicalRelativePathToAbsolutePath($entity->canonicalRelativePath);
+        
+        unlink($absolutePath);
+
+        /** Remove directory the file resided in, if it's empty. */
+        $dirName = pathinfo($absolutePath, PATHINFO_DIRNAME);
+        $files = scandir($dirName);
+        if (count($files) <= 2)
+        {
+            rmdir($dirName);
+        }
+    }
 }

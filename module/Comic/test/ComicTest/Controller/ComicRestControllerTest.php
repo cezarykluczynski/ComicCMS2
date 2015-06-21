@@ -380,7 +380,7 @@ class ComicRestControllerTest extends AbstractHttpControllerTestCase
      *
      * @cover ::delete
      */
-    public function testNonexistingComicCantBeDeleted()
+    public function testNonExistingComicCantBeDeleted()
     {
         $this->getRequest()->setMethod('DELETE');
         $this->dispatch('/rest/comic/'.$this->getHighestInteger());

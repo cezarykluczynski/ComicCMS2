@@ -54,11 +54,15 @@ class UploadRestController extends AbstractRestfulController
         if ($response['success'])
         {
             return $view->setVariables([
-                'imageId' => $response['image']->id,
+                'image' => [
+                    'id' => $response['image']->id,
+                    'uri' => $response['uri'],
+                 ],
                 'success' => true,
             ]);
         }
 
+        $this->getResponse()->setStatusCode(500);
         return $view->setVariables([
             'success' => false,
             'message' => $response['message'],
@@ -75,6 +79,7 @@ class UploadRestController extends AbstractRestfulController
     {
         $messages =  $validator->getMessages();
 
+        $this->getResponse()->setStatusCode(500);
         return $view->setVariables([
             'success' => false,
             'message' => reset($messages),

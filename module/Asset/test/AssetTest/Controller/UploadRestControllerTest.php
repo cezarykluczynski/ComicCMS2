@@ -63,6 +63,7 @@ class UploadRestControllerTest extends AbstractHttpControllerTestCase
 
         $response = $this->getJSONResponseAsArray();
 
+        $this->assertResponseStatusCode(500);
         $this->assertFalse($response['success']);
         $this->assertEquals('No temporary directory was found for file', $response['message']);
     }
@@ -94,6 +95,7 @@ class UploadRestControllerTest extends AbstractHttpControllerTestCase
 
         $response = $this->getJSONResponseAsArray();
 
+        $this->assertResponseStatusCode(500);
         $this->assertFalse($response['success']);
         $this->assertEquals('File is empty.', $response['message']);
     }
@@ -124,6 +126,7 @@ class UploadRestControllerTest extends AbstractHttpControllerTestCase
 
         $response = $this->getJSONResponseAsArray();
 
+        $this->assertResponseStatusCode(500);
         $this->assertFalse($response['success']);
         $this->assertEquals('Uploaded file cannot be moved to new location.', $response['message']);
     }
@@ -161,12 +164,13 @@ class UploadRestControllerTest extends AbstractHttpControllerTestCase
 
         $response = $this->getJSONResponseAsArray();
 
+        $this->assertResponseStatusCode(200);
         $this->assertTrue($response['success']);
-        $this->assertInternalType("int", $response['imageId']);
+        $this->assertInternalType("int", $response['image']['id']);
 
         /** Teardown. */
         $em = $this->getEntityManager();
-        $image = $em->find('Asset\Entity\Image', $response['imageId']);
+        $image = $em->find('Asset\Entity\Image', $response['image']['id']);
         $em->remove($image);
         $em->flush();
     }

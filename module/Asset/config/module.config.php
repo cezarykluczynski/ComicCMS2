@@ -13,6 +13,20 @@ namespace Asset;
 return array(
     'router' => array(
         'routes' => array(
+            'rest-image' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/rest/image[/:id]',
+                    'constraints' => array(
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Asset\Controller',
+                        'controller'    => 'ImageRest',
+                    ),
+                ),
+                'may_terminate' => true,
+            ),
             'rest-upload' => array(
                 'type'    => 'Segment',
                 'options' => array(
@@ -27,6 +41,7 @@ return array(
                 ),
                 'may_terminate' => true,
             ),
+
         ),
     ),
     'service_manager' => array(
@@ -37,6 +52,7 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
+            'Asset\Controller\ImageRest' => 'Asset\Controller\ImageRestController',
             'Asset\Controller\UploadRest' => 'Asset\Controller\UploadRestController',
         ),
     ),

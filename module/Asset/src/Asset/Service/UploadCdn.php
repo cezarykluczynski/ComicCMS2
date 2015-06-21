@@ -42,24 +42,25 @@ class UploadCdn implements ServiceLocatorAwareInterface
 
     /**
      * Given file array, generates unique path on which file can be saved.
-     * 
+     *
      * @param  array $file File array from $_FILES.
      * @return array       Array containing paths: relative (to be saved in entity), canonical (with path separators
      *                     for a current filesystem and absolute.
      */
     protected function getUniquePath($file)
     {
-        $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+        $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
         $name = Rand::getString(64, '1234567890abcdef');
         $realRelativePath = substr($name, 0, 2) . DIRECTORY_SEPARATOR . substr($name, 2) . '.' . $ext;
         $canonicalRelativePath = substr($name, 0, 2) . '/' . substr($name, 2) . '.' . $ext;
         $absolutePath = $this->realRelativePathToAbsolutePath($realRelativePath);
 
-        /** If file already exsits, return furrent fuction one more time. */
+        /** If file already exsits, return current fuction one more time. */
         return is_file($absolutePath) ? $this->getUniquePath($file) : [
             'canonicalRelativePath' => $canonicalRelativePath,
             'realRelativePath' => $realRelativePath,
             'absolutePath' => $absolutePath,
+            'uri' => $this->canonicalRelativePathToUri($canonicalRelativePath),
         ];
     }
 
@@ -68,6 +69,22 @@ class UploadCdn implements ServiceLocatorAwareInterface
         $config = $this->getServiceLocator()->get('Config');
         $relativePathParts = explode(DIRECTORY_SEPARATOR, $name);
         return implode(DIRECTORY_SEPARATOR, array_merge([getcwd(), 'public', 'assets'], $relativePathParts));
+    }
+
+    public function canonicalRelativePathToAbsolutePath($path)
+    {
+        return $this->realRelativePathToAbsolutePath($this->canonicalRelativePathToRealRelativePath($path));
+    }
+
+    protected function canonicalRelativePathToRealRelativePath($path)
+    {
+        return str_replace('/', DIRECTORY_SEPARATOR, $path);
+    }
+
+    public function canonicalRelativePathToUri($canonicalRelativePath)
+    {
+        $basePath = $this->getServiceLocator()->get('ViewHelperManager')->get('basepath');
+        return $basePath->__invoke('assets/' . $canonicalRelativePath);
     }
 
     protected function moveUploadedFile($file, $paths)
@@ -81,10 +98,9 @@ class UploadCdn implements ServiceLocatorAwareInterface
             }
         }
 
-        /** 
+        /**
          * Using rename(), and not move_uploaded_file() makes it testable.
-         * It should be validate before using {@link \Zend\Validator\File\UploadFile} 
-         * that the file being moved is uploaded file.
+         * is_uploaded file, durring normal execution, is validated before in {@link \Zend\Validator\File\UploadFile}.
          */
         if (@rename($file['tmp_name'], $paths['absolutePath']))
         {

@@ -16,6 +16,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Image.
  *
  * @ORM\Entity(repositoryClass="\Asset\Entity\ImageRepository")
+ * @ORM\EntityListeners({"\Asset\Entity\ImageListener"})
  * @ORM\Table(name="images")
  * @property int $id
  */

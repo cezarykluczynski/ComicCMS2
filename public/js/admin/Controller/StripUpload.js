@@ -59,13 +59,18 @@ admin
                     file.progressPercentage = progressPercentage;
                 })
                 .success(function ( data, status, headers, config ) {
-                    file.loaded = true;
+                    if ( data.success ) {
+                        file.loaded = true;
+                        file.entity = data.image;
+                    } else {
+                        $scope.delete( file );
+                    }
+                    
                     $scope.upload( files );
                     $scope.emitState();
                 })
                 .error( function () {
-                    file.loaded = true;
-                    $scope.upload( files );
+                    $scope.delete( file );
                     $scope.emitState();
                 });
 
@@ -88,9 +93,16 @@ admin
          * Deletes file from list.
          */
         $scope.delete = function ( file ) {
+            var id = file.entity.id;
             var index = $scope.files.indexOf( file );
             $scope.files.splice( index, 1 );
             $scope.emitState();
+
+            /**
+             * Delete and ignore result. If it's deleted, it's deleted.
+             * If it's not deleted, later a maintenance procedure will be written to cleanup orphaned images.
+             */
+            $http.delete( "/rest/image/" + id );
         };
 
         /**

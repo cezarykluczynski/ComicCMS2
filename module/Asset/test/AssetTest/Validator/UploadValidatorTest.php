@@ -1,6 +1,6 @@
 <?php
 /**
- * Tests for Comic REST controller.
+ * Tests for Upload validator.
  *
  * @package ComicCMS2
  * @author Cezary Kluczyński

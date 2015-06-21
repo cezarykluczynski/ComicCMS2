@@ -52,7 +52,8 @@ return [
                 /** Admin panel. */
                 ['controller' => 'Admin\Controller\Admin', 'action' => 'index', 'roles' => ['admin']],
 
-                /** Asset RESful controller. */
+                /** Assets RESful controller. */
+                ['controller' => 'Asset\Controller\ImageRest', 'action' => null, 'roles' => ['admin']],
                 ['controller' => 'Asset\Controller\UploadRest', 'action' => null, 'roles' => ['admin']],
 
                 /** Users RESTful controller. */

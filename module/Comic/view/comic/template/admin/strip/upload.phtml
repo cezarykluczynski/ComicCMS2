@@ -45,7 +45,7 @@
             </div>
             <div class="media-left" ng-show="file.loaded">
                 <a href="javascript:void(0)" class="thumbnail">
-                    <img ngf-src="file" class="media-object">
+                    <img ng-attr-src="{{ file.entity.uri }}" class="media-object">
                 </a>
             </div>
             <div class="media-body" ng-show="file.loaded">
