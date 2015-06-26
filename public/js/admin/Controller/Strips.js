@@ -1,7 +1,7 @@
 "use strict";
 
 admin
-    .controller( "StripController", [ "comics", "strips", "$scope", '$http', "ngDialog",
+    .controller( "StripsController", [ "comics", "strips", "$scope", '$http', "ngDialog",
     function( comics, strips, $scope, $http, ngDialog ) {
         $scope.comics = comics;
         $scope.strips = strips;

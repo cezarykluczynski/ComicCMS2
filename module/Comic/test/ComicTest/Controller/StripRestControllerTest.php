@@ -25,6 +25,24 @@ use Comic\Entity\Slug;
 class StripRestControllerTest extends AbstractHttpControllerTestCase
 {
     /**
+     * Testing an admin controller, admin access is required.
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->grantAllRolesToUser();
+    }
+
+    /**
+     * Clean admin access.
+     */
+    public function tearDown()
+    {
+        $this->revokeGrantedRoles();
+    }
+
+    /**
      * Test if list of strips associated with comics can be obtained.
      *
      * @covers ::getList
@@ -32,9 +50,7 @@ class StripRestControllerTest extends AbstractHttpControllerTestCase
     public function testStripListCanBeObtained()
     {
         /** Setup. */
-        $this->grantAllRolesToUser();
         $this->loadFixtures('ComicTest\Fixture\ComicWithStrips');
-
         $fixtures = $this->getLoadedFixtures();
 
         /**
@@ -56,7 +72,6 @@ class StripRestControllerTest extends AbstractHttpControllerTestCase
 
         /** Teardown. */
         $this->removeFixtures();
-        $this->revokeGrantedRoles();
     }
 
     /**
@@ -66,9 +81,6 @@ class StripRestControllerTest extends AbstractHttpControllerTestCase
      */
     public function testEmptyListAndErrorIsReturnedForMissingComic()
     {
-        /** Setup. */
-        $this->grantAllRolesToUser();
-
         /** Dispatch GET request to non-existing ID. */
         $this->getRequest()->setMethod('GET');
         $this->dispatch('/rest/comic/'.$this->getHighestInteger().'/strip');
@@ -78,8 +90,59 @@ class StripRestControllerTest extends AbstractHttpControllerTestCase
         $this->assertResponseStatusCode(404);
         $this->assertTrue($response['error']);
         $this->assertTrue(empty($response['list']));
+    }
+
+    /**
+     * Test if empty strip cannot be created for non-existing comic.
+     *
+     * @covers ::create
+     */
+    public function testStripCannotBeCreatedForNonExistingComic()
+    {
+        /** Dispatch PUT request to non-existing ID. */
+        $this->getRequest()->setMethod('POST');
+        $this->setJSONRequestHeaders();
+        $this->setJSONRequestContent([]);
+        $this->dispatch('/rest/comic/'.$this->getHighestInteger().'/strip');
+
+        /** Assert response. */
+        $response = $this->getJSONResponseAsArray();
+        $this->assertResponseStatusCode(404);
+        $this->assertEquals('Strip cannot be create for non-existing comic.', $response['error']);
+    }
+
+    /**
+     * Test if empty strip cannot be created for non-existing comic.
+     *
+     * Doesn't really uses {@link ::getList}, it's just a XDebug bugfix.
+     *
+     * @covers ::create
+     * @uses \Comic\Controller\StripRestController::getList
+     */
+    public function testStripCanBeCreated()
+    {
+        /** Setup. */
+        $this->loadFixtures('ComicTest\Fixture\Comic');
+        $fixtures = $this->getLoadedFixtures();
+        $comic = array_pop($fixtures);
+
+        /** Dispatch PUT request to non-existing ID. */
+        $this->getRequest()->setMethod('POST');
+        $this->setJSONRequestHeaders();
+        $this->setJSONRequestContent([
+            'images' => [],
+            'title' => 'Title',
+            'caption' => 'Caption',
+        ]);
+        $this->dispatch('/rest/comic/'.$comic->id.'/strip');
+
+        /** Assert response. */
+        $response = $this->getJSONResponseAsArray();
+        $this->assertResponseStatusCode(200);
+        $this->assertTrue($response['success']);
+        $this->assertInternalType('integer', $response['stripId']);
 
         /** Teardown. */
-        $this->revokeGrantedRoles();
+        $this->removeFixtures();
     }
 }

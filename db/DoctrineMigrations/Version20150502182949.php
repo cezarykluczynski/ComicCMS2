@@ -1,6 +1,6 @@
 <?php
 /**
- * Migration. Creates tables "comics", "slugs", "strips", and "comics_slugs", and "comics_strips".
+ * Migration. Creates tables "comics", "slugs", "strips", and "comic_slugs", and "comic_strips".
  *
  * @package ComicCMS2
  * @author Cezary Kluczyński
@@ -69,36 +69,53 @@ class Version20150502182949 extends AbstractMigration
         /** Create "strips" table. */
         $strips = $schema->createTable('strips');
         $strips->addColumn('id', 'integer', array('autoincrement' => true));
+        $strips->addColumn('comic_id', 'integer');
+        $strips->addForeignKeyConstraint('comics', array('comic_id'), array('id'), array(
+            'onUpdate' => 'CASCADE',
+            'onDelete' => 'CASCADE'
+        ));
         $strips->setPrimaryKey(array('id'));
     }
 
     /**
-     * Create "comics_slugs" table.
+     * Create "comic_slugs" table.
      *
      * @param Schema $schema
      * @return void
      */
     public function createTableComicsSlugs(Schema $schema) {
-        /** Create "comics_slugs" table. */
-        $comicsSlugs = $schema->createTable('comics_slugs');
+        /** Create "comic_slugs" table. */
+        $comicsSlugs = $schema->createTable('comic_slugs');
         $comicsSlugs->addColumn('comic_id', 'integer');
         $comicsSlugs->addColumn('slug_id', 'integer');
-        $comicsSlugs->addForeignKeyConstraint('comics', array('comic_id'), array('id'));
-        $comicsSlugs->addForeignKeyConstraint('slugs', array('slug_id'), array('id'));
+        $comicsSlugs->addForeignKeyConstraint('comics', array('comic_id'), array('id'), array(
+            'onUpdate' => 'CASCADE',
+            'onDelete' => 'CASCADE'
+        ));
+        $comicsSlugs->addForeignKeyConstraint('slugs', array('slug_id'), array('id'), array(
+            'onUpdate' => 'CASCADE',
+            'onDelete' => 'CASCADE'
+        ));
     }
 
     /**
-     * Create "comics_strips" table.
+     * Create "comic_strips" table.
      *
      * @param Schema $schema
      * @return void
      */
     public function createTableComicsStrips(Schema $schema) {
-        $comicsSlugs = $schema->createTable('comics_strips');
+        $comicsSlugs = $schema->createTable('comic_strips');
         $comicsSlugs->addColumn('comic_id', 'integer');
         $comicsSlugs->addColumn('strip_id', 'integer');
-        $comicsSlugs->addForeignKeyConstraint('comics', array('comic_id'), array('id'));
-        $comicsSlugs->addForeignKeyConstraint('strips', array('strip_id'), array('id'));
+        $comicsSlugs->addForeignKeyConstraint('comics', array('comic_id'), array('id'), array(
+            'onUpdate' => 'CASCADE',
+            'onDelete' => 'CASCADE'
+        ));
+        $comicsSlugs->addForeignKeyConstraint('strips', array('strip_id'), array('id'), array(
+            'onUpdate' => 'CASCADE',
+            'onDelete' => 'CASCADE'
+        ));
     }
 
     /**
@@ -109,7 +126,7 @@ class Version20150502182949 extends AbstractMigration
         $schema->dropTable('comics');
         $schema->dropTable('slugs');
         $schema->dropTable('strips');
-        $schema->dropTable('comics_slugs');
-        $schema->dropTable('comics_strips');
+        $schema->dropTable('comic_slugs');
+        $schema->dropTable('comic_strips');
     }
 }

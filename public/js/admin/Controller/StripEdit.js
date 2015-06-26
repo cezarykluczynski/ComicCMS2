@@ -15,6 +15,13 @@ admin
         });
 
         $scope.canSave = function () {
-            return ! $scope.strips.loading && $scope.hasFiles && $scope.strips.entity.title.length;
+            return $scope.hasFiles && $scope.strips.entity.title.length;
+        };
+
+        $scope.save = function () {
+            $scope.strips.save()
+                .then( function () {
+                    return $scope.strips.loadStrips();
+                });
         };
     }]);

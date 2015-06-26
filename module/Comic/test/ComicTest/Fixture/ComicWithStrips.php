@@ -35,6 +35,7 @@ class ComicWithStrips extends FixtureRepository
         {
             $strip = new Strip;
             $strip->title = "Strip title " . $i;
+            $strip->comic = $this->comic;
             $this->entities[] = $strip;
             $this->manager->persist($strip);
             $this->comic->addStrip($strip);

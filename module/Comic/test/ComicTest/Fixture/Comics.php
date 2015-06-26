@@ -1,6 +1,6 @@
 <?php
 /**
- * Fixtures for comic entity.
+ * Fixtures for multiple comic entities.
  *
  * @package ComicCMS2
  * @author Cezary Kluczyński

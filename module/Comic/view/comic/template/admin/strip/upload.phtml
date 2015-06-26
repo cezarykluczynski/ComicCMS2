@@ -2,7 +2,7 @@
 <div ng-controller="StripUploadController">
     <div
         ngf-drop
-        ng-model="files"
+        ng-model="images"
         class="dropzone"
         ngf-multiple="true"
         ngf-allow-dir="true"
@@ -18,41 +18,43 @@
     </div>
 
     <ul class="list-group">
-        <div class="media list-group-item" ng-repeat="file in files">
-            <div class="progress" ng-show="!file.loaded">
-                <div class="progress-bar" role="progressbar" aria-valuenow="{{ file.progressPercentage }}" aria-valuemin="0" aria-valuemax="100" ng-style="{'width': file.progressPercentage + '%'}">
+        <div class="media list-group-item" ng-repeat="image in images">
+            <div class="progress" ng-show="!image.loaded">
+                <div class="progress-bar" role="progressbar" aria-valuenow="{{ image.progressPercentage }}" aria-valuemin="0" aria-valuemax="100" ng-style="{'width': image.progressPercentage + '%'}">
                 </div>
             </div>
-            <div class="manipulation" ng-show="file.loaded">
+            <div class="manipulation" ng-show="image.loaded">
                 <div class="pull-right" ng-class="{'btn-group': loadedFilesLength() > 1}">
                     <button
                         class="btn btn-primary"
                         ng-show="loadedFilesLength() > 1"
-                        ng-disabled="files.indexOf( file ) === 0"
-                        ng-click="move('up', file)"
+                        ng-disabled="images.indexOf( image ) === 0 || strips.saving"
+                        ng-click="move('up', image)"
                     ><?= $this->translate('Move up'); ?></button>
                     <button
                         class="btn btn-primary"
                         ng-show="loadedFilesLength() > 1"
-                        ng-disabled="files.indexOf( file ) === files.length - 1"
-                        ng-click="move('down', file)"
+                        ng-disabled="images.indexOf( image ) === images.length - 1 || strips.saving"
+                        ng-click="move('down', image)"
                     ><?= $this->translate('Move down'); ?></button>
                     <button
                         class="btn btn-danger"
-                        ng-click="delete( file )"
+                        ng-click="delete( image )"
+                        ng-disabled="strips.saving"
                     ><?= $this->translate('Delete'); ?></button>
                 </div>
             </div>
-            <div class="media-left" ng-show="file.loaded">
+            <div class="media-left" ng-show="image.loaded">
                 <a href="javascript:void(0)" class="thumbnail">
-                    <img ng-attr-src="{{ file.entity.uri }}" class="media-object">
+                    <img ng-attr-src="{{ image.entity.uri }}" class="media-object">
                 </a>
             </div>
-            <div class="media-body" ng-show="file.loaded">
+            <div class="media-body" ng-show="image.loaded">
                 <div class="caption">
                     <textarea
                         class="form-control"
-                        ng-model="file.caption"
+                        ng-model="image.caption"
+                        ng-disabled="strips.saving"
                         placeholder="<?= $this->translate('Caption, transcript, description, or leave empty'); ?>"
                     ></textarea>
                 </div>

@@ -21,16 +21,29 @@ admin
             this._editing = editing;
         }
 
+        strips.loadingStatus = function ( status ) {
+            this.loading = status;
+            this.loaded = ! status;
+        };
+
+        strips.savingStatus = function ( status ) {
+            this.saving = status;
+        };
+
         strips.setComicId = function ( comicId ) {
             this.comicId = comicId;
             this.loadStrips();
         };
 
+        strips.getComicUri = function () {
+            return "/rest/comic/" + this.comicId + "/strip";
+        };
+
         strips.loadStrips = function () {
-            this.loaded = false;
-            $http.get( "/rest/comic/" + this.comicId + "/strip" ).then( function ( response ) {
+            this.loadingStatus( true );
+            $http.get( this.getComicUri() ).then( function ( response ) {
                 strips.refresh( response.data );
-                strips.loaded = true;
+                strips.loadingStatus( false );
             });
         };
 
@@ -41,7 +54,9 @@ admin
         strips.new = function () {
             var entity = {
                 id: null,
-                title: ""
+                title: "",
+                caption: "",
+                images: []
             };
 
             this.edit( entity );
@@ -58,6 +73,32 @@ admin
         strips.cancelEdit = function () {
             this.editing( false );
         };
+
+        strips.save = function () {
+            var self = this;
+            var $httpMethod = this.entity.id ? $http.put : $http.post;
+            var uri = this.getComicUri() + ( this.entity.id ? "/" + this.entity.id : "" );
+
+            this.savingStatus( true );
+
+            return $httpMethod( uri, this.pruneEntityForSave( this.entity ) )
+                .then( function () {
+                    self.editing( false );
+                })
+                .finally( function () {
+                    self.savingStatus( false );
+                });
+        };
+
+        strips.pruneEntityForSave = function ( base ) {
+            var entity = angular.copy( base );
+
+            _.each( entity.images, function ( image, index ) {
+                entity.images[ index ] =  _.pick( image, [ "entity", "caption" ] );
+            });
+
+            return entity;
+        }
 
         /**
          * Whether the new entity is edited.

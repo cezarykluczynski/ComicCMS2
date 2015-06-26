@@ -15,28 +15,37 @@
                 class="form-control strip-title"
                 id="strip-title"
                 ng-model="strips.entity.title"
+                ng-disabled="strips.saving"
                 focus-once="strips.editing()"
                 placeholder="<?= $this->translate('Comic title'); ?>"
             >
+            <label for="strip-caption"><?= $this->translate('Comic caption, optional'); ?></label>
+            <textarea
+                class="form-control strip-caption"
+                id="strip-caption"
+                ng-model="strips.entity.caption"
+                ng-disabled="strips.saving"
+                placeholder="<?= $this->translate('Comic caption'); ?>"
+            ></textarea>
         </div>
         <div class="form-group" ng-include="'adminStripUpload'"></div>
         <div class="form-group actions">
                 <button
                     class="btn btn-success pull-right strip-create"
                     ng-click="save()"
-                    ng-disabled="!canSave()"
+                    ng-disabled="!canSave() || strips.saving"
                     ng-show="strips.editingNew()"
                 ><?= $this->translate('Create'); ?></button>
                 <button
                     class="btn btn-success pull-right strip-save"
                     ng-click="save()"
-                    ng-disabled="!canSave()"
+                    ng-disabled="!canSave() || strips.saving"
                     ng-show="!strips.editingNew()"
                 ><?= $this->translate('Save'); ?></button>
                 <button
                     class="btn btn-danger pull-left strip-cancel"
                     ng-click="cancel()"
-                    ng-disabled="strips.loading"
+                    ng-disabled="strips.saving"
                 ><?= $this->translate('Cancel'); ?></button>
             </div>
         </div>

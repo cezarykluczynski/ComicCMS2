@@ -35,7 +35,7 @@ class ComicRestControllerTest extends AbstractHttpControllerTestCase
     }
 
     /**
-     * Clean ip admin access.
+     * Clean admin access.
      */
     public function tearDown()
     {

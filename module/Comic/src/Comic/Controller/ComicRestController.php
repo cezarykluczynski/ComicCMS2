@@ -195,7 +195,6 @@ class ComicRestController extends AbstractRestfulController
         $entityManager->remove($comic);
         $entityManager->flush();
 
-        $response->setStatusCode(200);
         return $view->setVariable('success', sprintf('Comic "%s" was deleted.', $comic->title));
     }
 }

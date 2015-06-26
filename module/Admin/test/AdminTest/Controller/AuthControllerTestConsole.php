@@ -42,7 +42,10 @@ class AuthControllerTestConsole extends AbstractConsoleControllerTestCase
     /**
      * Admin can be created with two arguments.
      *
+     * Doesn't really uses {@link \Admin\Controller\AuthController::signinAction}, it's just a XDebug bugfix.
+     *
      * @covers ::createAdminAction
+     * @uses \Admin\Controller\AuthController::signinAction
      */
     public function testCreateAdminActionCreatesAnAccount() {
         /** Setup. */

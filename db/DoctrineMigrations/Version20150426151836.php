@@ -67,8 +67,14 @@ class Version20150426151836 extends AbstractMigration
         $usersRoles = $schema->createTable('user_role_linker');
         $usersRoles->addColumn('user_id', 'integer');
         $usersRoles->addColumn('role_id', 'integer');
-        $usersRoles->addForeignKeyConstraint('users', array('user_id'), array('id'));
-        $usersRoles->addForeignKeyConstraint('roles', array('role_id'), array('id'));
+        $usersRoles->addForeignKeyConstraint('users', array('user_id'), array('id'), array(
+            'onUpdate' => 'CASCADE',
+            'onDelete' => 'CASCADE'
+        ));
+        $usersRoles->addForeignKeyConstraint('roles', array('role_id'), array('id'), array(
+            'onUpdate' => 'CASCADE',
+            'onDelete' => 'CASCADE'
+        ));
     }
 
     /**

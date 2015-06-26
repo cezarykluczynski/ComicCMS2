@@ -5,24 +5,24 @@ admin
         function ( $scope, $http, Upload, strips ) {
         $scope.strips = strips;
 
-        /** List of all uploaded files. */
-        $scope.files = [];
+        /** Bind images from entity. */
+        $scope.images = $scope.strips.entity.images;
 
         /** Auto upload: start upload on change. */
-        $scope.$watch("files", function () {
-            $scope.upload( $scope.files );
+        $scope.$watch("images", function () {
+            $scope.upload( $scope.images );
         });
 
         /**
-         * Return list of loaded files.
-         * It's important for "Move up" / "move down" buttons visibility.
+         * Return length of list of loaded images.
+         * It's important for "Move up" / "Move down" buttons visibility.
          */
         $scope.loadedFilesLength = function () {
             var loaded = 0, i;
 
-            for ( i = 0; i < $scope.files.length; i++ ) {
+            for ( i = 0; i < $scope.images.length; i++ ) {
                 /** You can add booleans to integers. */
-                loaded += $scope.files[ i ].loaded;
+                loaded += $scope.images[ i ].loaded;
             }
 
             return loaded;
@@ -32,90 +32,102 @@ admin
             $scope.$emit( "stripUploadChange", $scope.loadedFilesLength() );
         };
 
-        $scope.upload = function ( files ) {
+        $scope.upload = function ( images ) {
+            /** Bind image list back to entity. */
+            $scope.strips.entity.images = images;
+
             /** Nothing to upload, return. */
-            if ( ! files || ! files.length ) {
+            if ( ! images || ! images.length ) {
                 return;
             }
 
-            var i, file;
+            var i, image;
 
-            for ( i = 0; i < files.length; i++ ) {
-                file = files[i];
+            for ( i = 0; i < images.length; i++ ) {
+                image = images[ i ];
 
-                /** Skip loaded files. */
-                if ( file.loaded ) {
+                /** Skip loaded images. */
+                if ( image.loaded ) {
                     continue;
                 }
 
-                /** Upload single file. */
+                /** Upload single image. */
                 Upload.upload({
                     url: "/rest/upload",
-                    file: file
+                    file: image
                 })
                 .progress( function ( evt ) {
                     /** Update progress bar. */
-                    var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                    file.progressPercentage = progressPercentage;
+                    var progressPercentage = parseInt( 100.0 * evt.loaded / evt.total );
+                    image.progressPercentage = progressPercentage;
                 })
                 .success(function ( data, status, headers, config ) {
                     if ( data.success ) {
-                        file.loaded = true;
-                        file.entity = data.image;
+                        image.loaded = true;
+                        image.fresh = true;
+                        image.caption = "";
+                        image.entity = data.image;
                     } else {
-                        $scope.delete( file );
+                        $scope.delete( image );
                     }
-                    
-                    $scope.upload( files );
+
+                    $scope.upload( images );
                     $scope.emitState();
                 })
                 .error( function () {
-                    $scope.delete( file );
+                    $scope.delete( image );
                     $scope.emitState();
                 });
 
-                /** One at the time: break after first file upload is started. */
+                /** One at the time: break after first image upload is started. */
                 break;
             }
         };
 
         /**
-         * Moves file in list up or down.
+         * Moves image in list up or down.
          */
-        $scope.move = function ( direction, file ) {
-            var index = $scope.files.indexOf( file );
+        $scope.move = function ( direction, image ) {
+            var index = $scope.images.indexOf( image );
             var newPosition = index + ( direction === "down" ? 1 : -1 );
-            $scope.files.splice( index, 1 );
-            $scope.files.splice( newPosition, 0, file );
+            $scope.images.splice( index, 1 );
+            $scope.images.splice( newPosition, 0, image );
         };
 
         /**
-         * Deletes file from list.
+         * Deletes image from list.
          */
-        $scope.delete = function ( file ) {
-            var id = file.entity.id;
-            var index = $scope.files.indexOf( file );
-            $scope.files.splice( index, 1 );
+        $scope.delete = function ( image ) {
+            var id = image && image.entity ? image.entity.id : null;
+            var fresh =  image && image.fresh;
+            var index = $scope.images.indexOf( image );
+            $scope.images.splice( index, 1 );
             $scope.emitState();
 
             /**
              * Delete and ignore result. If it's deleted, it's deleted.
              * If it's not deleted, later a maintenance procedure will be written to cleanup orphaned images.
              */
-            $http.delete( "/rest/image/" + id );
+            if ( id && ! fresh ) {
+                $http.delete( "/rest/image/" + id );
+            }
         };
 
         /**
-         * Removes all files from list.
+         * Removes all images from list.
          */
         $scope.clear = function () {
-            $scope.files.splice( 0, $scope.files.length );
+            if ( ! $scope.images ) {
+                return;
+            }
+
+            $scope.images.splice( 0, $scope.images.length );
             $scope.emitState();
         };
 
         /**
          * Listen to events emited from parent controller,
-         * and clear files list if comic edit is canceled.
+         * and clear images list if comic edit is canceled.
          */
         $scope.$on( "comicCanceled", function () {
             $scope.clear();

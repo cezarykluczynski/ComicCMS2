@@ -225,7 +225,10 @@ class AuthControllerTestHttp extends AbstractHttpControllerTestCase
     /**
      * Sign out redirects to sign in form.
      *
+     * Doesn't really uses {@link \Admin\Controller\AuthController::signinAction}, it's just a XDebug bugfix.
+     *
      * @covers ::signoutAction
+     * @uses \Admin\Controller\AuthController::signinAction
      */
     public function testSignoutActionRedirectsToSignInForm()
     {

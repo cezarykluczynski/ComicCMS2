@@ -1,6 +1,6 @@
 <?php
 /**
- * Strip entity.
+ * Strip image entity.
  *
  * @package ComicCMS2
  * @author Cezary Kluczyński
@@ -13,13 +13,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Strip.
+ * Strip image.
  *
- * @ORM\Entity(repositoryClass="\Comic\Entity\StripRepository")
- * @ORM\Table(name="strips")
+ * @ORM\Entity
+ * @ORM\Table(name="strip_images")
  * @property int $id
  */
-class Strip
+class StripImage
 {
     /**
      * @ORM\Id
@@ -29,28 +29,26 @@ class Strip
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=255);
-     */
-    protected $title;
-
-    /**
-     * @ORM\Column(type="string");
+     * @ORM\Column(type="string")
      */
     protected $caption;
-    /**
-     * @ORM\OneToMany(targetEntity="\Comic\Entity\StripImage", mappedBy="strip")
-     **/
-    private $images;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Comic\Entity\Comic", inversedBy="strips")
-     * @ORM\JoinColumn(name="comic_id", referencedColumnName="id")
-     **/
-    protected $comic;
+     * @ORM\Column(type="integer");
+     */
+    protected $position;
 
-    public function __construct() {
-        $this->images = new ArrayCollection();
-    }
+    /**
+     * @ORM\ManyToOne(targetEntity="\Comic\Entity\Strip", inversedBy="images")
+     * @ORM\JoinColumn(name="strip_id", referencedColumnName="id")
+     **/
+    private $strip;
+
+    /**
+     * @ORM\OneToOne(targetEntity="\Asset\Entity\Image")
+     * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
+     **/
+    private $image;
 
     /**
      * Magic getter to expose protected properties.
@@ -72,11 +70,5 @@ class Strip
     public function __set($property, $value)
     {
         $this->$property = $value;
-    }
-
-    public function getFirstImageCanonicalRelativePath()
-    {
-        $firstStripImage = $this->images->count() ? $this->images->first() : null;
-        return $firstStripImage ? $firstStripImage->image->canonicalRelativePath : null;
     }
 }

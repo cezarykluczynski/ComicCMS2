@@ -66,17 +66,13 @@ class Comic
     protected $role;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\Comic\Entity\Strip", fetch="LAZY")
-     * @ORM\JoinTable(name="comics_strips",
-     *      joinColumns={@ORM\JoinColumn(name="comic_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="strip_id", referencedColumnName="id")}
-     *      )
-     */
+     * @ORM\OneToMany(targetEntity="\Comic\Entity\Strip", mappedBy="comic")
+     **/
     private $strips;
 
     /**
      * @ORM\ManyToMany(targetEntity="\Comic\Entity\Slug", fetch="LAZY")
-     * @ORM\JoinTable(name="comics_slugs",
+     * @ORM\JoinTable(name="comic_slugs",
      *      joinColumns={@ORM\JoinColumn(name="comic_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="slug_id", referencedColumnName="id")}
      *      )
@@ -113,11 +109,6 @@ class Comic
     public function __set($property, $value)
     {
         $this->$property = $value;
-    }
-
-    public function getStrips()
-    {
-        return $this->strips;
     }
 
     public function getSlugs()

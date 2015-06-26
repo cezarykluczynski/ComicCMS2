@@ -11,7 +11,7 @@ namespace Comic\Controller;
 
 use Application\Controller\AbstractRestfulController;
 use Zend\View\Model\JsonModel;
-use Comic\Entity\Comic;
+use Comic\Entity\Strip;
 
 class StripRestController extends AbstractRestfulController
 {
@@ -23,12 +23,12 @@ class StripRestController extends AbstractRestfulController
     public function getList()
     {
         /** @var string Comic ID. */
-        $comicId = $this->params()->fromRoute('comicId');
+        $comicId = (int) $this->params()->fromRoute('comicId');
         /** @var \Zend\View\Model\JsonModel */
         $view = new JsonModel;
         /** @var \Doctrine\ORM\EntityManager */
-        $entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
-        /** @var array */
+        $entityManager = $this->getEntityManager();
+        /** @var \Comic\Entity\Comic|null */
         $comic = $entityManager->find('Comic\Entity\Comic', $comicId);
 
         if (!$comic)
@@ -41,10 +41,59 @@ class StripRestController extends AbstractRestfulController
             ]);
         }
 
+        $strips = $entityManager->getRepository('Comic\Entity\Strip')->findBy([
+            'comic' => $comic,
+        ]);
+
+        $cdn = $this->serviceLocator->get('Asset\UploadCdn');
+
+        $response = [];
+
+        foreach($strips as $strip)
+        {
+            $response[] = [
+                'id' => $strip->id,
+                'title' => $strip->title,
+                'cover' => $cdn->canonicalRelativePathToUri($strip->getFirstImageCanonicalRelativePath()),
+            ];
+        }
+
         $view->setVariables([
-            'list' => $comic->strips,
+            'list' => $response,
         ]);
 
         return $view;
+    }
+
+    /**
+     * Create strip entity.
+     */
+    public function create($data)
+    {
+        /** @var string Comic ID. */
+        $comicId = (int) $this->params()->fromRoute('comicId');
+        /** @var \Zend\View\Model\JsonModel */
+        $view = new JsonModel;
+        /** @var \Doctrine\ORM\EntityManager */
+        $entityManager = $this->getEntityManager();
+        /** @var \Comic\Entity\Comic|null */
+        $comic = $entityManager->find('Comic\Entity\Comic', $comicId);
+
+        if (!$comic)
+        {
+            /** If no comics was found, strip cannot be saved. */
+            $this->getResponse()->setStatusCode(404);
+            return $view->setVariables([
+                'error' => 'Strip cannot be create for non-existing comic.',
+            ]);
+        }
+
+        /** @var \Comic\Entity\Strip Newly created strip. */
+        $strip = $entityManager->getRepository('Comic\Entity\Strip')->createFromPost($data, $comic);
+
+        return $view->setVariables([
+            'success' => true,
+            'stripId' => $strip->id,
+        ]);
     }
 }

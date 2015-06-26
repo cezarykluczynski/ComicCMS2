@@ -81,7 +81,7 @@ Functional test are written using Intern testing framework, and resides in <code
 Functional tests require an admin account with a specific credentials. This account can be created by running:
 ```sh
 vendor/bin/robo createadmin admin@example.com password
-``
+```
 
 Selenium server is required for running functional tests locally.
 

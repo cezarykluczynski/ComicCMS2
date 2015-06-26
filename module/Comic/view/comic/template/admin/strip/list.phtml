@@ -1,5 +1,5 @@
 <script type="text/ng-template" id="adminStripsList">
-<div class="panel panel-default" ng-controller="StripController">
+<div class="panel panel-default" ng-controller="StripsController">
     <h2 class="panel-heading">
         <button type="button" class="btn btn-success pull-right create-strip" ng-click="new()" ng-disabled="strips.editing()">
             <?= $this->translate("Create strip") ?>
@@ -7,7 +7,7 @@
         <?= $this->translate('Strips'); ?>
     </h2>
     <div class="panel-body">
-        <ul class="list-group admin-strips-list" ng-show="strips.loaded">
+        <ul class="list-group strips" ng-show="strips.loaded">
             <li
                 class="list-group-item"
                 ng-repeat="entity in strips.list | orderBy:'id':true"

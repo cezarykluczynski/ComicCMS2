@@ -6,10 +6,12 @@ admin
         comics.loaded = false;
         comics.loading = false;
 
+        /** Reloads list of comics. */
         comics.refresh = function ( data ) {
             this.list = data.list;
         };
 
+        /** Returns comic that was created lately. */
         comics.getLatest = function () {
             return this.list.sort(function ( a, b ) {
                 return a.id > b.id;

@@ -1,6 +1,6 @@
 <?php
 /**
- * Migration. Extends table "strips". Creates table "strips_images".
+ * Migration. Extends table "strips". Creates table "strip_images".
  *
  * @package ComicCMS2
  * @author Cezary Kluczyński
@@ -38,18 +38,27 @@ class Version20150522210521 extends AbstractMigration
     }
 
     /**
-     * Create "strips_images" table.
+     * Create "strip_images" table.
      *
      * @param Schema $schema
      * @return void
      */
     function createTableStripsImages(Schema $schema) {
-        /** Create "strips_images" table. */
-        $comicsSlugs = $schema->createTable('strips_images');
-        $comicsSlugs->addColumn('strip_id', 'integer');
-        $comicsSlugs->addColumn('image_id', 'integer');
-        $comicsSlugs->addForeignKeyConstraint('strips', array('strip_id'), array('id'));
-        $comicsSlugs->addForeignKeyConstraint('images', array('image_id'), array('id'));
+        /** Create "strip_images" table. */
+        $stripImages = $schema->createTable('strip_images');
+        $stripImages->addColumn('id', 'integer', array('autoincrement' => true));
+        $stripImages->addColumn('strip_id', 'integer');
+        $stripImages->addColumn('image_id', 'integer');
+        $stripImages->addColumn('caption', 'text', array('notNull' => false));
+        $stripImages->addColumn('position', 'integer', array('notNull'=> true));
+        $stripImages->addForeignKeyConstraint('strips', array('strip_id'), array('id'), array(
+            'onUpdate' => 'CASCADE',
+            'onDelete' => 'CASCADE'
+        ));
+        $stripImages->addForeignKeyConstraint('images', array('image_id'), array('id'), array(
+            'onUpdate' => 'CASCADE',
+            'onDelete' => 'CASCADE'
+        ));
     }
 
     /**
@@ -59,7 +68,7 @@ class Version20150522210521 extends AbstractMigration
     public function down(Schema $schema)
     {
         $this->pruneTableStrips($schema);
-        $schema->dropTable('strips_images');
+        $schema->dropTable('strip_images');
     }
 
     /**
