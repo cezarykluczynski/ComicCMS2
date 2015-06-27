@@ -1,10 +1,12 @@
 admin
-    .factory( "strips", [ "$http", "$rootScope", function( $http, $rootScope ) {
+    .factory( "strips", [ "$http", "$q", "$rootScope", function( $http, $q, $rootScope ) {
         var strips = {};
 
         strips.list = [];
         strips._editing = false;
         strips.entity = {};
+
+        strips.xhr = {};
 
         /**
          * Reload entity list.
@@ -40,11 +42,30 @@ admin
         };
 
         strips.loadStrips = function () {
-            this.loadingStatus( true );
-            $http.get( this.getComicUri() ).then( function ( response ) {
-                strips.refresh( response.data );
-                strips.loadingStatus( false );
-            });
+            var self = this;
+
+            function loadStrips() {
+                self.loadingStatus( true );
+                self.xhr.loadStripsCancel = $q.defer();
+                self.xhr.loadStrips = $http.get( self.getComicUri(), {
+                        timeout: self.xhr.loadStripsCancel.promise
+                    })
+                    .then( function ( response ) {
+                        self.refresh( response.data );
+                    })
+                    .finally( function () {
+                        self.loadingStatus( false );
+                    });
+
+                return self.xhr.loadStrips;
+            }
+
+            if ( this.xhr.loadStrips && this.xhr.loadStrips.$$state.status < 2 ) {
+                this.xhr.loadStrips.finally( loadStrips );
+                this.xhr.loadStripsCancel.resolve();
+            } else {
+                loadStrips();
+            }
         };
 
         $rootScope.$on( "reloadStrips", function () {
@@ -65,7 +86,7 @@ admin
         strips.load = function ( entity ) {
             var self = this;
 
-            this.loadingStatus( true );
+            this.loadingEntity = entity.id;
 
             return $http.get( this.getComicUri() + "/" + entity.id )
                 .then( function ( response ) {
@@ -73,7 +94,7 @@ admin
                     self.edit( response.data.entity );
                 })
                 .finally( function () {
-                    self.loadingStatus( false );
+                    self.loadingEntity = false;
                 });
         };
 
@@ -87,6 +108,7 @@ admin
          */
         strips.cancelEdit = function () {
             this.editing( false );
+            this.entity = {};
         };
 
         strips.save = function () {

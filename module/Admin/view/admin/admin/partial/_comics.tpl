@@ -35,10 +35,19 @@
         </div>
         <div
             {literal}ng-class="{'col-sm-6': !strips.editing(), 'col-sm-8': strips.editing()}"{/literal}
-            ng-show="activated() && !comics.loading && strips.editing()"
+            ng-show="activated() && !comics.loading && strips.editing() && !strips.loadingEntity"
             ng-include="'adminStripEdit'"
         >
+        </div>
 
+        <div
+            class="col-sm-6"
+            ng-show="strips.loadingEntity"
+        >
+            <div class="panel panel-default">
+                <h2 class="panel-heading">{$this->translate('Loading entity...')}</h2>
+                <div class="panel-body" ng-include="'loading'"></div>
+            </div>
         </div>
     </div>
 </div>

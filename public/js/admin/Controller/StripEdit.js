@@ -7,7 +7,7 @@ admin
 
         $scope.cancel = function () {
             $scope.$broadcast( "comicCanceled" );
-            strips.cancelEdit();
+            $scope.strips.cancelEdit();
         };
 
         $scope.$on( "stripUploadChange", function ( event, loadedFiles ) {

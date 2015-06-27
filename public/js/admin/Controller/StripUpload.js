@@ -11,8 +11,6 @@ admin
             $scope.upload( $scope.images );
         });
 
-        console.log( $scope );
-
         /**
          * Return length of list of loaded images.
          * It's important for "Move up" / "Move down" buttons visibility.

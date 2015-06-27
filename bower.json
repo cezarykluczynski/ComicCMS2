@@ -26,7 +26,8 @@
     "ng-alertify": "~0.6.0",
     "alertify.js": "~0.3.11",
     "ng-file-upload": "~5.0.6",
-    "lodash": "~3.9.3"
+    "lodash": "~3.9.3",
+    "angular-translate": "^2.7.2"
   },
   "resolutions": {
     "angular": "~1.4.x"

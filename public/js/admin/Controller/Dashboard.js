@@ -1,13 +1,14 @@
 "use strict";
 
 admin
-    .controller( "DashboardController", [ "$scope", "$http", "$sce", "$rootScope", "$templateCache", "Alertify",
-    "comics", "users", function( $scope, $http, $sce, $rootScope, $templateCache, Alertify, comics, users ) {
+    .controller( "DashboardController", [ "$scope", "$http", "$sce", "$rootScope", "$templateCache", "$translate",
+    "Alertify", "comics", "users", function( $scope, $http, $sce, $rootScope, $templateCache, $translate, Alertify, comics,
+    users ) {
         $scope.users = users;
         $scope.comics = comics;
 
-        $scope.$emit = function (eventName) {
-            $rootScope.$emit(eventName);
+        $scope.$emit = function ( eventName ) {
+            $rootScope.$emit( eventName );
         };
 
         /** Compile templates. */
@@ -27,6 +28,29 @@ admin
                     response.data.error :
                     "Error " + response.status + ": " + response.statusText );
             }
+        };
+
+        /** Wrapper for convenient error messages. */
+        $rootScope.error = function ( message ) {
+            $translate( message ).then( function ( message ) {
+                $rootScope.alertResponse({
+                    data: {
+                        error: message
+                    }
+                });
+        	});
+        };
+
+        /** Wrapper for convenient success messages. */
+        $rootScope.success = function ( message ) {
+            $translate( message ).then( function ( message ) {
+                $rootScope.alertResponse({
+                    status: 200,
+                    data: {
+                        success: message
+                    }
+                });
+            });
         };
 
         /** Common helper: various places in code need to blur active element. */

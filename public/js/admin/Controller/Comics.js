@@ -78,18 +78,26 @@ admin
         };
 
         $scope.activate = function ( entity, force ) {
+            function activate( entity ) {
+                $scope.comics.activeEntity = entity;
+                $scope.comics.refreshActiveEntityFromList();
+                strips.setComicId( entity.id );
+            };
+
             /**
              * Put a comic to edit, but only if the currently edited comic isn't edited,
              * and strips are not loading, and current comics is not yet activated.
              */
-            if (
-                ! strips.edited &&
-                ! $scope.comics.loading &&
-                ! ( force || $scope.activated( entity ) )
-            ) {
-                $scope.comics.activeEntity = entity;
-                $scope.comics.refreshActiveEntityFromList();
-                strips.setComicId( entity.id );
+            if ( force ) {
+                activate( entity );
+            } else if ( strips.editing() || strips.loadingEntity ) {
+                $rootScope.error( "cannotChangeComicEntityEditInProgress" );
+            } else if ( $scope.comics.loading ) {
+                // todo
+            } else if ( $scope.activated( entity ) ) {
+                /** Requested activation of already active comic, do nothing. */
+            } else {
+                activate( entity );
             }
         };
 

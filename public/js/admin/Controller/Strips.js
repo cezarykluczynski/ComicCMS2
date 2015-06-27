@@ -17,22 +17,22 @@ admin
          */
         $scope.activated = function ( entity ) {
             var entityIsSet = !! $scope.strips.entity;
-            return entityIsSet && ( typeof entity === "undefined" || entity.id === $scope.strips.entity.id );
+            return entityIsSet && ( typeof entity === "undefined" || $scope.isActiveOrLoading( entity ) );
         };
 
+        $scope.isActiveOrLoading = function ( entity ) {
+            return $scope.strips.entity.id === entity.id || $scope.strips.loadingEntity === entity.id;
+        }
+
         $scope.activate = function ( entity ) {
-            if ( $scope.strips.editing() ) {
+            if ( $scope.strips.editing() || $scope.strips.loadingEntity ) {
                 
-                if ( $scope.strips.entity && $scope.strips.entity.id === entity.id ) {
+                if ( $scope.strips.entity && $scope.isActiveOrLoading( entity ) ) {
                     /** This entity is already being edited. */
                     return;
                 }
 
-                $rootScope.alertResponse({
-                    data: {
-                        error: "no"
-                    }
-                });
+                $rootScope.error( "cannotChangeStripEntityEditInProgress" );
 
                 return;
             }
