@@ -15,13 +15,13 @@ return array(
             'rest-comic' => array(
                 'type'    => 'Segment',
                 'options' => array(
-                    'route'    => '/rest/comic[/:id]',
+                    'route' => '/rest/comic[/:id]',
                     'constraints' => array(
-                        'id'     => '[0-9]+',
+                        'id' => '[0-9]+',
                     ),
                     'defaults' => array(
                         '__NAMESPACE__' => 'Comic\Controller',
-                        'controller'    => 'ComicRest',
+                        'controller' => 'ComicRest',
                     ),
                 ),
                 'may_terminate' => true,
@@ -29,13 +29,14 @@ return array(
             'rest-comic-strip' => array(
                 'type'    => 'Segment',
                 'options' => array(
-                    'route'    => '/rest/comic/:comicId/strip',
+                    'route' => '/rest/comic/:comicId/strip[/:id]',
                     'constraints' => array(
-                        'comicId'     => '[0-9]+',
+                        'comicId' => '[0-9]+',
+                        'id' => '[0-9]+',
                     ),
                     'defaults' => array(
                         '__NAMESPACE__' => 'Comic\Controller',
-                        'controller'    => 'StripRest',
+                        'controller' => 'StripRest',
                     ),
                 ),
             ),

@@ -60,7 +60,22 @@ admin
             };
 
             this.edit( entity );
-        }
+        };
+
+        strips.load = function ( entity ) {
+            var self = this;
+
+            this.loadingStatus( true );
+
+            return $http.get( this.getComicUri() + "/" + entity.id )
+                .then( function ( response ) {
+                    self.decorateLoadedImages( response.data.entity );
+                    self.edit( response.data.entity );
+                })
+                .finally( function () {
+                    self.loadingStatus( false );
+                });
+        };
 
         strips.edit = function( entity ) {
             this.entity = entity;
@@ -98,7 +113,13 @@ admin
             });
 
             return entity;
-        }
+        };
+
+        strips.decorateLoadedImages = function ( entity ) {
+            entity.images.forEach( function ( image ) {
+                image.loaded = true;
+            });
+        };
 
         /**
          * Whether the new entity is edited.

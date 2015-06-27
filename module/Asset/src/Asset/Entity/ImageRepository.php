@@ -75,10 +75,20 @@ class ImageRepository extends EntityRepository implements ServiceLocatorAwareInt
         $cdn = $this->getServiceLocator()->get('Asset\UploadCdn');
         $absolutePath = $cdn->canonicalRelativePathToAbsolutePath($entity->canonicalRelativePath);
         
-        unlink($absolutePath);
+        if (is_file($absolutePath))
+        {
+            unlink($absolutePath);
+        }
 
         /** Remove directory the file resided in, if it's empty. */
         $dirName = pathinfo($absolutePath, PATHINFO_DIRNAME);
+
+        /** Not a directory, do nothing. */
+        if (!is_dir($dirName))
+        {
+            return;
+        }
+
         $files = scandir($dirName);
         if (count($files) <= 2)
         {

@@ -12,7 +12,7 @@ namespace ComicTest\Fixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use ComicCmsTestHelper\Fixture\FixtureRepository;
-use Comic\Entity\Comic;
+use Comic\Entity\Comic as ComicEntity;
 use Comic\Entity\Strip;
 
 class ComicWithStrips extends FixtureRepository
@@ -27,7 +27,7 @@ class ComicWithStrips extends FixtureRepository
     {
         $this->manager = $manager;
 
-        $this->comic = new Comic;
+        $this->comic = new ComicEntity;
         $this->comic->title = 'Comic';
         $this->entities[] = $this->comic;
 

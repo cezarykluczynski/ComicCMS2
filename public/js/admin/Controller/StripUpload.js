@@ -4,14 +4,14 @@ admin
     .controller( "StripUploadController", [ "$scope", "$http", "Upload", "strips",
         function ( $scope, $http, Upload, strips ) {
         $scope.strips = strips;
-
-        /** Bind images from entity. */
-        $scope.images = $scope.strips.entity.images;
+        $scope.images = [];
 
         /** Auto upload: start upload on change. */
         $scope.$watch("images", function () {
             $scope.upload( $scope.images );
         });
+
+        console.log( $scope );
 
         /**
          * Return length of list of loaded images.
@@ -131,5 +131,15 @@ admin
          */
         $scope.$on( "comicCanceled", function () {
             $scope.clear();
+        });
+
+        /**
+         * Listen to events emited from parent controller,
+         * and reload images list if comic entity was loaded from server.
+         */
+        $scope.$on( "comicLoaded", function () {
+            /** Bind images from entity. */
+            $scope.images = $scope.strips.entity.images;
+            $scope.emitState();
         });
     }]);
