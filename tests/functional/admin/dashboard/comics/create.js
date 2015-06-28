@@ -19,6 +19,7 @@ define([
                 .setFindTimeout( testHelper.getTimeoutForPageAction() )
                 .findByCssSelector( "div.comics-dialog" )
                     /** Assert that the "Create" button is still disabled if there's no title and no slug. */
+                    .setFindTimeout( testHelper.getTimeoutForPageAction() )
                     .findByCssSelector( "button.comics-create" )
                         .isEnabled()
                         .then( function ( enabled ) {
@@ -27,6 +28,7 @@ define([
                         .end()
                     .end()
                     /** Type title. */
+                    .setFindTimeout( testHelper.getTimeoutForPageAction() )
                     .findById( "comics-title" )
                         .type( title )
                         .end()
@@ -38,10 +40,12 @@ define([
                         })
                         .end()
                     /** Clear title. */
+                    .setFindTimeout( testHelper.getTimeoutForPageAction() )
                     .findById( "comics-title" )
                         .clearValue()
                         .end()
                     /** Type slug. */
+                    .setFindTimeout( testHelper.getTimeoutForPageAction() )
                     .findById( "comics-slug" )
                         .type( title )
                         .end()
@@ -70,14 +74,17 @@ define([
                 .setFindTimeout( testHelper.getTimeoutForPageAction() )
                 .findByCssSelector( "div.comics-dialog" )
                     /** Type title. */
+                    .setFindTimeout( testHelper.getTimeoutForPageAction() )
                     .findById( "comics-title" )
                         .type( title )
                         .end()
                     /** Type slug. */
+                    .setFindTimeout( testHelper.getTimeoutForPageAction() )
                     .findById( "comics-slug" )
                         .type( title )
                         .end()
                     /** Assert that the "Create" button is now enabled when title and slug were both typed. */
+                    .setFindTimeout( testHelper.getTimeoutForPageAction() )
                     .findByCssSelector( "button.comics-create" )
                     .isEnabled()
                         .then( function ( enabled ) {
