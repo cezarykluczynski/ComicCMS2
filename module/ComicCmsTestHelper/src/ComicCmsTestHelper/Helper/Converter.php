@@ -19,6 +19,16 @@ trait Converter
      * @return array JSON response as array.
      */
     public function getJSONResponseAsArray() {
-        return Json::decode($this->getResponseContent(), Json::TYPE_ARRAY);
+        return $this->getJSONStringAsArray($this->getResponseContent());
+    }
+
+    /**
+     * Returns JSON string as array.
+     *
+     * @return array
+     */
+    public function getJSONStringAsArray($string)
+    {
+        return Json::decode($string, Json::TYPE_ARRAY);
     }
 }

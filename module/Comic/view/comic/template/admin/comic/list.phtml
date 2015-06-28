@@ -3,7 +3,7 @@
     <div ng-show="comics.loaded && comics.list.length === 0" class="alert alert-info text-center">
         <?= $this->translate('There are no comics yet.'); ?>
     </div>
-    <ul class="list-group admin-comics-list" ng-show="comics.loaded">
+    <ul class="list-group comics" ng-show="comics.loaded">
         <li
             class="list-group-item"
             ng-repeat="entity in comics.list | orderBy:'id':true"

@@ -27,7 +27,7 @@ define([
                     .end()
                 .setFindTimeout( testHelper.getTimeoutForAjaxRequests() )
                 /** Find first comic on the list. It should be entity created in this test. */
-                .findByCssSelector( ".admin-comics-list .list-group-item" )
+                .findByCssSelector( ".comics .list-group-item" )
                     /** Click for "Edit" and "Delete" buttons to appear. */
                     .click()
                     /** Assert that the title matches. */

@@ -10,11 +10,17 @@
 namespace ComicCmsTestHelper\Controller;
 
 use Application\Controller\AbstractActionController;
-use Zend\View\Model\JsonModel;
 use Zend\Json\Json;
+use ComicCmsTestHelper\Helper\Converter;
+use ComicCmsTestHelper\Helper\FixtureProvider;
+use ComicCmsTestHelper\Helper\FQN;
 
 class TeardownConsoleController extends AbstractActionController
 {
+    use Converter;
+    use FixtureProvider;
+    use FQN;
+
     /**
      * Removes entity, based on condition.
      */
@@ -25,14 +31,10 @@ class TeardownConsoleController extends AbstractActionController
 
         $response->setErrorLevel(0);
 
-        /** Entity class name, with dots in place of backslashes. */
-        $entityName = $request->getParam('entityName');
-        /** Entity class name. */
-        $className = str_replace('.', '\\', $entityName);
-        /** @var string JSON-encoded criteria. */
-        $criteriaEncoded = $request->getParam('criteria');
+        /** Entity FQN. */
+        $className = $this->getFQN($request->getParam('entityName'));
         /** @var array Critieria for finding entities to remove. */
-        $criteria = Json::decode($criteriaEncoded, Json::TYPE_ARRAY);
+        $criteria =  $this->getJSONStringAsArray($request->getParam('criteria'));
 
         $em = $this->getEntityManager();
 
@@ -50,6 +52,39 @@ class TeardownConsoleController extends AbstractActionController
         {
             $em->remove($entity);
         }
+        $em->flush();
+
+        return 0;
+    }
+
+    /**
+     * Remove entities, based of response from
+     * {@link \ComicCmcTextHelper\Controller\SetupConsoleController::loadFixturesAction}.
+     */
+    public function unloadFixturesAction()
+    {
+        $request = $this->getRequest();
+        $response = $this->getResponse();
+
+        $response->setErrorLevel(0);
+
+        /** @var array Entity class names and ID's. */
+        $entitiesIds = $this->getJSONStringAsArray($request->getParam('entitiesIds'));
+
+        $em = $this->getEntityManager();
+
+        /** Remove all given entities. */
+        foreach($entitiesIds as $className => $ids)
+        {
+            $className = $this->getFQN($className);
+
+            foreach($ids as $id)
+            {
+                $entity = $em->find($className, $id);
+                $em->remove($entity);
+            }
+        }
+
         $em->flush();
 
         return 0;

@@ -29,12 +29,30 @@ return array(
                         ),
                     ),
                 ),
+                'load-fixtures' => array(
+                    'options' => array(
+                        'route'    => 'load-fixtures <className>',
+                        'defaults' => array(
+                            'controller' => 'ComicCmsTestHelper\Controller\SetupConsole',
+                            'action'     => 'load-fixtures'
+                        ),
+                    ),
+                ),
                 'remove-entity' => array(
                     'options' => array(
                         'route'    => 'remove-entity <entityName> <criteria>',
                         'defaults' => array(
                             'controller' => 'ComicCmsTestHelper\Controller\TeardownConsole',
                             'action'     => 'remove-entity'
+                        ),
+                    ),
+                ),
+                'unload-fixtures' => array(
+                    'options' => array(
+                        'route'    => 'unload-fixtures <entitiesIds>',
+                        'defaults' => array(
+                            'controller' => 'ComicCmsTestHelper\Controller\TeardownConsole',
+                            'action'     => 'unload-fixtures'
                         ),
                     ),
                 ),

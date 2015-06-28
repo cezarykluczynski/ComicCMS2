@@ -10,12 +10,18 @@
 namespace ComicCmsTestHelper\Controller;
 
 use Application\Controller\AbstractActionController;
-use Zend\View\Model\JsonModel;
 use Zend\Json\Json;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
+use ComicCmsTestHelper\Helper\Converter;
+use ComicCmsTestHelper\Helper\FixtureProvider;
+use ComicCmsTestHelper\Helper\FQN;
 
 class SetupConsoleController extends AbstractActionController
 {
+    use Converter;
+    use FixtureProvider;
+    use FQN;
+
     /**
      * Removes entity, based on condition.
      */
@@ -26,16 +32,10 @@ class SetupConsoleController extends AbstractActionController
 
         $response->setErrorLevel(0);
 
-        /** Entity class name, with dots in place of backslashes. */
-        $entityName = $request->getParam('entityName');
-        /** Entity class name. */
-        $className = str_replace('.', '\\', $entityName);
-        /** Add forward bashslash, if not present. */
-        $className  = $className[0] === '\\' ? $className : '\\' . $className;
-        /** @var string JSON-encoded data. */
-        $dataEncoded = $request->getParam('data');
+        /** Entity FQN. */
+        $className = $this->getFQN($request->getParam('entityName'));
         /** @var array Data to hydrate entity with. */
-        $data = Json::decode($dataEncoded, Json::TYPE_ARRAY);
+        $data = $this->getJSONStringAsArray($request->getParam('data'));
 
         $em = $this->getEntityManager();
 
@@ -50,5 +50,47 @@ class SetupConsoleController extends AbstractActionController
         $em->flush();
 
         return 0;
+    }
+
+    /**
+     * Loads given fixture class and returns an object later passed to
+     * {@link \ComicCmcTextHelper\Controller\TeardownConsoleController::unloadFixturesAction}.
+     */
+    public function loadFixturesAction()
+    {
+        $request = $this->getRequest();
+        $response = $this->getResponse();
+
+        $response->setErrorLevel(0);
+
+        /** Fixtures FQN. */
+        $className = $this->getFQN($request->getParam('className'));
+
+        /** Load requested fixtures. */
+        $this->loadFixtures($className);
+
+        /** @var array All loaded fixtures. */
+        $fixtures = $this->getLoadedFixtures();
+
+        /** @var array JSON response. */
+        $response = [];
+
+        /**
+         * Go over all fixtures and create a key-value array, where keys are class names,
+         * with dots in place of backslashes, and values are arrays of entity ID's.
+         */
+        foreach($fixtures as $fixture)
+        {
+            $fixtureClassName = str_replace('\\', '.', get_class($fixture));
+
+            if (!isset($response[$fixtureClassName]))
+            {
+                $response[$fixtureClassName] = [];
+            }
+
+            $response[$fixtureClassName][] = $fixture->id;
+        }
+
+        return JSON::encode($response);
     }
 }

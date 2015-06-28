@@ -16,10 +16,11 @@ define([
                 .end()
             .setFindTimeout( testHelper.getTimeoutForAjaxRequests() )
             /** Find first comic on the list. It should be entity created in this test. */
-            .findByCssSelector( ".admin-comics-list .list-group-item" )
+            .findByCssSelector( ".comics .list-group-item" )
                 /** Click for "Edit" and "Delete" buttons to appear. */
                 .click()
                 .end()
+            /** Open strip for edit. */
             .findByCssSelector( ".create-strip" )
                 .click()
                 .end();
@@ -67,7 +68,8 @@ define([
         },
         "Strip can be uploaded.": function () {
             if ( ! testHelper.isLocal() ) {
-                this.skip( "Skip until Intern fixes remote uploads." );
+                this.skip( "Skipped until Intern fixes remote uploads." );
+
                 return;
             }
 

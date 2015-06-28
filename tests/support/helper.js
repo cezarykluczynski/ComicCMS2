@@ -67,17 +67,6 @@ define( [
         },
 
         /**
-         * Removes entity, based on criteria.
-         *
-         * @param {string} entity   FQN of entity class.
-         * @param {Object} criteria Criteria to use when searching for entity.
-         */
-        removeEntity: function ( entity, criteria ) {
-            criteria = JSON.stringify( criteria ).replace( /\"/gi, "\\\"" );
-            return this.exec( "php public/index.php remove-entity " + entity + " " + criteria + "" );
-        },
-
-        /**
          * Creates entity with a given data.
          *
          * @param {string} entity FQN of entity class.
@@ -85,7 +74,37 @@ define( [
          */
         createEntity: function ( entity, data ) {
             data = JSON.stringify( data ).replace( /\"/gi, "\\\"" );
-            return this.exec( "php public/index.php create-entity " + entity + " " + data + "" );
+            return this.exec( "php public/index.php create-entity " + entity + " " + data );
+        },
+
+        /**
+         * Removes entity, based on criteria.
+         *
+         * @param {string} entity   FQN of entity class.
+         * @param {Object} criteria Criteria to use when searching for entity.
+         */
+        removeEntity: function ( entity, criteria ) {
+            criteria = JSON.stringify( criteria ).replace( /\"/gi, "\\\"" );
+            return this.exec( "php public/index.php remove-entity " + entity + " " + criteria );
+        },
+
+        /**
+         * Loads fixtures by class name.
+         *
+         * @param {string} name FQN of fixture class.
+         */
+        loadFixtures: function ( name ) {
+            return JSON.parse( this.exec( "php public/index.php load-fixtures " + name ) );
+        },
+
+        /**
+         * Unload given fixtures.
+         *
+         * @param {Object} data ID's of fixtures to remove.
+         */
+        unloadFixtures: function ( data ) {
+            data = JSON.stringify( data ).replace( /\"/gi, "\\\"" );
+            return this.exec( "php public/index.php unload-fixtures " + data );
         },
 
         /**
