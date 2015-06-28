@@ -1,27 +1,9 @@
 define([
     "intern!object",
     "intern/chai!assert",
-    "tests/support/helper"
-], function ( registerSuite, assert, testHelper ) {
-    /** Opens comics edit dialog for new entity. */
-    function openComicEditDialog( context ) {
-        return context.setFindTimeout( testHelper.getTimeoutForAjaxRequests() )
-            /** Go to "Comics" tab. */
-            .findByCssSelector( "ul.root-tabs" )
-                .setFindTimeout( testHelper.getTimeoutForPageAction() )
-                .findByCssSelector( "li.tab.comics a" )
-                    .click()
-                    .end()
-                .end()
-            /** Wait for comics list to load. */
-            .setFindTimeout( testHelper.getTimeoutForAjaxRequests() )
-            .findByCssSelector( ".comics-list-loading.ng-hide" )
-                .end()
-            .setFindTimeout( testHelper.getTimeoutForAjaxRequests() )
-            .findByCssSelector( "div[ng-controller=\"ComicsController\"] button.comics-create-open-dialog" )
-                .click()
-                .end();
-    }
+    "tests/support/helper",
+    "tests/support/commonRoutines"
+], function ( registerSuite, assert, testHelper, commonRoutines ) {
 
     registerSuite({
         name: "Comic: create",
@@ -31,7 +13,7 @@ define([
             var slug = testHelper.getUniqueString();
 
             return testHelper.cleanupDashboardTest(
-                openComicEditDialog(
+                commonRoutines.openComicEditDialog(
                     testHelper.getDashboardAuthorizedAsAdmin( this )
                 )
                 .setFindTimeout( testHelper.getTimeoutForPageAction() )
@@ -76,12 +58,13 @@ define([
                     .end()
             );
         },
+
         "Comic can be created with title and slug.": function () {
             var title = testHelper.getUniqueString();
             var slug = testHelper.getUniqueString();
 
             return testHelper.cleanupDashboardTest(
-                openComicEditDialog(
+                commonRoutines.openComicEditDialog(
                     testHelper.getDashboardAuthorizedAsAdmin( this )
                 )
                 .setFindTimeout( testHelper.getTimeoutForPageAction() )

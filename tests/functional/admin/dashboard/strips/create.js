@@ -1,30 +1,10 @@
 define([
     "intern!object",
     "intern/chai!assert",
-    "tests/support/helper"
-], function ( registerSuite, assert, testHelper ) {
+    "tests/support/helper",
+    "tests/support/commonRoutines"
+], function ( registerSuite, assert, testHelper, commonRoutines ) {
     var title;
-
-    function openStripEdit( context ) {
-        return context
-            /** Go to "Comics" tab. */
-            .findByCssSelector( "ul.root-tabs" )
-                .setFindTimeout( testHelper.getTimeoutForPageAction() )
-                .findByCssSelector( "li.tab.comics a" )
-                    .click()
-                    .end()
-                .end()
-            .setFindTimeout( testHelper.getTimeoutForAjaxRequests() )
-            /** Find first comic on the list. It should be entity created in this test. */
-            .findByCssSelector( ".comics .list-group-item" )
-                /** Click for "Edit" and "Delete" buttons to appear. */
-                .click()
-                .end()
-            /** Open strip for edit. */
-            .findByCssSelector( ".create-strip" )
-                .click()
-                .end();
-    }
 
     registerSuite({
         name: "Strip: create",
@@ -42,7 +22,7 @@ define([
 
         "Comic can be created.": function () {
             return testHelper.cleanupDashboardTest(
-                openStripEdit(
+                commonRoutines.openStripEdit(
                     testHelper.getDashboardAuthorizedAsAdmin( this )
                 )
                 /** Assert that the controller is visible. */
@@ -66,6 +46,7 @@ define([
                     .end()
             );
         },
+
         "Strip can be uploaded.": function () {
             if ( ! testHelper.isLocal() ) {
                 this.skip( "Skipped until Intern fixes remote uploads." );
@@ -74,7 +55,7 @@ define([
             }
 
             return testHelper.cleanupDashboardTest(
-                openStripEdit(
+                commonRoutines.openStripEdit(
                     testHelper.getDashboardAuthorizedAsAdmin( this )
                 )
                 /** Type some title. */
