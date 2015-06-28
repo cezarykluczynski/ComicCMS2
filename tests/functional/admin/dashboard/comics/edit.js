@@ -26,6 +26,7 @@ define([
                 commonRoutines.openStripList(
                     testHelper.getDashboardAuthorizedAsAdmin( this )
                 )
+                /** Open comic for edit. */
                 .setFindTimeout( testHelper.getTimeoutForPageAction() )
                 .findByCssSelector( ".comics .list-group-item .comics-edit-open-dialog" )
                     .click()
