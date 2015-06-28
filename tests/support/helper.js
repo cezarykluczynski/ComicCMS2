@@ -171,7 +171,7 @@ define( [
          * @return {int}
          */
         getTimeoutForAjaxRequests: function() {
-            return 15000;
+            return this.isLocal() ? 15000 : 30000;
         },
 
         /**
