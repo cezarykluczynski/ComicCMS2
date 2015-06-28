@@ -21,6 +21,7 @@ define({
         "tests/functional/admin/dashboard/dashboard",
         "tests/functional/admin/dashboard/comics/create",
         "tests/functional/admin/dashboard/comics/delete",
+        "tests/functional/admin/dashboard/comics/edit",
         "tests/functional/admin/dashboard/comics/select",
         "tests/functional/admin/dashboard/strips/create",
         "tests/functional/admin/dashboard/strips/edit",

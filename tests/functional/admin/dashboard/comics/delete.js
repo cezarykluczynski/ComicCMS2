@@ -45,7 +45,8 @@ define([
                 .setFindTimeout( testHelper.getTimeoutForPageAction() )
                 /** Find dialog and click "Confirm" button. */
                 .findByCssSelector( ".comics-delete-dialog" )
-                    .findByCssSelector( ".comics-delete-confirm" )
+                    .setFindTimeout( testHelper.getTimeoutForPageAction() )
+                    .findByCssSelector( ".comics-delete-confirm:not([disabled])" )
                         .click()
                         .end()
                     .end()

@@ -8,7 +8,7 @@ admin
 
         /** Comic entity, either a existing entity or a new one. */
         if ( $scope.ngDialogData.entity ) {
-            entity = $scope.ngDialogData.entity;
+            entity = angular.copy( $scope.ngDialogData.entity );
         } else {
             entity = {};
             entity.id = null;
