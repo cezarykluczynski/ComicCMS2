@@ -15,7 +15,10 @@ use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 trait FixtureProvider
 {
     /** @var array */
-    protected $fixtures = array();
+    protected $repositories = [];
+
+    /** @var array */
+    protected $generatedClasses = [];
 
     public abstract function getEntityManager();
 
@@ -30,16 +33,25 @@ trait FixtureProvider
         /** @var \Doctrine\Common\DataFixtures\Loader */
         $loader = new Loader();
 
-        $fixtureClass = $this->fixtures[$fixtureClassName] = new $fixtureClassName($options);
+        $this->repositories[$fixtureClassName] = isset($this->repositories[$fixtureClassName]) ?
+            $this->repositories[$fixtureClassName] :
+            [];
+
+        $this->generatedClasses[$fixtureClassName] = isset($this->generatedClasses[$fixtureClassName]) ?
+            $this->generatedClasses[$fixtureClassName] :
+            [];
+
+        $fixtureClass = new $fixtureClassName($options);
+        $this->repositories[$fixtureClassName][] = $fixtureClass;
         $loader->addFixture($fixtureClass);
 
         $em = $this->getEntityManager();
 
-        $this->fixtures = $loader->getFixtures();
+        $this->generatedClasses[$fixtureClassName][] = $loader->getFixtures();
 
         /** @var \Doctrine\Common\DataFixtures\Executor\ORMExecutor */
         $executor = new ORMExecutor($em);
-        $executor->execute($this->fixtures, true);
+        $executor->execute([$fixtureClass], true);
     }
 
     /**
@@ -49,15 +61,19 @@ trait FixtureProvider
      */
     public function removeFixtures($fixtureClassNameFilter = null)
     {
-        foreach($this->fixtures as $fixtureClassName => $fixture)
+        foreach($this->repositories as $fixtureClassName => $fixtureList)
         {
             if ($fixtureClassNameFilter !== null && $fixtureClassName !== $fixtureClassNameFilter)
             {
                 continue;
             }
 
-            $fixture->unload();
-            unset($this->fixtures[$fixtureClassName]);
+            foreach($fixtureList as $fixture)
+            {
+                $fixture->unload();
+            }
+
+            unset($this->repositories[$fixtureClassName]);
         }
     }
 
@@ -68,12 +84,15 @@ trait FixtureProvider
      */
     public function getLoadedFixtures()
     {
-        $fixtures = array();
+        $fixtures = [];
 
-        foreach($this->fixtures as $fixtureClassName => $fixture)
+        foreach($this->repositories as $fixtureClassName => $fixtureList)
         {
-            /** Merge fixtures from all currently loaded classes. */
-            $fixtures = array_merge($fixtures, $fixture->getLoadedFixtures());
+            foreach($fixtureList as $fixture)
+            {
+                /** Merge fixtures from all currently loaded classes. */
+                $fixtures = array_merge($fixtures, $fixture->getLoadedFixtures());
+            }
         }
 
         return $fixtures;

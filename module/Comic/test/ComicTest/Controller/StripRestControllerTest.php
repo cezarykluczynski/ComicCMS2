@@ -46,7 +46,7 @@ class StripRestControllerTest extends AbstractHttpControllerTestCase
     }
 
     /**
-     * Test if strip cannot be created for non-existing comic.
+     * Test if strip can be created.
      *
      * Doesn't really uses {@link ::getList}, it's just a XDebug bugfix.
      *
@@ -60,7 +60,7 @@ class StripRestControllerTest extends AbstractHttpControllerTestCase
         $fixtures = $this->getLoadedFixtures();
         $comic = array_pop($fixtures);
 
-        /** Dispatch PUT request to non-existing ID. */
+        /** Dispatch POST request with minimal data. */
         $this->getRequest()->setMethod('POST');
         $this->setJSONRequestHeaders();
         $this->setJSONRequestContent([
@@ -87,7 +87,7 @@ class StripRestControllerTest extends AbstractHttpControllerTestCase
      */
     public function testStripCannotBeCreatedForNonExistingComic()
     {
-        /** Dispatch PUT request to non-existing ID. */
+        /** Dispatch POST request to non-existing ID. */
         $this->getRequest()->setMethod('POST');
         $this->setJSONRequestHeaders();
         $this->setJSONRequestContent([]);
@@ -97,6 +97,108 @@ class StripRestControllerTest extends AbstractHttpControllerTestCase
         $response = $this->getJSONResponseAsArray();
         $this->assertResponseStatusCode(404);
         $this->assertEquals('Strip cannot be created for non-existing comic.', $response['error']);
+    }
+
+    /**
+     * Test if strip can be updated.
+     *
+     * Doesn't really uses {@link ::create}, it's just a XDebug bugfix.
+     *
+     * @covers ::update
+     * @uses \Comic\Controller\StripRestController::create
+     */
+    public function testStripCanBeUpdated()
+    {
+        /** Setup. */
+        $this->loadFixtures('ComicTest\Fixture\ComicWithStripWithImage');
+        $this->loadFixtures('ComicTest\Fixture\ComicWithStripWithImage');
+        $fixtures = $this->getLoadedFixtures();
+
+        $comic = null;
+        $strip = null;
+        /** @var \Comic\Entity\Strip[] */
+        $stripImages = [];
+        /** @var \Asset\Entity\Image[] */
+        $images = [];
+
+        foreach($fixtures as $fixture)
+        {
+            if ($fixture instanceof Comic && !$comic)
+            {
+                /** @var \Comic\Entity\Comic */
+                $comic = $fixture;
+            }
+
+            if ($fixture instanceof Strip && !$strip)
+            {
+                /** @var \Comic\Entity\Strip */
+                $strip = $fixture;
+            }
+
+            if ($fixture instanceof StripImage)
+            {
+                $stripImages[] = $fixture;
+            }
+
+            if ($fixture instanceof Image)
+            {
+                $images[] = $fixture;
+            }
+        }
+
+        /** Dispatch PUT request with new data. */
+        $this->getRequest()->setMethod('PUT');
+        $this->setJSONRequestHeaders();
+        $this->setJSONRequestContent([
+            'images' => [
+                [
+                    'caption' => 'New image',
+                    'entity' => [
+                        'id' => $images[1]->id,
+                    ],
+                ],
+            ],
+            'title' => 'New title',
+            'caption' => 'New caption',
+        ]);
+        $this->dispatch('/rest/comic/'.$comic->id.'/strip/'.$strip->id);
+
+        /** Assert response. */
+        $response = $this->getJSONResponseAsArray();
+        $this->assertResponseStatusCode(200);
+        $this->assertTrue($response['success']);
+        $this->assertInternalType('integer', $response['stripId']);
+
+        $em = $this->getEntityManager();
+
+        $strip = $em->find('Comic\Entity\Strip', $strip->id);
+
+        $this->assertEquals('New title', $strip->title);
+        $this->assertEquals('New caption', $strip->caption);
+
+        $this->assertEquals(1, $strip->images->count());
+
+        /** Teardown. */
+        $this->removeFixtures();
+    }
+
+    /**
+     * Test if empty strip cannot be updated for non-existing comic.
+     *
+     * @covers ::update
+     */
+    public function testStripCannotBeUpdateForNonExistingComic()
+    {
+        /** Dispatch PUT request to non-existing ID. */
+        $this->getRequest()->setMethod('PUT');
+        $this->setJSONRequestHeaders();
+        $this->setJSONRequestContent([]);
+        $this->dispatch('/rest/comic/'.$this->getHighestInteger().'/strip/1');
+
+        /** Assert response. */
+        $response = $this->getJSONResponseAsArray();
+        $this->assertResponseStatusCode(404);
+        $this->assertEquals('Strip cannot be updated for non-existing comic.', $response['error']);
     }
 
     /**
@@ -155,8 +257,8 @@ class StripRestControllerTest extends AbstractHttpControllerTestCase
         $this->assertEquals($strip->caption, $response['entity']['caption']);
 
         /** Assert image-related properties. */
-        $this->assertEquals($stripImage->id, $response['entity']['images'][0]['entity']['id']);
-        $this->assertEquals($stripImage->caption, $response['entity']['images'][0]['entity']['caption']);
+        $this->assertEquals($stripImage->image->id, $response['entity']['images'][0]['entity']['id']);
+        $this->assertEquals($stripImage->caption, $response['entity']['images'][0]['caption']);
         $this->assertEquals(
             $cdn->canonicalRelativePathToUri($image->canonicalRelativePath),
             $response['entity']['images'][0]['entity']['uri']

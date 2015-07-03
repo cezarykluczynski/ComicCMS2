@@ -106,7 +106,7 @@ admin
              * Delete and ignore result. If it's deleted, it's deleted.
              * If it's not deleted, later a maintenance procedure will be written to cleanup orphaned images.
              */
-            if ( id && ! fresh ) {
+            if ( id && fresh ) {
                 $http.delete( "/rest/image/" + id );
             }
         };

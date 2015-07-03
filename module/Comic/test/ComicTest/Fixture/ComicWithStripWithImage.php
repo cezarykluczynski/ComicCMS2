@@ -1,6 +1,6 @@
 <?php
 /**
- * Fixtures for comic entity with single strip.
+ * Fixtures for comic entity with single strip with image.
  *
  * @package ComicCMS2
  * @author Cezary Kluczyński
@@ -52,6 +52,7 @@ class ComicWithStripWithImage extends FixtureRepository
         $this->stripImage->image = $this->image;
         $this->stripImage->strip = $this->strip;
         $this->strip->comic = $this->comic;
+        $this->strip->addImage($this->stripImage);
         $this->comic->addStrip($this->strip);
 
         /** Save references, so entities can be retrieved or deleted. */

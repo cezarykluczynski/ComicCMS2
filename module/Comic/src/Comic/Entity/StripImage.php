@@ -39,7 +39,7 @@ class StripImage
     protected $position;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Comic\Entity\Strip", inversedBy="images")
+     * @ORM\ManyToOne(targetEntity="\Comic\Entity\Strip", inversedBy="images", cascade={"persist"})
      * @ORM\JoinColumn(name="strip_id", referencedColumnName="id")
      **/
     private $strip;

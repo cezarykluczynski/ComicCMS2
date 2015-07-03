@@ -15,7 +15,6 @@ use Comic\Entity\Strip;
 
 class StripRestController extends AbstractRestfulController
 {
-
     /**
      * Create strip entity.
      */
@@ -41,6 +40,43 @@ class StripRestController extends AbstractRestfulController
 
         /** @var \Comic\Entity\Strip Newly created strip. */
         $strip = $entityManager->getRepository('Comic\Entity\Strip')->createFromPost($data, $comic);
+
+        return $view->setVariables([
+            'success' => true,
+            'stripId' => $strip->id,
+        ]);
+    }
+
+    /**
+     * Update strip entity.
+     */
+    public function update($id, $data)
+    {
+        /** @var string Comic ID. */
+        $comicId = (int) $this->params()->fromRoute('comicId');
+        /** @var \Zend\View\Model\JsonModel */
+        $view = new JsonModel;
+        /** @var \Doctrine\ORM\EntityManager */
+        $entityManager = $this->getEntityManager();
+        /** @var \Comic\Entity\Comic|null */
+        $comic = $entityManager->find('Comic\Entity\Comic', $comicId);
+
+        if (!$comic)
+        {
+            /** If no comics was found, strip cannot be saved. */
+            $this->getResponse()->setStatusCode(404);
+            return $view->setVariables([
+                'error' => 'Strip cannot be updated for non-existing comic.',
+            ]);
+        }
+
+        /** @var \Comic\Entity\StripRepository */
+        $stripRepository = $entityManager->getRepository('Comic\Entity\Strip');
+
+        /** @var \Comic\Entity\Strip Enity. */
+        $strip = $stripRepository->find((int) $id);
+
+        $stripRepository->updateFromPost($data, $strip);
 
         return $view->setVariables([
             'success' => true,
@@ -91,10 +127,11 @@ class StripRestController extends AbstractRestfulController
         {
             $images[] = [
                 'entity' => [
-                    'id' => $image->id,
-                    'caption' => $image->caption,
+                    'id' => $image->image->id,
                     'uri' => $cdn->canonicalRelativePathToUri($image->image->canonicalRelativePath),
-                ]
+                ],
+                'caption' => $image->caption,
+                'id' => $image->id,
             ];
         }
 

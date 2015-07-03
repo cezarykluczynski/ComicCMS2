@@ -21,6 +21,7 @@ admin
         $scope.save = function () {
             $scope.strips.save()
                 .then( function () {
+                    $scope.cancel();
                     return $scope.strips.loadStrips();
                 });
         };

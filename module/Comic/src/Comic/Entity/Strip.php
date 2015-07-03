@@ -39,11 +39,12 @@ class Strip
     protected $caption;
     /**
      * @ORM\OneToMany(targetEntity="\Comic\Entity\StripImage", mappedBy="strip")
+     * @ORM\OrderBy({"position" = "ASC"})
      **/
     private $images;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Comic\Entity\Comic", inversedBy="strips")
+     * @ORM\ManyToOne(targetEntity="Comic\Entity\Comic", inversedBy="strips", cascade={"persist"})
      * @ORM\JoinColumn(name="comic_id", referencedColumnName="id")
      **/
     protected $comic;
@@ -72,6 +73,12 @@ class Strip
     public function __set($property, $value)
     {
         $this->$property = $value;
+    }
+
+
+    public function addImage(StripImage $image)
+    {
+        $this->images[] = $image;
     }
 
     public function getFirstImageCanonicalRelativePath()

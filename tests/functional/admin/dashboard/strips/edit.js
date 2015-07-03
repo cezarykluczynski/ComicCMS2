@@ -38,7 +38,7 @@ define([
                 .findByCssSelector( ".alertify-log-error" )
                     .getVisibleText()
                     .then( function ( visibleText ) {
-                        assert.equal( visibleText, "Active entity cannot be change if other entity is edited. " +
+                        assert.equal( visibleText, "Active strip cannot be change if other strip is edited. " +
                             "Save or discard changes first." );
                     })
                     .end()
