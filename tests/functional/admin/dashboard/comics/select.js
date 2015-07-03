@@ -39,6 +39,7 @@ define([
                         assert.equal( visibleText, "Active comic cannot be change if entity is edited. " +
                             "Save or discard changes first." );
                     })
+                    .click()
                     .end()
             );
         },

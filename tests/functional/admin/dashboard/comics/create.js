@@ -101,6 +101,7 @@ define([
                     .then( function ( visibleText ) {
                         assert.equal( visibleText, "Comic was created." );
                     })
+                    .click()
                     .end()
                 /** Teardown. */
                 .then( function () {

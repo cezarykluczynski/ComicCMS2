@@ -41,6 +41,7 @@ define([
                         assert.equal( visibleText, "Active strip cannot be change if other strip is edited. " +
                             "Save or discard changes first." );
                     })
+                    .click()
                     .end()
             );
         }

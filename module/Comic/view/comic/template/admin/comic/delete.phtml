@@ -8,8 +8,8 @@
                 <p><?= $this->translate('This action will remove comics along with strips and images.'); ?></p>
                 <p><?= $this->translate('Please confirm it\'s what you want.'); ?></p>
             </div>
-            <div class="form-group col-lg-12">
-                <button class="btn btn-danger pull-right comics-delete-confirm" ng-click="delete()" ng-disabled="comics.loading || closing">
+            <div class="form-group col-lg-12 actions">
+                <button class="btn btn-danger comics-delete-confirm" ng-click="delete()" ng-disabled="comics.loading || closing">
                     <?= $this->translate('I understand, delete, please'); ?>
                 </button>
                 <button class="btn btn-primary pull-left comics-delete-cancel" ng-click="cancel()" ng-disabled="comics.loading || closing">
