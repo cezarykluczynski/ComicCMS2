@@ -17,6 +17,8 @@ class StripRestController extends AbstractRestfulController
 {
     /**
      * Create strip entity.
+     *
+     * @return \Zend\View\Model\JsonModel
      */
     public function create($data)
     {
@@ -49,6 +51,8 @@ class StripRestController extends AbstractRestfulController
 
     /**
      * Update strip entity.
+     *
+     * @return \Zend\View\Model\JsonModel
      */
     public function update($id, $data)
     {
@@ -84,6 +88,11 @@ class StripRestController extends AbstractRestfulController
         ]);
     }
 
+    /**
+     * Get single strip entity.
+     *
+     * @return \Zend\View\Model\JsonModel
+     */
     public function get($id)
     {
         /** @var string Comic ID. */
