@@ -3,7 +3,7 @@
  *
  * @see http://stackoverflow.com/a/14837021/3807342
  */
-admin.directive('focusOnce', function($timeout, $parse) {
+admin.directive( "focusOnce", function($timeout, $parse) {
     return {
         link: function( scope, element, attrs ) {
         var model = $parse( attrs.focusOnce );
