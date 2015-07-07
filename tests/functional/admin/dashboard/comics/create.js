@@ -100,13 +100,10 @@ define([
                     .getVisibleText()
                     .then( function ( visibleText ) {
                         assert.equal( visibleText, "Comic was created." );
+
+                        /** Teardown. */
+                        testHelper.removeEntity( "Comic.Entity.Comic", { title: title } );
                     })
-                    .click()
-                    .end()
-                /** Teardown. */
-                .then( function () {
-                    testHelper.removeEntity( "Comic.Entity.Comic", { title: title } );
-                })
             );
         }
     });
