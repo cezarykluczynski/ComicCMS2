@@ -6,7 +6,7 @@
                     <button
                         class="btn btn-success comics-create-open-dialog"
                         ng-click="openComicEditDialog()"
-                        ng-disabled="strips.editing()"
+                        ng-disabled="strips.editing() || strips.loadingEntity"
                     >
                         {$this->translate('Create comics')}
                     </button>
