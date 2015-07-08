@@ -79,13 +79,15 @@ admin
             return $http.delete( "/rest/comic/" + this.deleteEntity.id )
                 .then( function ( response ) {
                     $rootScope.alertResponse( response );
-                    return self.loadComics();
                 })
-                .then( function () {
-                    self.refreshActiveEntityFromList();
-                    self.loadingStatus( false );
-                    $rootScope.$emit( "comicDelete" );
+                .finally( function () {
+                    self.loadComics().then( function () {
+                        self.refreshActiveEntityFromList();
+                        self.loadingStatus( false );
+                        $rootScope.$emit( "comicDelete" );
+                    });
                 });
+
         };
 
         comics.loadComics();
