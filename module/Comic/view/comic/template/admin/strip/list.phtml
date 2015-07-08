@@ -14,8 +14,13 @@
                 ng-class="{active: activated(entity)}"
                 ng-click="activate(entity)"
                 >
-                <div class="clearfix">
-                    <h3 class="title" ng-bind="entity.title"></h3>
+                <div class="clearfix row">
+                    <div class="col-md-8">
+                        <h3 class="title" ng-bind="entity.title"></h3>
+                    </div>
+                    <div class="col-md-4 media-right">
+                        <img ng-src="{{ entity.cover }}" class="thumbnail">
+                    </div>
                 </div>
             </li>
         </ul>
