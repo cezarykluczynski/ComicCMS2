@@ -111,4 +111,17 @@ class StripRepository extends EntityRepository
 
         return [$imagesIds, $captions, $images, $positions];
     }
+
+    /**
+     * Counts all strips for a given comic.
+     *
+     * @return integer Total number of strips for a given comic.
+     */
+    public function count(Comic $comic)
+    {
+        return $this->_em
+            ->createQuery('SELECT COUNT(s.id) FROM \Comic\Entity\Strip s WHERE s.comic = :comic')
+            ->setParameter('comic', $comic)
+            ->getSingleScalarResult();
+    }
 }

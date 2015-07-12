@@ -24,7 +24,9 @@ class UserRestController extends AbstractRestfulController
     {
         $view = new JsonModel;
 
+        /** @var int */
         $limit = (int) $this->params()->fromQuery('limit', 10);
+        /** @var int */
         $offset = (int) $this->params()->fromQuery('offset', 0);
 
         /** @var \User\Entity\User */

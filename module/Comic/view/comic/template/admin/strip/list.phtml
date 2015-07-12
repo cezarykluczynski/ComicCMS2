@@ -12,10 +12,16 @@
         <?= $this->translate('Strips'); ?>
     </h2>
     <div class="panel-body">
+        <dir-pagination-controls on-page-change="strips.changePage(newPageNumber)" template-url="adminStripsListPagination" pagination-id="'strips'">
+        </dir-pagination-controls>
+
         <ul class="list-group strips" ng-show="strips.loaded">
             <li
+                dir-paginate="entity in strips.list | itemsPerPage: strips.limit"
+                pagination-id="'strips'"
+                total-items="strips.total"
+                current-page="strips.current"
                 class="list-group-item"
-                ng-repeat="entity in strips.list | orderBy:'id':true"
                 ng-class="{active: activated(entity)}"
                 ng-click="activate(entity)"
                 >
@@ -37,6 +43,9 @@
         </div>
 
         <div ng-show="!strips.loaded" ng-include="'loading'"></div>
+
+        <dir-pagination-controls on-page-change="strips.changePage(newPageNumber)" template-url="adminStripsListPagination" pagination-id="'strips'">
+        </dir-pagination-controls>
     </div>
 </div>
 </script>

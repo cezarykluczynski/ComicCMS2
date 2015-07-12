@@ -1,10 +1,20 @@
 admin
-    .factory( "strips", [ "$http", "$q", "$rootScope", function( $http, $q, $rootScope ) {
+    .factory( "strips", [ "$http", "$httpParamSerializer", "$q", "$rootScope",
+    function( $http, $httpParamSerializer, $q, $rootScope ) {
         var strips = {};
 
         strips.list = [];
         strips._editing = false;
         strips.entity = {};
+
+        strips.limit = 5;
+        strips.current = 1;
+        strips.total = 0;
+
+        strips.changePage = function( newPage ) {
+            var offset = ( newPage - 1 ) * this.limit;
+            this.loadStrips( offset );
+        };;
 
         strips.xhr = {};
 
@@ -13,6 +23,7 @@ admin
          */
         strips.refresh = function ( data ) {
             this.list = data.list;
+            this.total = data.total;
         };
 
         strips.editing = function ( editing ) {
@@ -41,13 +52,21 @@ admin
             return "/rest/comic/" + this.comicId + "/strip";
         };
 
-        strips.loadStrips = function () {
+        strips.getListUri = function ( offset ) {
+            return this.getComicUri() + "?" + $httpParamSerializer({
+                offset: offset,
+                limit: this.limit
+            });
+        };
+
+        strips.loadStrips = function ( offset ) {
             var self = this;
 
-            function loadStrips() {
+            function loadStrips( offset ) {
                 self.loadingStatus( true );
                 self.xhr.loadStripsCancel = $q.defer();
-                self.xhr.loadStrips = $http.get( self.getComicUri(), {
+                var uri = self.getListUri( offset );
+                self.xhr.loadStrips = $http.get( uri, {
                         timeout: self.xhr.loadStripsCancel.promise
                     })
                     .then( function ( response ) {
@@ -61,10 +80,12 @@ admin
             }
 
             if ( this.xhr.loadStrips && this.xhr.loadStrips.$$state.status < 2 ) {
-                this.xhr.loadStrips.finally( loadStrips );
+                this.xhr.loadStrips.finally( function () {
+                    return loadStrips( offset );
+                });
                 this.xhr.loadStripsCancel.resolve();
             } else {
-                loadStrips();
+                loadStrips( offset );
             }
         };
 

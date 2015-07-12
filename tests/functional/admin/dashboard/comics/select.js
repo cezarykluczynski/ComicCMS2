@@ -36,7 +36,7 @@ define([
                 .findByCssSelector( ".alertify-log-error" )
                     .getVisibleText()
                     .then( function ( visibleText ) {
-                        assert.equal( visibleText, "Active comic cannot be change if entity is edited. " +
+                        assert.equal( visibleText, "Active comic cannot be changed when strip is being edited. " +
                             "Save or discard changes first." );
                     })
                     .click()

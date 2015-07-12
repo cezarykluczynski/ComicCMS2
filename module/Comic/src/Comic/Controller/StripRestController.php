@@ -170,6 +170,7 @@ class StripRestController extends AbstractRestfulController
         /** @var \Comic\Entity\Comic|null */
         $comic = $entityManager->find('Comic\Entity\Comic', $comicId);
 
+
         if (!$comic)
         {
             /** If no comics was found, list is empty. */
@@ -180,20 +181,30 @@ class StripRestController extends AbstractRestfulController
             ]);
         }
 
-        /** @var array */
+        /** @var int */
+        $limit = (int) $this->params()->fromQuery('limit', 10);
+        /** @var int */
+        $offset = (int) $this->params()->fromQuery('offset', 0);
+
+        /** @var array List of strips for current comic, account for pagination. */
         $strips = $entityManager->getRepository('Comic\Entity\Strip')->findBy([
             'comic' => $comic,
-        ]);
+        ], [
+            'id' => 'desc',
+        ], $limit, $offset);
+
+        /** @var int Total number of strips in current comic. */
+        $total = $entityManager->getRepository('Comic\Entity\Strip')->count($comic);
 
         /** @var \Asset\Service\UploadCdn */
         $cdn = $this->serviceLocator->get('Asset\UploadCdn');
 
         /** @var array */
-        $response = [];
+        $list = [];
 
         foreach($strips as $strip)
         {
-            $response[] = [
+            $list[] = [
                 'id' => $strip->id,
                 'title' => $strip->title,
                 'cover' => $cdn->canonicalRelativePathToUri($strip->getFirstImageCanonicalRelativePath()),
@@ -201,7 +212,8 @@ class StripRestController extends AbstractRestfulController
         }
 
         $view->setVariables([
-            'list' => $response,
+            'list' => $list,
+            'total' => $total,
         ]);
 
         return $view;

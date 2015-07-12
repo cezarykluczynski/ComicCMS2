@@ -7,11 +7,11 @@ define([
     var comicWithStripWithImage;
 
     registerSuite({
-        name: "Strip: edit",
+        name: "Strip: list",
 
         setup: function () {
             /** Load fixtures. */
-            comicWithStripWithImage = testHelper.loadFixtures( "ComicTest.Fixture.ComicWithStripWithImage" );
+            comicWithStripWithImage = testHelper.loadFixtures( "ComicTest.Fixture.ComicWithStrips" );
         },
 
         teardown: function () {
@@ -19,7 +19,7 @@ define([
             testHelper.unloadFixtures( comicWithStripWithImage );
         },
 
-        "Strip cannot be edited if another entity is edited.": function () {
+        "Page cannot be change when strip is being edited.": function () {
             return testHelper.cleanupDashboardTest(
                 commonRoutines.openStripList(
                     testHelper.getDashboardAuthorizedAsAdmin( this )
@@ -30,7 +30,7 @@ define([
                     .end()
                 /** Try to open existing entity for edit. */
                 .setFindTimeout( testHelper.getTimeoutForPageAction() )
-                .findByCssSelector( ".strips .list-group-item" )
+                .findByCssSelector( "[ng-controller=\"StripsController\"] .pagination li:not(.active) a:not(.ng-hide)" )
                     .click()
                     .end()
                 /** Assert that the error has been shown. */
@@ -38,7 +38,7 @@ define([
                 .findByCssSelector( ".alertify-log-error" )
                     .getVisibleText()
                     .then( function ( visibleText ) {
-                        assert.equal( visibleText, "Active strip cannot be changed when other strip is being edited. " +
+                        assert.equal( visibleText, "Page cannot be change when strip is being edited. " +
                             "Save or discard changes first." );
                     })
                     .click()

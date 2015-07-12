@@ -22,11 +22,19 @@ admin
 
         $scope.isActiveOrLoading = function ( entity ) {
             return $scope.strips.entity.id === entity.id || $scope.strips.loadingEntity === entity.id;
+        };
+
+        $rootScope.disableStripsPagination = function () {
+            return $scope.strips.editing() || $scope.strips.loadingEntity;
+        };
+
+        $rootScope.showStripPaginationErrorEntityEditInProgress = function () {
+            $rootScope.error( "cannotChangePageEntityEditInProgress" );
         }
 
         $scope.activate = function ( entity ) {
             if ( $scope.strips.editing() || $scope.strips.loadingEntity ) {
-                
+
                 if ( $scope.strips.entity && $scope.isActiveOrLoading( entity ) ) {
                     /** This entity is already being edited. */
                     return;

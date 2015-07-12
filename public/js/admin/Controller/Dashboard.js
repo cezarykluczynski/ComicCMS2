@@ -30,6 +30,8 @@ admin
             }
         };
 
+        $rootScope.ok = true;
+
         /** Wrapper for convenient error messages. */
         $rootScope.error = function ( message ) {
             $translate( message ).then( function ( message ) {
@@ -38,7 +40,7 @@ admin
                         error: message
                     }
                 });
-        	});
+            });
         };
 
         /** Wrapper for convenient success messages. */

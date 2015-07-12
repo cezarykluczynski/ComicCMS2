@@ -20,6 +20,7 @@ define({
         "tests/functional/admin/dashboard/comics/select",
         "tests/functional/admin/dashboard/strips/create",
         "tests/functional/admin/dashboard/strips/edit",
+        "tests/functional/admin/dashboard/strips/list",
     ],
     excludeInstrumentation: /tests|node_modules/
 });
