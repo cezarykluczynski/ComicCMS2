@@ -26,19 +26,19 @@
             <div class="manipulation" ng-show="image.loaded">
                 <div class="pull-right" ng-class="{'btn-group': loadedFilesLength() > 1}">
                     <button
-                        class="btn btn-primary"
+                        class="btn btn-sm btn-primary"
                         ng-show="loadedFilesLength() > 1"
                         ng-disabled="images.indexOf( image ) === 0 || strips.saving"
                         ng-click="move('up', image)"
                     ><?= $this->translate('Move up'); ?></button>
                     <button
-                        class="btn btn-primary"
+                        class="btn btn-sm btn-primary"
                         ng-show="loadedFilesLength() > 1"
                         ng-disabled="images.indexOf( image ) === images.length - 1 || strips.saving"
                         ng-click="move('down', image)"
                     ><?= $this->translate('Move down'); ?></button>
                     <button
-                        class="btn btn-danger"
+                        class="btn btn-sm btn-danger"
                         ng-click="delete( image )"
                         ng-disabled="strips.saving"
                     ><?= $this->translate('Delete'); ?></button>

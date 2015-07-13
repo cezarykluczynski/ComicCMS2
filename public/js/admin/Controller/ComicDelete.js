@@ -16,7 +16,7 @@ admin
 
         /** Creates or updates comic entity. */
         $scope.delete = function() {
-            comics.delete().then( function () {
+            $scope.comics.delete().then( function () {
                 $scope.cancel();
 
                 $rootScope.$emit( "comicDeleted" );

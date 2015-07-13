@@ -87,7 +87,6 @@ admin
                         $rootScope.$emit( "comicDelete" );
                     });
                 });
-
         };
 
         comics.loadComics();

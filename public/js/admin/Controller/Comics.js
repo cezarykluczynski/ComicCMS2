@@ -56,7 +56,6 @@ admin
             $rootScope.comicDeleteDialog.closePromise.then(function () {
                 $rootScope.comicDeleteDialog = null;
             });
-
         };
 
         $rootScope.$on( "ngDialog.opened", function () {

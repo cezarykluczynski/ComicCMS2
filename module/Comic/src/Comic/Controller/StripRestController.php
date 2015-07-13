@@ -170,7 +170,6 @@ class StripRestController extends AbstractRestfulController
         /** @var \Comic\Entity\Comic|null */
         $comic = $entityManager->find('Comic\Entity\Comic', $comicId);
 
-
         if (!$comic)
         {
             /** If no comics was found, list is empty. */
@@ -217,5 +216,50 @@ class StripRestController extends AbstractRestfulController
         ]);
 
         return $view;
+    }
+
+    /**
+     * Deletes strip.
+     *
+     * @return \Zend\View\Model\JsonModel
+     */
+    public function delete($id)
+    {
+        /** @var string Comic ID. */
+        $comicId = (int) $this->params()->fromRoute('comicId');
+        /** @var \Zend\View\Model\JsonModel */
+        $view = new JsonModel;
+        /** @var \Doctrine\ORM\EntityManager */
+        $entityManager = $this->getEntityManager();
+        /** @var \Comic\Entity\Comic|null */
+        $comic = $entityManager->find('Comic\Entity\Comic', $comicId);
+
+        if (!$comic)
+        {
+            /** If no comics was found, strip cannot be retrieved. */
+            $this->getResponse()->setStatusCode(404);
+            return $view->setVariables([
+                'list' => array(),
+                'error' => 'Strip cannot be deleted for non-existing comic.',
+            ]);
+        }
+
+        $strip = $entityManager->find('Comic\Entity\Strip', (int) $id);
+
+        if (!$strip)
+        {
+            /** If no comics was found, it can't be retrieved. */
+            $this->getResponse()->setStatusCode(404);
+            return $view->setVariables([
+                'list' => array(),
+                'error' => 'Strip not found.',
+            ]);
+        }
+
+        /** Remove strip. */
+        $entityManager->remove($strip);
+        $entityManager->flush();
+
+        return $view->setVariable('success', sprintf('Strip "%s" was deleted.', $strip->title));
     }
 }

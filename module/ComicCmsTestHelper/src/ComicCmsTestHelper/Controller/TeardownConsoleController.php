@@ -81,7 +81,12 @@ class TeardownConsoleController extends AbstractActionController
             foreach($ids as $id)
             {
                 $entity = $em->find($className, $id);
-                $em->remove($entity);
+
+                /** Additional check. Entity could alredy be deleted in functional tests. */
+                if ($entity)
+                {
+                    $em->remove($entity);
+                }
             }
         }
 

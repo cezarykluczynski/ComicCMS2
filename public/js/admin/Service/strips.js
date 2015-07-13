@@ -13,6 +13,7 @@ admin
 
         strips.changePage = function( newPage ) {
             var offset = ( newPage - 1 ) * this.limit;
+            this.current = newPage;
             this.loadStrips( offset );
         };;
 
@@ -122,6 +123,17 @@ admin
         strips.edit = function( entity ) {
             this.entity = entity;
             this.editing( true );
+        };
+
+        strips.delete = function () {
+            var self = this;
+
+            this.loadingStatus( true );
+
+            return $http.delete( this.getComicUri()  + "/" + this.entity.id )
+                .then( function ( response ) {
+                    $rootScope.alertResponse( response );
+                });
         };
 
         /**

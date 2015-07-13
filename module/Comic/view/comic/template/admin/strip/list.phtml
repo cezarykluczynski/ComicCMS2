@@ -12,7 +12,12 @@
         <?= $this->translate('Strips'); ?>
     </h2>
     <div class="panel-body">
-        <dir-pagination-controls on-page-change="strips.changePage(newPageNumber)" template-url="adminStripsListPagination" pagination-id="'strips'">
+        <dir-pagination-controls
+            ng-show="!strips.loading"
+            on-page-change="strips.changePage(newPageNumber)"
+            template-url="adminStripsListPagination"
+            pagination-id="'strips'"
+        >
         </dir-pagination-controls>
 
         <ul class="list-group strips" ng-show="strips.loaded">
@@ -44,7 +49,12 @@
 
         <div ng-show="!strips.loaded" ng-include="'loading'"></div>
 
-        <dir-pagination-controls on-page-change="strips.changePage(newPageNumber)" template-url="adminStripsListPagination" pagination-id="'strips'">
+        <dir-pagination-controls
+            ng-show="!strips.loading"
+            on-page-change="strips.changePage(newPageNumber)"
+            template-url="adminStripsListPagination"
+            pagination-id="'strips'"
+        >
         </dir-pagination-controls>
     </div>
 </div>

@@ -45,6 +45,7 @@
         ->appendFile("`$basePath`/js/admin/Controller/ComicDelete.js")
         ->appendFile("`$basePath`/js/admin/Controller/ComicEdit.js")
         ->appendFile("`$basePath`/js/admin/Controller/Strips.js")
+        ->appendFile("`$basePath`/js/admin/Controller/StripDelete.js")
         ->appendFile("`$basePath`/js/admin/Controller/StripEdit.js")
         ->appendFile("`$basePath`/js/admin/Controller/StripUpload.js")
         ->appendFile("`$basePath`/js/admin/Controller/Signin.js")
