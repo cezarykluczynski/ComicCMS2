@@ -89,7 +89,5 @@ admin
                 });
         };
 
-        comics.loadComics();
-
         return comics;
     }]);

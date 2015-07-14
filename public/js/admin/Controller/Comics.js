@@ -107,4 +107,10 @@ admin
         $rootScope.$on( "comicDelete", function () {
             $scope.comics.activeEntity = null;
         });
+
+        $scope.comics.loadComics().then( function () {
+            if ( $scope.comics.list.length === 1 ) {
+                $scope.activate( $scope.comics.list[ 0 ] );
+            }
+        });
     }]);
