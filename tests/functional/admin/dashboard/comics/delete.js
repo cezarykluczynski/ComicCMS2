@@ -50,15 +50,13 @@ define([
                         .click()
                         .end()
                     .end()
-                .setFindTimeout( testHelper.getTimeoutForAjaxRequests() )
                 /** Check if the comics was created. */
+                .setFindTimeout( testHelper.getTimeoutForAjaxRequests() )
                 .findByCssSelector( ".alertify-log-success" )
                     .getVisibleText()
                     .then( function ( visibleText ) {
                         assert.equal( visibleText, "Comic \"" + title + "\" was deleted." );
-                    })
-                    .click()
-                    .end()
+                    });
             );
         }
     });

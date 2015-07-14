@@ -33,6 +33,8 @@ define([
                         assert.ok( displayed );
                     })
                     .end()
+                /** Cancel edit. */
+                .setFindTimeout( testHelper.getTimeoutForPageAction() )
                 .findByCssSelector( ".strip-cancel" )
                     .click()
                     .end()

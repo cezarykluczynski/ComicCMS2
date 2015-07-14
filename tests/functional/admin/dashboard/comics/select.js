@@ -28,7 +28,7 @@ define([
                 )
                 .setFindTimeout( testHelper.getTimeoutForPageAction() )
                 .findByCssSelector( ".comics .list-group-item:nth-child(1)" )
-                    /** Click for "Edit" and "Delete" buttons to appear. */
+                    /** Click and wait for alert. */
                     .click()
                     .end()
                  /** Assert that the error has been shown. */
@@ -38,9 +38,7 @@ define([
                     .then( function ( visibleText ) {
                         assert.equal( visibleText, "Active comic cannot be changed when strip is being edited. " +
                             "Save or discard changes first." );
-                    })
-                    .click()
-                    .end()
+                    });
             );
         },
     });

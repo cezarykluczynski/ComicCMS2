@@ -47,8 +47,6 @@ define([
                         assert.include( visibleText, "Strip" );
                         assert.include( visibleText, "was deleted." );
                     })
-                    .click()
-                    .end()
             );
         }
     });
