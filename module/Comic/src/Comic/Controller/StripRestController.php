@@ -239,7 +239,6 @@ class StripRestController extends AbstractRestfulController
             /** If no comics was found, strip cannot be retrieved. */
             $this->getResponse()->setStatusCode(404);
             return $view->setVariables([
-                'list' => array(),
                 'error' => 'Strip cannot be deleted for non-existing comic.',
             ]);
         }
@@ -251,7 +250,6 @@ class StripRestController extends AbstractRestfulController
             /** If no comics was found, it can't be retrieved. */
             $this->getResponse()->setStatusCode(404);
             return $view->setVariables([
-                'list' => array(),
                 'error' => 'Strip not found.',
             ]);
         }

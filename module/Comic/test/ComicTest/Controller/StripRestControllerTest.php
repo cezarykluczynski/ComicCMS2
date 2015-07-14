@@ -243,7 +243,7 @@ class StripRestControllerTest extends AbstractHttpControllerTestCase
         /** @var \Asset\Service\UploadCdn */
         $cdn = $this->getApplicationServiceLocator()->get('Asset\UploadCdn');
 
-        /** Dispatch PUT request to non-existing ID. */
+        /** Dispatch GET request. */
         $this->getRequest()->setMethod('GET');
         $this->dispatch('/rest/comic/'.$comic->id.'/strip/'.$strip->id);
 
@@ -284,7 +284,6 @@ class StripRestControllerTest extends AbstractHttpControllerTestCase
         $this->assertResponseStatusCode(404);
         $this->assertEquals('Strip cannot be retrieved for non-existing comic.', $response['error']);
     }
-
 
     /**
      * Test if strip cannot be retrieved if it don't exist.
@@ -359,5 +358,89 @@ class StripRestControllerTest extends AbstractHttpControllerTestCase
         $this->assertResponseStatusCode(404);
         $this->assertTrue($response['error']);
         $this->assertTrue(empty($response['list']));
+    }
+
+    /**
+     * Test if strip can be deleted.
+     *
+     * @cover ::delete
+     */
+    public function testStripCanBeDeleted()
+    {
+        $this->loadFixtures('ComicTest\Fixture\ComicWithStrips');
+        $fixtures = $this->getLoadedFixtures();
+
+        foreach($fixtures as $fixture)
+        {
+            if ($fixture instanceof Comic)
+            {
+                /** @var \Comic\Entity\Comic */
+                $comic = $fixture;
+            }
+
+            if ($fixture instanceof Strip)
+            {
+                /** @var \Comic\Entity\Strip */
+                $strip = $fixture;
+            }
+        }
+
+        /** Dispatch DELETE request. */
+        $this->getRequest()->setMethod('DELETE');
+        $this->dispatch('/rest/comic/'.$comic->id.'/strip/'.$strip->id);
+
+        $em = $this->getEntityManager();
+
+        /** @var null */
+        $strip = $em->find('Comic\Entity\Strip', $strip->id);
+
+        $this->assertNull($strip);
+
+        /** Teardown. */
+        $this->removeFixtures();
+    }
+
+    /**
+     * Test if an strip from non-existing comic cannot be deleted.
+     *
+     * @cover ::delete
+     */
+    public function testStripCannotBeDeletedForNonExistingComic()
+    {
+        $this->getRequest()->setMethod('DELETE');
+        $this->dispatch('/rest/comic/'.$this->getHighestInteger().'/strip/1');
+
+        /** Assert response. */
+        $response = $this->getJSONResponseAsArray();
+        /** Assert status code. */
+        $this->assertResponseStatusCode(404);
+        /** Assert erroe message. */
+        $this->assertEquals('Strip cannot be deleted for non-existing comic.', $response['error']);
+    }
+
+
+    /**
+     * Test if non-existing strip cannot be deleted.
+     *
+     * @covers ::delete
+     */
+    public function testNonExistingStripCannotBeDeleted()
+    {
+        /** Setup. */
+        $this->loadFixtures('ComicTest\Fixture\Comic');
+        $fixtures = $this->getLoadedFixtures();
+        $comic = array_pop($fixtures);
+
+        /** Dispatch GET request to non-existing ID. */
+        $this->getRequest()->setMethod('DELETE');
+        $this->dispatch('/rest/comic/'.$comic->id.'/strip/'.$this->getHighestInteger());
+
+        /** Assert response. */
+        $response = $this->getJSONResponseAsArray();
+        $this->assertResponseStatusCode(404);
+        $this->assertEquals('Strip not found.', $response['error']);
+
+        /** Teardown. */
+        $this->removeFixtures();
     }
 }
