@@ -41,8 +41,6 @@ define([
                         assert.equal( visibleText, "Page cannot be change when strip is being edited. " +
                             "Save or discard changes first." );
                     })
-                    .click()
-                    .end()
             );
         }
     });
