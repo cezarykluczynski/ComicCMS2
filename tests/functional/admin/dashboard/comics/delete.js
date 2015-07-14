@@ -56,7 +56,7 @@ define([
                     .getVisibleText()
                     .then( function ( visibleText ) {
                         assert.equal( visibleText, "Comic \"" + title + "\" was deleted." );
-                    });
+                    })
             );
         }
     });

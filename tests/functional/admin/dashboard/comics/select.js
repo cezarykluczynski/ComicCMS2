@@ -38,7 +38,7 @@ define([
                     .then( function ( visibleText ) {
                         assert.equal( visibleText, "Active comic cannot be changed when strip is being edited. " +
                             "Save or discard changes first." );
-                    });
+                    })
             );
         },
     });
