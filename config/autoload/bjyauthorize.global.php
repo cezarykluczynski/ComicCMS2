@@ -63,6 +63,8 @@ return [
                 ['controller' => 'Comic\Controller\ComicRest', 'action' => null, 'roles' => ['admin']],
                 ['controller' => 'Comic\Controller\StripRest', 'action' => null, 'roles' => ['admin']],
 
+                /** Comics RESTful controllers. */
+                ['controller' => 'Settings\Controller\SettingsRest', 'action' => null, 'roles' => ['admin']],
 
                 /** Techically, console routing does not require ACL.
                  *  Anyone with access to CLI is authenticated enough, or cannot be stopped anyway. */

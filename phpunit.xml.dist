@@ -29,6 +29,7 @@
             <directory suffix=".php">./module/Application/test/ApplicationTest/Controller</directory>
             <directory suffix=".php">./module/Application/test/ApplicationTest/View</directory>
             <directory suffix=".php">./module/Comic/test/ComicTest/Controller</directory>
+            <directory suffix=".php">./module/Settings/test/SettingsTest/Controller</directory>
             <directory suffix=".php">./module/User/test/UserTest/Controller</directory>
             <directory suffix=".php">./module/User/test/UserTest/Entity</directory>
         </testsuite>
@@ -49,6 +50,7 @@
             <directory suffix=".php">./module/Asset/src/</directory>
             <directory suffix=".php">./module/Application/src/</directory>
             <directory suffix=".php">./module/Comic/src/</directory>
+            <directory suffix=".php">./module/Settings/src/</directory>
             <directory suffix=".php">./module/User/src/</directory>
             <exclude>
                 <directory suffix=".php">./vendor</directory>
@@ -60,6 +62,7 @@
                 <!-- Entities as for now just copies of Doctrine docs, so no need for tests. -->
                 <directory suffix=".php">./module/Asset/src/Asset/Entity/</directory>
                 <directory suffix=".php">./module/Comic/src/Comic/Entity/</directory>
+                <directory suffix=".php">./module/Settings/src/Settings/Entity/</directory>
                 <!-- AuthService is tested by controllers tests. -->
                 <directory suffix=".php">./module/Admin/src/Admin/Service/</directory>
             </exclude>

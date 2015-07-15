@@ -13,6 +13,7 @@ return array(
         'BjyAuthorize',
         'DoctrineModule',
         'DoctrineORMModule',
+        'Settings',
         'Application',
         'Admin',
         'Asset',
