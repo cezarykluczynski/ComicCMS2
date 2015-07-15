@@ -1,4 +1,11 @@
 <?php
+/**
+ * Migration. Extends "images" table by "canonical_relative_path", "width", and "height" columns.
+ *
+ * @package ComicCMS2
+ * @author Cezary Kluczyński
+ * @license https://github.com/cezarykluczynski/ComicCMS2/blob/master/LICENSE.txt MIT
+ */
 
 namespace DoctrineMigrations;
 
