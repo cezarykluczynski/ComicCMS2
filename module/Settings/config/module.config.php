@@ -52,6 +52,11 @@ return array(
         'template_path_stack' => array(
             'comic-rest' => __DIR__ . '/../view',
         ),
+        'angular_templates' => array(
+            'admin' => array(
+                __DIR__ . '/../view/settings/template',
+            ),
+        ),
         'strategies' => array(
             'ViewJsonStrategy',
         ),
