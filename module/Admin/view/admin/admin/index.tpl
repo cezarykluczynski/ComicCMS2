@@ -25,7 +25,7 @@
         {$this->partial('partial/_users')}
     </div>
     <div ng-show="panel.isSelected('settings')">
-        Settings
+        {$this->partial('partial/_settings')}
     </div>
 </div>
 

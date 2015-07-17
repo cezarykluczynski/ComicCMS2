@@ -58,6 +58,8 @@ class Module
             $body = $body . "\n";
             $response->setContent($body);
         });
+
+
     }
 
     public function getConfig()
