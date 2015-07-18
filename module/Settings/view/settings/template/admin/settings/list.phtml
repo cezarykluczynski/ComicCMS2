@@ -1,0 +1,17 @@
+<script type="text/ng-template" id="adminSettingsList">
+<div class="panel panel-default" ng-controller="SettingsController">
+    <h2 class="panel-heading"><?= $this->translate('Settings'); ?></h2>
+
+    <div class="row" ng-repeat="(name, value) in settings.list">
+        <div class="col-xs-4">
+            <span ng-bind="name"></span>
+        </div>
+        <div class="col-xs-4">
+            <span ng-bind="value"></span>
+        </div>
+        <div class="col-xs-4">
+            <button class="btn btn-danger"><?= $this->translate('Delete'); ?></button>
+        </div>
+    </div>
+</div>
+</script>

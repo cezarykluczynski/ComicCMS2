@@ -1,6 +1,6 @@
 .hg/
 .sass-cache/
-.settings/
+\.settings/
 node_modules/
 vendor/
 data/
