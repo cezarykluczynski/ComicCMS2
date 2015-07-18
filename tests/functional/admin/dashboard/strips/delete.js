@@ -42,6 +42,7 @@ define([
                 /** Assert that the success message has been shown. */
                 .setFindTimeout( testHelper.getTimeoutForPageAction() )
                 .findByCssSelector( ".alertify-log-success" )
+                    .sleep( 1000 )
                     .getVisibleText()
                     .then( function ( visibleText ) {
                         assert.include( visibleText, "Strip" );

@@ -26,9 +26,6 @@ class AdminController extends AbstractActionController
         /** @var array */
         $this->config = $this->sl->get('Config');
 
-        /** @var \Doctrine\ORM\EntityManager */
-        $this->em = $this->getEntityManager();
-
         /** @var array */
         $widgets = $this->getWidgets();
 

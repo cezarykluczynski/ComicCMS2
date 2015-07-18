@@ -19,14 +19,12 @@ trait Authentication
      */
     protected $authenticatedUser;
 
-    public function onDispatch(MvcEvent $e)
+    public function onDispatchAuthentication(MvcEvent $e)
     {
         $userContainer = new Container('user');
 
         if (!is_null($userContainer->authenticatedUser)) {
             $this->authenticatedUser = $userContainer->authenticatedUser;
         }
-
-        return parent::onDispatch($e);
     }
 }

@@ -12,9 +12,13 @@ namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractActionController as BaseController;
 use Application\Service\Authentication;
 use Application\Service\Database;
+use Application\Service\Dispatcher;
+use Settings\Service\Settings;
 
 class AbstractActionController extends BaseController
 {
     use Authentication;
     use Database;
+    use Settings;
+    use Dispatcher;
 }

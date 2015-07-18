@@ -30,6 +30,7 @@
             <directory suffix=".php">./module/Application/test/ApplicationTest/View</directory>
             <directory suffix=".php">./module/Comic/test/ComicTest/Controller</directory>
             <directory suffix=".php">./module/Settings/test/SettingsTest/Controller</directory>
+            <directory suffix=".php">./module/Settings/test/SettingsTest/Service</directory>
             <directory suffix=".php">./module/User/test/UserTest/Controller</directory>
             <directory suffix=".php">./module/User/test/UserTest/Entity</directory>
         </testsuite>

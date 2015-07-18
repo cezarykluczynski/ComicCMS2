@@ -53,6 +53,7 @@ define([
                 /** Check if the comics was created. */
                 .setFindTimeout( testHelper.getTimeoutForAjaxRequests() )
                 .findByCssSelector( ".alertify-log-success" )
+                    .sleep( 1000 )
                     .getVisibleText()
                     .then( function ( visibleText ) {
                         assert.equal( visibleText, "Comic \"" + title + "\" was deleted." );

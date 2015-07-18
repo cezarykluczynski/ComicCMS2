@@ -34,6 +34,7 @@ define([
                  /** Assert that the error has been shown. */
                 .setFindTimeout( testHelper.getTimeoutForPageAction() )
                 .findByCssSelector( ".alertify-log-error" )
+                    .sleep( 1000 )
                     .getVisibleText()
                     .then( function ( visibleText ) {
                         assert.equal( visibleText, "Active comic cannot be changed when strip is being edited. " +

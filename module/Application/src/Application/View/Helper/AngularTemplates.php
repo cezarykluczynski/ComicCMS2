@@ -24,9 +24,9 @@ class AngularTemplates extends AbstractHelper
     /**
      * When invoked, This function will pass all defined Angular templates as a string.
      *
-     * @throws \Exception   If requested group cannot be found in config.
-     * @param strong $group Group name, configured in ["view_manager"]["angular_templates"].
-     * @return string       All templates as a single string.
+     * @throws \Exception        If requested group cannot be found in config.
+     * @param  string     $group Group name, configured in ["view_manager"]["angular_templates"].
+     * @return string            All templates as a single string.
      */
     public function __invoke($group)
     {

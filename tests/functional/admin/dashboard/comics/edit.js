@@ -43,6 +43,7 @@ define([
                 /** Check if the comics was saved. */
                 .setFindTimeout( testHelper.getTimeoutForAjaxRequests() )
                 .findByCssSelector( ".alertify-log-success" )
+                    .sleep( 1000 )
                     .getVisibleText()
                     .then( function ( visibleText ) {
                         assert.equal( visibleText, "Comic was updated." );

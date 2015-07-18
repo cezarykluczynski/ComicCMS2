@@ -17,6 +17,8 @@ use Zend\Stdlib\Parameters;
  * @uses \Application\Controller\AbstractActionController
  * @uses \Application\Service\Authentication
  * @uses \Application\Service\Database
+ * @uses \Application\Service\Dispatcher
+ * @uses \Settings\Service\Settings
  * @uses \User\Provider\Identity\UserIdentityProvider
  * @uses \User\Provider\Identity\UserIdentityProviderMock
  * @uses \Asset\Entity\ImageRepository

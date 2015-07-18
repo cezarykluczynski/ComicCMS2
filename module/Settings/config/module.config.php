@@ -33,6 +33,11 @@ return array(
             'Settings\Controller\SettingsRest' => 'Settings\Controller\SettingsRestController',
         ),
     ),
+    'service_manager' => array(
+        'invokables' => array(
+            'Settings\ExtensionManifest' => 'Settings\Service\ManifestService',
+        ),
+    ),
     // Doctrine config
     'doctrine' => array(
         'driver' => array(

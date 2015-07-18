@@ -24,18 +24,38 @@ class SettingsRestController extends AbstractRestfulController
         $view = new JsonModel;
         /** @var \Doctrine\ORM\EntityManager */
         $entityManager = $this->getEntityManager();
+        /** @var \Zend\Di\ServiceLocator */
+        $sl = $this->getServiceLocator();
 
         /** @var array */
-        $settings = $entityManager->getRepository('Settings\Entity\Setting')->findAll();
+        $settingsCollection = $entityManager->getRepository('Settings\Entity\Setting')->findAll();
+
+        /** @var array */
+        $settings = $sl->get('Settings');
+
+        /** @var \Settings\Service\ManifestService Service for rediscovering new plugins and templates. */
+        $extensionManifest = $sl->get('Settings\ExtensionManifest');
+
+        /** Inject current settings. */
+        $extensionManifest->setSettingsCollection($settingsCollection);
+
+        /** Inject settings tree. */
+        $extensionManifest->setSettings($settings);
+        $extensionManifest->discover();
+
+        $parsingErrors = $extensionManifest->getParsingErrors();
 
         /** @var array */
         $list = array();
 
-        foreach($settings as $setting)
+        foreach($settingsCollection as $setting)
         {
             $list[$setting->name] = $setting->value;
         }
 
-        return $view->setVariable('list', $list);
+        return $view->setVariables([
+            'list' => $list,
+            'parsingErrors' => $parsingErrors,
+        ]);
     }
 }

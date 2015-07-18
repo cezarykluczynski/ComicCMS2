@@ -9,6 +9,12 @@
 
 namespace Settings;
 
+use Zend\Mvc\MvcEvent;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use RegexIterator;
+use RecursiveRegexIterator;
+
 class Module
 {
     public function getAutoloaderConfig()
