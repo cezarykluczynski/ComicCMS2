@@ -59,7 +59,7 @@ return array(
             'orm_default' => array(
                 'drivers' => array(
                     __NAMESPACE__ . '\Entity' => __NAMESPACE__ . '_driver'
-                )
+                ),
             )
         )
     ),
