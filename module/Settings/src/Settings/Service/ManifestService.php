@@ -24,6 +24,7 @@ class ManifestService implements ServiceLocatorAwareInterface
     protected $settings;
     protected $flattenSettings = [];
     protected $errors = [];
+    protected $descriptions = [];
 
     /**
      * @codeCoverageIgnore
@@ -98,6 +99,16 @@ class ManifestService implements ServiceLocatorAwareInterface
     }
 
     /**
+     * Getter for settings descriptions.
+     *
+     * @return array
+     */
+    public function getDescriptions()
+    {
+        return $this->descriptions;
+    }
+
+    /**
      * Discovers new settings added by templates and plugins.
      *
      * @return void
@@ -110,6 +121,9 @@ class ManifestService implements ServiceLocatorAwareInterface
         $coreSettings = $this->discoverCoreSettings();
         $templatesSettings = $this->discoverTemplatesSettings();
         $pluginsSettings = $this->discoverPluginsSettings();
+
+        /** @var \Doctrine\ORM\EntityManager */
+        $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
 
         if (!empty(array_intersect_key($coreSettings, $templatesSettings)))
         {
@@ -128,9 +142,6 @@ class ManifestService implements ServiceLocatorAwareInterface
         }
         else
         {
-            /** @var \Doctrine\ORM\EntityManager */
-            $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
-
             /** @var array Merged settings from all sources. */
             $settings = array_merge($coreSettings, $templatesSettings, $pluginsSettings);
 
@@ -148,6 +159,13 @@ class ManifestService implements ServiceLocatorAwareInterface
 
             /** Save everything. */
             $em->flush();
+        }
+
+        $settings = $em->getRepository('Settings\Entity\Setting')->findAll();
+
+        foreach($settings as $setting)
+        {
+            $this->descriptions[$setting->name]['id'] = $setting->id;
         }
     }
 
@@ -304,9 +322,18 @@ class ManifestService implements ServiceLocatorAwareInterface
                         continue;
                     }
 
+                    $prefix = $settingsGroup['prefix'];
+                    $settingsKey = $prefix.$setting['name'];
+
                     /** Finally, when everything is OK, save setting, optionally using "default_value". */
-                    $settings[$settingsGroup['prefix'].$setting['name']] = isset($setting['default_value']) ?
-                        strval($setting['default_value']) : '';
+                    $settings[$settingsKey] = isset($setting['default_value']) ? strval($setting['default_value']) : '';
+
+                    $this->descriptions[$settingsKey] = [
+                        'group_name' => $settingsGroup['name'],
+                        'group_prefix' => $prefix,
+                        'name' => $setting['name'],
+                        'label' => $setting['label'],
+                    ];
                 }
             }
         }

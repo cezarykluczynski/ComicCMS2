@@ -41,8 +41,14 @@ class SettingsRestController extends AbstractRestfulController
 
         /** Inject settings tree. */
         $extensionManifest->setSettings($settings);
+
+        /** Discover new settings set via templates and plugins. */
         $extensionManifest->discover();
 
+        /** @var array */
+        $descriptions = $extensionManifest->getDescriptions();
+
+        /** @var array */
         $parsingErrors = $extensionManifest->getParsingErrors();
 
         /** @var array */
@@ -55,7 +61,33 @@ class SettingsRestController extends AbstractRestfulController
 
         return $view->setVariables([
             'list' => $list,
+            'descriptions' => $descriptions,
             'parsingErrors' => $parsingErrors,
         ]);
+    }
+
+    public function update($id, $data)
+    {
+        /** @var \Zend\View\Model\JsonModel */
+        $view = new JsonModel;
+        /** @var \Doctrine\ORM\EntityManager */
+        $entityManager = $this->getEntityManager();
+
+        $setting = $entityManager->find('Settings\Entity\Setting', $id);
+
+        /** Comic has to exist to be updated. */
+        if (is_null($setting))
+        {
+            $this->getResponse()->setStatusCode(404);
+            return $view
+                ->setVariable('error', 'Setting not found.');
+        }
+
+        $setting->value = $data['value'];
+
+        $entityManager->persist($setting);
+        $entityManager->flush();
+
+        return $view->setVariable('success', 'Setting was updated.');
     }
 }

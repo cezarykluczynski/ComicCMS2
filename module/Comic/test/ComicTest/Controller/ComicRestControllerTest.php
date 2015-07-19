@@ -236,7 +236,7 @@ class ComicRestControllerTest extends AbstractHttpControllerTestCase
 
         /** Assert controller response. */
         $this->assertResponseStatusCode(200);
-        $this->assertTrue(is_int($response['id']), 'Entity created.');
+        $this->assertTrue(is_int($response['id']), 'Entity updated.');
         $this->assertEquals('Comic was updated.', $response['success']);
 
         $comic = $em->find('Comic\Entity\Comic', $comic->id);
@@ -342,7 +342,7 @@ class ComicRestControllerTest extends AbstractHttpControllerTestCase
     /**
      * Test if existing comic can be deleted.
      *
-     * @cover ::delete
+     * @covers ::delete
      */
     public function testExistingComicCanBeDeleted()
     {
@@ -380,7 +380,7 @@ class ComicRestControllerTest extends AbstractHttpControllerTestCase
     /**
      * Test if non-existing comic can't be deleted.
      *
-     * @cover ::delete
+     * @covers ::delete
      */
     public function testNonExistingComicCantBeDeleted()
     {

@@ -73,4 +73,59 @@ class SettingsRestControllerTest extends AbstractHttpControllerTestCase
         /** Teardown. */
         $this->removeFixtures();
     }
+
+    /**
+     * Test if setting entity can be updated.
+     *
+     * @covers ::update
+     */
+    public function testSettingEntityCanBeUpdated()
+    {
+        /** Setup. */
+        $this->loadFixtures('SettingsTest\Fixture\Setting');
+        $fixtures = $this->getLoadedFixtures();
+        $setting = array_pop($fixtures);
+        /** @var \Doctrine\ORM\EntityManager. */
+        $em = $this->getEntityManager();
+
+        /** Prepare and dispatch PUT request. */
+        $this->getRequest()->setMethod('PUT');
+        $this->setJSONRequestHeaders();
+        $this->setJSONRequestContent([
+            'value' => 'changed',
+        ]);
+        $this->dispatch('/rest/settings/' . $setting->id);
+
+        $response = $this->getJSONResponseAsArray();
+
+        /** Assert controller response. */
+        $this->assertResponseStatusCode(200);
+        $this->assertEquals('Setting was updated.', $response['success']);
+
+        $setting = $em->find('Settings\Entity\Setting', $setting->id);
+
+        /** Assert entity value change. */
+        $this->assertEquals('changed', $setting->value);
+    }
+
+    /**
+     * Test if non-existing setting cannot be updated.
+     *
+     * @covers ::update
+     */
+    public function testNonexistingSettingCannotBeUpdated()
+    {
+        /** Dispatch invalid request. */
+        $this->getRequest()->setMethod('PUT');
+        $this->setJSONRequestHeaders();
+        $this->dispatch('/rest/settings/' . $this->getHighestInteger());
+
+        /** Assert response. */
+        $response = $this->getJSONResponseAsArray();
+        /** Assert status code. */
+        $this->assertResponseStatusCode(404);
+        /** Assert erroe message. */
+        $this->assertEquals('Setting not found.', $response['error']);
+    }
+
 }
