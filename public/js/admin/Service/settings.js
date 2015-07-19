@@ -74,6 +74,7 @@ admin
             return $http.put( "/rest/settings/" + id, data );
         }
 
+        /** Reaload list of settings. */
         settings.loadSettings = function() {
             if ( this.loading ) {
                 return;
