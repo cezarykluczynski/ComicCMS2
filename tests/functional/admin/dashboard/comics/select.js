@@ -27,10 +27,11 @@ define([
                     testHelper.getDashboardAuthorizedAsAdmin( this )
                 )
                 .setFindTimeout( testHelper.getTimeoutForPageAction() )
-                .findByCssSelector( ".comics .list-group-item:nth-child(1)" )
+                .findByCssSelector( ".comics .list-group-item:not(.active)" )
                     /** Click and wait for alert. */
                     .click()
                     .end()
+                .sleep( 1000 )
                  /** Assert that the error has been shown. */
                 .setFindTimeout( testHelper.getTimeoutForPageAction() )
                 .findByCssSelector( ".alertify-log-error" )

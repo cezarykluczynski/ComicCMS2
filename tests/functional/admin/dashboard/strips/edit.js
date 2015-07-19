@@ -33,9 +33,11 @@ define([
                 .findByCssSelector( ".strips .list-group-item" )
                     .click()
                     .end()
+                .sleep( 1000 )
                 /** Assert that the error has been shown. */
                 .setFindTimeout( testHelper.getTimeoutForPageAction() )
                 .findByCssSelector( ".alertify-log-error" )
+                    .sleep( 1000 )
                     .getVisibleText()
                     .then( function ( visibleText ) {
                         assert.equal( visibleText, "Active strip cannot be changed when other strip is being edited. " +

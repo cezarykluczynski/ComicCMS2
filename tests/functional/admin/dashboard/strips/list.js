@@ -33,9 +33,11 @@ define([
                 .findByCssSelector( "[ng-controller=\"StripsController\"] .pagination li:not(.active) a:not(.ng-hide)" )
                     .click()
                     .end()
+                .sleep( 1000 )
                 /** Assert that the error has been shown. */
                 .setFindTimeout( testHelper.getTimeoutForPageAction() )
                 .findByCssSelector( ".alertify-log-error" )
+                    .sleep( 1000 )
                     .getVisibleText()
                     .then( function ( visibleText ) {
                         assert.equal( visibleText, "Page cannot be change when strip is being edited. " +
