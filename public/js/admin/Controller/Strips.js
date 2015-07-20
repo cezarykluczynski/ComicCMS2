@@ -20,6 +20,7 @@ admin
             return entityIsSet && ( typeof entity === "undefined" || $scope.isActiveOrLoading( entity ) );
         };
 
+        /** Returns true if entity is currently being edited or being loaded, so it can be edited. */
         $scope.isActiveOrLoading = function ( entity ) {
             return $scope.strips.entity.id === entity.id || $scope.strips.loadingEntity === entity.id;
         };
