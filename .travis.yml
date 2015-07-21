@@ -36,6 +36,10 @@ after_success:
   - php vendor/bin/coveralls -v
 env:
   global:
+  # Sauce Labs
   - secure: UlZEyedGNDsYx6c4M/GRNdLYqFQZHBA5gYRVbNa3/7LCryO6RzkOoJ2v1zxWX5rSm8db6nkWKpON2+D09Ij1ot+KOybGNjia38+MXrZSF6xUvWTcUGNpZv6NoMKx0HlknS5ZAWjjcek/yoTs7ZwZgleaC6Dy4fELHD2Wmbf9aIw=
   - secure: BH1JzVc17vLddSi4af9a57GEfqraB/orIkEB2aaD4spc5OH7GIxNFY2vbJ8EYRqGwuRK1d9NjIC0/7IWr5uKbCLUjk4J+HEvP88T3M+pmCnESLGCu+oD3jjq6zaIFrSq0A8eleh+Q2V5SZTRQovkhNTwiyRRoTW5VYBK/arbVws=
+  # BrowserStack
+  - secure: HuSpAsyxLsj42PfJMqxBQjuwDhWYjQBlOjOo4rgx6wAdM6sTqzA/emCkEpui0GFlM7wsOiA04BQtCSYSOhBzy77SpJs3JSo/2JDxK93GRLfXYK1O2Xv+j6TnZmQDpss45ZCMG1eE40bhKrAFP5oWflXb1KXW/CLtYSLTuWusVd0=
+  - secure: GK8rLSiZyArBIlsc1bI3r9dnk6kA+M81TzSbX9I2dgI8uYVMBffnf1h370f0c5ObB5WYYexc5bPHXrK3+YcLRE6oOmP0own3BhjfhKX+6swaHSNYc/mKW9EJmFi/vNM9P7EEuAjPJaBsEpqGNW+ygsRLUQedoihg/souahOlVkk=
   - TRAVIS_POSTGRES_USER=postgres

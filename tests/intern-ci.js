@@ -5,7 +5,7 @@ define({
     capabilities: {
         "selenium-version": "2.45.0"
     },
-    tunnel: "SauceLabsTunnel",
+    tunnel: "BrowserStackTunnel",
     tunnelOptions: {
         port: 4444
     },
