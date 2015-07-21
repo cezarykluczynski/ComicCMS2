@@ -8,7 +8,7 @@
                 <h3 ng-bind="getHeader(name)"></h3>
             </div>
         </div>
-        <div class="row" ng-class="{'even': $index % 2} ">
+        <div class="row" ng-class="{'even': $index % 2} " ng-attr-setting-id="{{getId(name)}}">
             <div class="col-lg-4">
                 <span ng-bind="getDescription(name)"></span>
             </div>
@@ -16,8 +16,8 @@
                 <input type="text" class="form-control" ng-model="settings.list[name]" ng-disabled="saving(name)">
             </div>
             <div class="col-lg-4">
-                <button class="btn btn-success" ng-show="dirty(name)" ng-disabled="saving(name)" ng-click="save(name)"><?= $this->translate('Save'); ?></button>
-                <button class="btn btn-warning" ng-show="dirty(name)" ng-disabled="saving(name)" ng-click="revert(name)"><?= $this->translate('Revert'); ?></button>
+                <button class="btn btn-success save" ng-show="dirty(name)" ng-disabled="saving(name)" ng-click="save(name)"><?= $this->translate('Save'); ?></button>
+                <button class="btn btn-warning revert" ng-show="dirty(name)" ng-disabled="saving(name)" ng-click="revert(name)"><?= $this->translate('Revert'); ?></button>
             </div>
         </div>
     </div>

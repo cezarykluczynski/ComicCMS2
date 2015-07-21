@@ -20,6 +20,10 @@ admin
             return $scope.settings.descriptions[ name ] ? $scope.settings.descriptions[ name ].label : name;
         };
 
+        $scope.getId = function ( name ) {
+            return $scope.settings.descriptions[ name ] ? $scope.settings.descriptions[ name ].id : null;
+        };
+
         /** Returns header, is applicable, or undefined, if no header should be shown before given setting. */
         $scope.getHeader = function ( name ) {
             return $scope.settings.headers[name];

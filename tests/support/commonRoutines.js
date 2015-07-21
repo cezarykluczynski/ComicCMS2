@@ -58,6 +58,29 @@ define( [
                     /** Click for "Edit" and "Delete" buttons to appear. */
                     .click()
                     .end();
+        },
+
+        /**
+         * Adds some characters to setting.
+         *
+         * @param {Object} context Remote handle.
+         * @param {Object} setting Setting fixture.
+         */
+        editSetting: function ( context, setting ) {
+            return context
+                /** Go to "Settings" tab. */
+                .findByCssSelector( "ul.root-tabs" )
+                    .setFindTimeout( testHelper.getTimeoutForPageAction() )
+                    .findByCssSelector( "li.tab.settings a" )
+                        .click()
+                        .end()
+                    .end()
+                .findByCssSelector( "div[setting-id=\"" + setting[ "Settings.Entity.Setting" ][ 0 ] + "\"]" )
+                    /** Type additional characters from  */
+                    .findByCssSelector( "input[type=\"text\"]" )
+                        .type( " additional characters" )
+                        .end()
+                    .sleep( 1000 );
         }
     };
 });

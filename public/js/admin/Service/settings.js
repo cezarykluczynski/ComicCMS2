@@ -1,7 +1,7 @@
 "use string";
 
 admin
-    .factory( "settings", [ "$http", function ( $http ) {
+    .factory( "settings", [ "$http", "$rootScope", function ( $http, $rootScope ) {
         var settings = {};
 
         settings.loading = false;
@@ -71,7 +71,11 @@ admin
             var id = this.descriptions[ name ].id;
             var data = { value: this.list[ name ] };
 
-            return $http.put( "/rest/settings/" + id, data );
+            return $http.put( "/rest/settings/" + id, data )
+                .then( function ( response ) {
+                    $rootScope.alertResponse( response );
+                    return response;
+                });
         }
 
         /** Reaload list of settings. */
