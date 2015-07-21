@@ -4,7 +4,6 @@ php:
   - 5.5
 addons:
   postgresql: '9.4'
-  sauce_connect: true
 install:
   - composer install --no-interaction -vvv
 before_script:

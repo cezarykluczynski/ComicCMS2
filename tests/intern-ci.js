@@ -1,7 +1,7 @@
 define({
     suites: false,
-    proxyPort: 9000,
-    proxyUrl: "http://localhost:9000/",
+    proxyPort: 9090,
+    proxyUrl: "http://localhost:9090/",
     capabilities: {
         "selenium-version": "2.45.0",
         "idle-timeout": 45
