@@ -30,7 +30,7 @@ before_script:
   - sudo service apache2 restart
 script:
   - vendor/bin/phpunit
-  - exet grunt test-ci & wait
+  - exec grunt test-ci & wait
 after_success:
   - php vendor/bin/coveralls -v
 env:
