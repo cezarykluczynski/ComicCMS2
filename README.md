@@ -9,6 +9,8 @@ Wanna help? Check out [todo](docs/todo.md) and [roadmap](docs/roadmap.md).
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/cezarykluczynski/ComicCMS2/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/cezarykluczynski/ComicCMS2/?branch=master)
 [![Dependency Status](https://www.versioneye.com/user/projects/553563157f43bcd889000020/badge.svg?style=flat)](https://www.versioneye.com/user/projects/553563157f43bcd889000020)
 
+Aditionally, this project run Selenium tests on [BrowserStack](https://www.browserstack.com/).
+
 ## About
 
 This project is aimed at recreating some of the functionalities of
