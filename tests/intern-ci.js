@@ -9,7 +9,7 @@ define({
     tunnel: "BrowserStackTunnel",
     environments: [
         { browserName: "Firefox" },
-        { browserName: "Internet Explorer", platform: "Windows 8.1", version: "11" },
+        { browserName: "Internet Explorer", platform: "WIN8", version: "11" },
         { browserName: "Chrome" }
     ],
     maxConcurrency: 1,
