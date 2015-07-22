@@ -5,7 +5,6 @@ Wanna help? Check out [todo](docs/todo.md) and [roadmap](docs/roadmap.md).
 ## Status
 [![Build Status](https://travis-ci.org/cezarykluczynski/ComicCMS2.svg?branch=master)](https://travis-ci.org/cezarykluczynski/ComicCMS2)
 [![Coverage Status](https://coveralls.io/repos/cezarykluczynski/ComicCMS2/badge.svg?branch=master)](https://coveralls.io/r/cezarykluczynski/ComicCMS2?branch=master)
-[![Sauce Test Status](https://saucelabs.com/buildstatus/comiccms2)](https://saucelabs.com/u/comiccms2)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/cezarykluczynski/ComicCMS2/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/cezarykluczynski/ComicCMS2/?branch=master)
 [![Dependency Status](https://www.versioneye.com/user/projects/553563157f43bcd889000020/badge.svg?style=flat)](https://www.versioneye.com/user/projects/553563157f43bcd889000020)
 
