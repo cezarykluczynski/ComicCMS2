@@ -36,7 +36,7 @@ define([
                 .sleep( 1000 )
                 /** Assert that the error has been shown. */
                 .setFindTimeout( testHelper.getTimeoutForPageAction() )
-                .findByCssSelector( ".alertify-log-error" )
+                .findByCssSelector( ".noty_type_error .noty_text" )
                     .sleep( 1000 )
                     .getVisibleText()
                     .then( function ( visibleText ) {

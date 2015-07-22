@@ -20,15 +20,44 @@ admin
         /** Allow all controllers access to unified Alertify wrapper. */
         $rootScope.alertResponse = function ( response ) {
             if ( response.status >= 200 && response.status < 300 ) {
-                Alertify.success( response.data && response.data.success ?
+                this._alertSuccess( response.data && response.data.success ?
                     response.data.success :
                     "Action was successful." );
             } else {
-                Alertify.error( response.data && response.data.error ?
+                this._alertError( response.data && response.data.error ?
                     response.data.error :
                     "Error " + response.status + ": " + response.statusText );
             }
         };
+
+        $rootScope._alertSuccess = function ( message ) {
+            this._noty( message, "success" );
+
+        };
+
+        $rootScope._alertError = function ( message ) {
+            this._noty( message, "error" );
+        };
+
+        $rootScope._noty = function ( message, type ) {
+            noty({
+                text: message,
+                layout: "bottomRight",
+                theme: "bootstrapTheme",
+                killer: true,
+                animation: {
+                    easing: 'linear',
+                    speed: 0,
+                    open: {
+                        height: 'toggle'
+                    },
+                    close: {
+                        height: 'toggle'
+                    },
+                },
+                type: type
+            });
+        }
 
         $rootScope.ok = true;
 

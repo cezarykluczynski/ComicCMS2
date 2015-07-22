@@ -41,7 +41,7 @@ define([
                     .end()
                 /** Assert that the success message has been shown. */
                 .setFindTimeout( testHelper.getTimeoutForPageAction() )
-                .findByCssSelector( ".alertify-log-success" )
+                .findByCssSelector( ".noty_type_success .noty_text" )
                     .sleep( 1000 )
                     .getVisibleText()
                     .then( function ( visibleText ) {

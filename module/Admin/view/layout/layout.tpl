@@ -31,6 +31,7 @@
         ->appendFile("`$basePath`/vendor/ng-file-upload/ng-file-upload.js")
         ->appendFile("`$basePath`/vendor/angular-translate/angular-translate.js")
         ->appendFile("`$basePath`/vendor/lodash/lodash.js")
+        ->appendFile("`$basePath`/vendor/noty/js/noty/packaged/jquery.noty.packaged.js")
         ->appendFile("`$basePath`/js/admin/module/admin.js")
         ->appendFile("`$basePath`/js/admin/module/admin-signin.js")
         ->appendFile("`$basePath`/js/admin/i18n/en.js")

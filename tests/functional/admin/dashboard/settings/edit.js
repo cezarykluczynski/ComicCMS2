@@ -70,7 +70,7 @@ define([
                     .end()
                 /** Wait for message to appear. */
                 .setFindTimeout( testHelper.getTimeoutForAjaxRequests() )
-                .findByCssSelector( ".alertify-log-success" )
+                .findByCssSelector( ".noty_type_success .noty_text" )
                     .sleep( 1000 )
                     .getVisibleText()
                     .then( function ( visibleText ) {
