@@ -5,7 +5,7 @@ php:
 addons:
   postgresql: '9.4'
 install:
-  - composer install --no-interaction -vvv
+  - composer install --no-interaction -v
 before_script:
   - cp config/autoload/travis.php config/autoload/local.php
   - psql -c 'create database comiccms;' -U postgres
