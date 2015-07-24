@@ -125,22 +125,13 @@ class ManifestService implements ServiceLocatorAwareInterface
         /** @var \Doctrine\ORM\EntityManager */
         $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
 
-        if (!empty(array_intersect_key($coreSettings, $templatesSettings)))
-        {
-            /** Report conflict: core settings are more important than templates settings. */
-            $this->error('Some template define settings keys that were already defined by core application.');
-        }
-        elseif (!empty(array_intersect_key($coreSettings, $pluginsSettings)))
-        {
-            /** Report conflict: core settings are more important than plugins settings. */
-            $this->error('Some plugins define settings keys that were already defined by core application.');
-        }
-        elseif (!empty(array_intersect_key($templatesSettings, $pluginsSettings)))
-        {
-            /** Report conflict: templates nad plugins should not share key names. */
-            $this->error('Both plugins and templates define the same settings keys.');
-        }
-        else
+        $isSettingsIntersection = $this->isSettingsIntersection([
+            'coreSettings' => $coreSettings,
+            'templatesSettings' => $templatesSettings,
+            'pluginsSettings' => $pluginsSettings,
+        ]);
+
+        if (!$isSettingsIntersection)
         {
             /** @var array Merged settings from all sources. */
             $settings = array_merge($coreSettings, $templatesSettings, $pluginsSettings);
@@ -167,6 +158,37 @@ class ManifestService implements ServiceLocatorAwareInterface
         {
             $this->descriptions[$setting->name]['id'] = $setting->id;
         }
+    }
+
+    /**
+     * Validates that the settings doesn't intersect.
+     *
+     * @param  array   $settings Array containing 'coreSettings', 'templateSettings', and 'pluginsSettings' keys.
+     * @return boolean           True if settings are intersecting, false otherwise.
+     */
+    public function isSettingsIntersection($settings)
+    {
+        if (!empty(array_intersect_key($settings['coreSettings'], $settings['templatesSettings'])))
+        {
+            /** Report conflict: core settings are more important than templates settings. */
+            $this->error('Some templates define settings keys that were already defined by core application.');
+        }
+        elseif (!empty(array_intersect_key($settings['coreSettings'], $settings['pluginsSettings'])))
+        {
+            /** Report conflict: core settings are more important than plugins settings. */
+            $this->error('Some plugins define settings keys that were already defined by core application.');
+        }
+        elseif (!empty(array_intersect_key($settings['templatesSettings'], $settings['pluginsSettings'])))
+        {
+            /** Report conflict: templates nad plugins should not share key names. */
+            $this->error('Both plugins and templates define the same settings keys.');
+        }
+        else
+        {
+            return false;
+        }
+
+        return true;
     }
 
     /**

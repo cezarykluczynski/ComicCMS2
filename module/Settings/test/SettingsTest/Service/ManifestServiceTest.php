@@ -72,6 +72,7 @@ class ManifestServiceTest extends AbstractHttpControllerTestCase
      * @uses \Settings\Service\Settings
      * @uses \Settings\Service\ManifestService
      * @uses \Settings\Controller\SettingsRestController::getList
+     * @uses \Settings\Service\ManifestService::isSettingsIntersection
      * @uses \Application\Service\Authentication
      * @uses \Application\Service\Database
      * @uses \Application\Service\Dispatcher
@@ -232,5 +233,120 @@ class ManifestServiceTest extends AbstractHttpControllerTestCase
                 'label' => 'Second name',
             ],
         ], $descriptions);
+    }
+
+    /**
+     * Test is settings intersections are correcly reported for templates settings overwriting core settings.
+     *
+     * @covers ::isSettingsIntersection
+     * @uses \Settings\Service\ManifestService::getParsingErrors
+     * @uses \Settings\Service\ManifestService::error
+     */
+    public function testNoErrorIsReportedForNonIntersectingSettings()
+    {
+        /** Exercise. */
+        $isSettingsIntersection = $this->manifest->isSettingsIntersection([
+            'coreSettings' => [
+                'intersect1' => true,
+            ],
+            'templatesSettings' => [
+                'intersect2' => true,
+            ],
+            'pluginsSettings' => [
+                'intersect3' => true,
+            ],
+        ]);
+        $parsingErrors = $this->manifest->getParsingErrors();
+
+        /** Assertion. */
+        $this->assertFalse($isSettingsIntersection);
+        $this->assertEmpty($parsingErrors);
+    }
+
+    /**
+     * Test is settings intersections are correcly reported for templates settings overwriting core settings.
+     *
+     * @covers ::isSettingsIntersection
+     * @uses \Settings\Service\ManifestService::getParsingErrors
+     * @uses \Settings\Service\ManifestService::error
+     */
+    public function testSettingsIntersectionsAreReportedForCoreAndTemplates()
+    {
+        /** Exercise. */
+        $isSettingsIntersection = $this->manifest->isSettingsIntersection([
+            'coreSettings' => [
+                'intersect' => true,
+            ],
+            'templatesSettings' => [
+                'intersect' => true,
+            ],
+            'pluginsSettings' => [],
+        ]);
+        $parsingErrors = $this->manifest->getParsingErrors();
+
+        /** Assertion. */
+        $this->assertTrue($isSettingsIntersection);
+        $this->assertEquals(
+            'Some templates define settings keys that were already defined by core application.',
+            $parsingErrors[0]
+        );
+    }
+
+    /**
+     * Test is settings intersections are correcly reported for plugins settings overwriting core settings.
+     *
+     * @covers ::isSettingsIntersection
+     * @uses \Settings\Service\ManifestService::getParsingErrors
+     * @uses \Settings\Service\ManifestService::error
+     */
+    public function testSettingsIntersectionsAreReportedForCoreAndPlugins()
+    {
+        /** Exercise. */
+        $isSettingsIntersection = $this->manifest->isSettingsIntersection([
+            'coreSettings' => [
+                'intersect' => true,
+            ],
+            'templatesSettings' => [],
+            'pluginsSettings' => [
+                'intersect' => true,
+            ],
+        ]);
+        $parsingErrors = $this->manifest->getParsingErrors();
+
+        /** Assertion. */
+        $this->assertTrue($isSettingsIntersection);
+        $this->assertEquals(
+            'Some plugins define settings keys that were already defined by core application.',
+            $parsingErrors[0]
+        );
+    }
+
+    /**
+     * Test is settings intersections are correcly reported for plugins settings conflicting with templates settings.
+     *
+     * @covers ::isSettingsIntersection
+     * @uses \Settings\Service\ManifestService::getParsingErrors
+     * @uses \Settings\Service\ManifestService::error
+     */
+    public function testSettingsIntersectionsAreReportedForTemplatesAndPlugins()
+    {
+        /** Exercise. */
+        $isSettingsIntersection = $this->manifest->isSettingsIntersection([
+            'coreSettings' => [],
+            'templatesSettings' => [
+                'intersect' => true,
+            ],
+            'pluginsSettings' => [
+                'intersect' => true,
+            ],
+        ]);
+        $parsingErrors = $this->manifest->getParsingErrors();
+
+        /** Assertion. */
+        $this->assertTrue($isSettingsIntersection);
+        $this->assertEquals(
+            'Both plugins and templates define the same settings keys.',
+            $parsingErrors[0]
+        );
     }
 }
