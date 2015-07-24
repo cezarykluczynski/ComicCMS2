@@ -198,4 +198,39 @@ class ManifestServiceTest extends AbstractHttpControllerTestCase
 
         $this->assertContains('should be an array, boolean found instead', $parsingErrors[0]);
     }
+
+    /**
+     * Test if descriptions are generated properly.
+     *
+     * @covers ::getDescriptions
+     * @uses \Settings\Service\ManifestService::gatherConfigs
+     * @uses \Settings\Service\ManifestService::flattenManifestSettings
+     * @uses \Settings\Service\ManifestService::validateFileArray
+     */
+    public function testDescriptionsCanBeObtained()
+    {
+        /** Setup. */
+        $configs = $this->manifest->gatherConfigs(['module', 'Settings', 'test', 'SettingsTest', 'Fixture', 'manifest',
+            'correct']);
+        $this->manifestSettings = $this->manifest->flattenManifestSettings($configs);
+
+        /** Exercise. */
+        $descriptions = $this->manifest->getDescriptions();
+
+        /** Assertion. */
+        $this->assertEquals([
+            'group:first_name' => [
+                'group_name' => 'Settings group name',
+                'group_prefix' => 'group:',
+                'name' => 'first_name',
+                'label' => 'First name',
+            ],
+            'group:second_name' => [
+                'group_name' => 'Settings group name',
+                'group_prefix' => 'group:',
+                'name' => 'second_name',
+                'label' => 'Second name',
+            ],
+        ], $descriptions);
+    }
 }

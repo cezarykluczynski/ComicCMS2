@@ -11,7 +11,7 @@ return array(
     'doctrine' => array(
         'configuration' => array(
             'orm_default' => array(
-                /** Doctrune Proxy classes are turned off on dev, but Travis apparently require them. */
+                /** Doctrine Proxy classes are turned off on dev, but Travis apparently require them. */
                 'generate_proxies' => true,
             ),
         ),
