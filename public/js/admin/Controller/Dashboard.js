@@ -2,7 +2,7 @@
 
 admin
     .controller( "DashboardController", [ "$scope", "$http", "$sce", "$rootScope", "$templateCache", "$translate",
-    "Alertify", "comics", "users", function( $scope, $http, $sce, $rootScope, $templateCache, $translate, Alertify, comics,
+    "comics", "users", function( $scope, $http, $sce, $rootScope, $templateCache, $translate, comics,
     users ) {
         $scope.users = users;
         $scope.comics = comics;
@@ -17,7 +17,7 @@ admin
             $templateCache.put( $this.attr( "id" ), $this.text() );
         });
 
-        /** Allow all controllers access to unified Alertify wrapper. */
+        /** Allow all controllers access to unified notifier wrapper. */
         $rootScope.alertResponse = function ( response ) {
             if ( response.status >= 200 && response.status < 300 ) {
                 this._alertSuccess( response.data && response.data.success ?
